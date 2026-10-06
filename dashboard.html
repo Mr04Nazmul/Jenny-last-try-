@@ -38,8 +38,8 @@ async function load(){
   document.getElementById("points").textContent=d.user.points;
   state.textContent="Account connected successfully.";
  }catch(e){
-  state.textContent="Could not connect to your account. Please sign in again.";
-  setTimeout(()=>{localStorage.removeItem("nazu_token");window.location.replace("login.html")},1800);
+  state.textContent=e.message==="Failed to fetch"?"Server connection failed. Please wait a moment and try again.":(e.message||"Could not load your account.");
+  if(e.message&&/expired|Invalid|Authentication/i.test(e.message)){localStorage.removeItem("nazu_token");setTimeout(()=>window.location.replace("login.html?v=5"),1200);}
  }
 }
 function logout(){localStorage.removeItem("nazu_token");window.location.replace("login.html")}

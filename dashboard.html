@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NAZU | Dashboard</title>
+<style>body{margin:0;background:#070b14;color:#fff;font-family:Arial,sans-serif;padding:25px}.card{max-width:700px;margin:40px auto;padding:28px;border:1px solid #252d40;border-radius:18px;background:#0d1320}button{padding:11px 16px;border:0;border-radius:9px}</style></head>
+<body><div class="card"><h1>NAZU Dashboard</h1><p id="status">Loading...</p><p>Points: <b id="points">—</b></p><button onclick="logout()">Sign out</button></div>
+<script>
+const API=localStorage.getItem("nazu_api_url")||"",token=localStorage.getItem("nazu_token");
+async function load(){if(!token){location.href="login.html";return}try{const r=await fetch(API+"/api/me",{headers:{Authorization:"Bearer "+token}});const d=await r.json();if(!r.ok)throw Error();status.textContent="Signed in as "+d.user.email;points.textContent=d.user.points}catch(e){status.textContent="Session/API unavailable."}}
+function logout(){localStorage.removeItem("nazu_token");location.href="login.html"} load();
+</script></body></html>

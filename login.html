@@ -47,18 +47,28 @@ sw.onclick=function(){
 };
 
 async function api(path){
- let response;
- try{
-  response=await fetch(API+path,{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({email:email.value.trim(),password:password.value})
-  });
- }catch(firstError){
-  await new Promise(function(resolve){setTimeout(resolve,1500);});
-  response=await fetch(API+path,{
- if(!response.ok) throw new Error(data.message||("Request failed ("+response.status+")"));
- return data;
+ const payload={email:email.value.trim(),password:password.value};
+ let lastError=null;
+ for(let attempt=0;attempt<8;attempt++){
+  try{
+   const response=await fetch(API+path,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload),
+    cache:"no-store"
+   });
+   const data=await response.json().catch(function(){return {};});
+   if(!response.ok) throw new Error(data.message||("Request failed ("+response.status+")"));
+   return data;
+  }catch(error){
+   lastError=error;
+   if(attempt<7){
+    msg.textContent="Connecting to NAZU server... "+(attempt+1)+"/8";
+    await new Promise(function(resolve){setTimeout(resolve,8000);});
+   }
+  }
+ }
+ throw lastError||new Error("Unable to connect to the server.");
 }
 
 form.onsubmit=async function(event){

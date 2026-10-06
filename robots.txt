@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mr04nazmul.github.io/Jenny-last-try-/sitemap.xml

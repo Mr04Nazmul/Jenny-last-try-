@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express=require("express"),cors=require("cors"),bcrypt=require("bcrypt"),jwt=require("jsonwebtoken"),{Pool}=require("pg");
-const app=express();app.use(cors({origin:process.env.FRONTEND_ORIGIN||true}));app.use(express.json({limit:"20kb"}));
+const app=express();app.use(cors({origin:["https://mr04nazmul.github.io","http://localhost:3000","http://localhost:5500"],methods:["GET","POST","OPTIONS"],allowedHeaders:["Content-Type","Authorization"]}));app.use(express.json({limit:"20kb"}));app.use(express.urlencoded({extended:false,limit:"20kb"}));
 const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.NODE_ENV==="production"?{rejectUnauthorized:false}:false});
 const SECRET=process.env.JWT_SECRET;if(!SECRET) console.warn("JWT_SECRET is not set");
 

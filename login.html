@@ -47,12 +47,16 @@ sw.onclick=function(){
 };
 
 async function api(path){
- const response=await fetch(API+path,{
+ let response;
+ try{
+  response=await fetch(API+path,{
   method:"POST",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify({email:email.value.trim(),password:password.value})
- });
- const data=await response.json().catch(function(){return {};});
+  });
+ }catch(firstError){
+  await new Promise(function(resolve){setTimeout(resolve,1500);});
+  response=await fetch(API+path,{
  if(!response.ok) throw new Error(data.message||("Request failed ("+response.status+")"));
  return data;
 }
@@ -70,7 +74,7 @@ form.onsubmit=async function(event){
    const login=await api("/api/login");
    localStorage.setItem("nazu_token",login.token);
   }
-  window.location.replace("dashboard.html?v=6");
+  window.location.replace("dashboard.html?v=8");
  }catch(error){
   msg.textContent=(error&&error.message)?error.message:"Unable to connect to the server. Please try again.";
  }finally{

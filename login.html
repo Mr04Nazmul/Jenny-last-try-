@@ -49,8 +49,8 @@ sw.onclick=function(){
 async function api(path){
  const response=await fetch(API+path,{
   method:"POST",
-  headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-  body:new URLSearchParams({email:email.value.trim(),password:password.value}).toString()
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({email:email.value.trim(),password:password.value})
  });
  const data=await response.json().catch(function(){return {};});
  if(!response.ok) throw new Error(data.message||("Request failed ("+response.status+")"));
@@ -70,9 +70,9 @@ form.onsubmit=async function(event){
    const login=await api("/api/login");
    localStorage.setItem("nazu_token",login.token);
   }
-  window.location.replace("dashboard.html?v=3");
+  window.location.replace("dashboard.html?v=6");
  }catch(error){
-  msg.textContent=error.message||"Unable to connect to the server. Please try again.";
+  msg.textContent=(error&&error.message)?error.message:"Unable to connect to the server. Please try again.";
  }finally{
   submit.disabled=false;
  }

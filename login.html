@@ -3,145 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NAZU | Secure Access</title>
+<title>NAZU | Sign in</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}
-body{min-height:100vh;background:#01040c;overflow-x:hidden}
-.bg{position:fixed;inset:0;background:url("nazu-login-world.svg") center/cover no-repeat;z-index:-3}
-.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,3,13,.08),rgba(0,3,15,.15) 42%,rgba(0,2,10,.68) 100%),radial-gradient(ellipse at center,transparent 18%,rgba(0,0,0,.38) 100%)}
-.shell{width:min(1040px,94%);min-height:100vh;margin:auto;position:relative;padding:25px 0 30px}
-.top{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px}.brandmark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:950;font-size:22px;background:linear-gradient(135deg,#8c67ff,#28b9ff);box-shadow:0 0 28px rgba(51,150,255,.35)}.brandname{font-size:21px;font-weight:900;letter-spacing:.22em}.topright{font-size:9px;letter-spacing:3px;line-height:1.5;text-align:right;color:#a9cdf3;text-shadow:0 0 12px #269cff}
-.hero{text-align:center;padding:35px 0 22px}.eyebrow{font-size:9px;letter-spacing:4px;color:#b5d5f5;text-transform:uppercase}.heroLogo{font-size:clamp(76px,13vw,138px);font-weight:1000;line-height:.78;letter-spacing:-8px;margin:28px 0 12px;text-shadow:0 0 25px rgba(160,215,255,.55),0 0 75px rgba(45,130,255,.3)}.tag{font-size:10px;letter-spacing:7px;color:#b4d5f5}
-.card{width:min(610px,100%);margin:36px auto 0;padding:29px 31px 27px;border:1px solid rgba(71,174,255,.7);border-radius:28px;background:linear-gradient(145deg,rgba(3,13,35,.96),rgba(2,8,24,.94));box-shadow:0 28px 100px rgba(0,0,0,.55),0 0 45px rgba(45,126,255,.2),inset 0 0 35px rgba(57,170,255,.055);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:left}
-.tabs{display:flex;border-bottom:1px solid rgba(112,146,194,.25);margin-bottom:27px}.tab{flex:1;padding:0 8px 16px;text-align:center;color:#9db4d5;font-size:15px;cursor:pointer}.tab.active{color:#fff;font-weight:800;border-bottom:3px solid #40aaff;box-shadow:0 8px 22px rgba(102,70,255,.28)}
-.notice{padding:11px 13px;border:1px solid rgba(65,190,255,.22);border-radius:12px;background:rgba(40,139,255,.07);color:#a8c4e6;font-size:12px;line-height:1.45;margin:-9px 0 18px}.hidden{display:none!important}
-h1{font-size:34px;letter-spacing:-1.5px;margin:0 0 9px}.sub{margin:0 0 23px;color:#9cb4d5;font-size:14px;line-height:1.55}
-.names{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:15px}label{display:block;color:#b9c9df;font-size:10px;font-weight:800;letter-spacing:.1em;margin:0 0 7px}input{width:100%;height:54px;padding:0 16px;border:1px solid rgba(81,125,177,.62);border-radius:13px;background:rgba(5,18,42,.76);color:#fff;outline:none;font:inherit;font-size:14px;box-shadow:inset 0 0 20px rgba(32,117,210,.035)}input:focus{border-color:#6c6dff;box-shadow:0 0 0 4px rgba(91,100,255,.1)}input[readonly]{opacity:.72}
-.row{display:flex;justify-content:space-between;align-items:center;margin:2px 0 19px;color:#93a9c8;font-size:12px}.remember{display:flex;align-items:center;gap:8px;cursor:pointer}.remember input{appearance:none;width:17px;height:17px;padding:0;margin:0;border-radius:4px}.remember input:checked{background:linear-gradient(135deg,#7147ff,#1bbcff)}.forgot{color:#a879ff;cursor:pointer}
-button{width:100%;height:55px;border:0;border-radius:14px;background:linear-gradient(100deg,#733fff,#536dff 53%,#12b9ff);color:#fff;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 15px 38px rgba(39,124,255,.3)}button:disabled{opacity:.6;cursor:wait}
-.divider{display:flex;align-items:center;gap:12px;margin:22px 0 17px;color:#748aa8;font-size:10px;letter-spacing:.18em}.divider:before,.divider:after{content:"";height:1px;flex:1;background:rgba(117,151,194,.22)}
-.createPrompt{text-align:center;color:#92a8c5;font-size:13px}.createPrompt span{color:#a873ff;font-weight:800;cursor:pointer}
-.msg{min-height:19px;margin-top:12px;text-align:center;color:#9bb0cb;font-size:12px;line-height:1.45}.ok{color:#8dffd0!important}.back{text-align:center;margin-top:15px;color:#8799b5;font-size:12px;cursor:pointer}
-.footer{display:flex;justify-content:space-between;align-items:center;margin-top:26px;color:#91a9c7;font-size:9px;letter-spacing:.12em;text-transform:uppercase}.footer b{font-size:14px;letter-spacing:.28em;color:#fff}
-@media(max-width:650px){.shell{width:92%;padding-top:19px}.topright{font-size:7px;letter-spacing:2px}.brandmark{width:37px;height:37px}.brandname{font-size:18px}.hero{padding-top:28px}.heroLogo{font-size:23vw;letter-spacing:-5px;margin-top:25px}.tag{letter-spacing:5px}.card{margin-top:30px;padding:23px 20px;border-radius:23px}h1{font-size:28px}.names{grid-template-columns:1fr}.footer{padding-bottom:15px}}
+body{min-height:100vh;display:grid;place-items:center;background:#02050c;overflow:auto}
+.bg{position:fixed;inset:0;background:url("nazu-login-world.svg") center/cover no-repeat}.shade{position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,3,10,.12),rgba(0,3,10,.58)),radial-gradient(ellipse at center,transparent 15%,rgba(0,0,0,.4));}
+.card{position:relative;width:min(430px,calc(100% - 30px));margin:24px 0;padding:30px 27px 24px;border:1px solid rgba(255,255,255,.14);border-radius:25px;background:rgba(5,12,27,.82);backdrop-filter:blur(24px);box-shadow:0 25px 80px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.08)}
+.logo{display:flex;align-items:center;gap:11px;margin-bottom:25px}.mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#8064ff,#3d9cff);box-shadow:0 0 28px rgba(90,120,255,.35)}.brand{font-weight:850;font-size:21px;letter-spacing:.08em}.pill{margin-left:auto;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#87ffd0;border:1px solid rgba(87,255,196,.22);padding:6px 9px;border-radius:99px}
+h1{margin:0 0 8px;font-size:29px;letter-spacing:-.04em}.sub{margin:0 0 24px;color:#94a4bd;font-size:14px;line-height:1.5}
+label{display:block;margin:0 0 7px;color:#b8c4d9;font-size:11px;font-weight:750;letter-spacing:.06em}input{width:100%;padding:14px 15px;margin:0 0 16px;border-radius:13px;border:1px solid #2a3750;outline:none;background:rgba(3,8,18,.78);color:#fff;font-size:15px}input:focus{border-color:#7561ff;box-shadow:0 0 0 4px rgba(117,97,255,.11)}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.names input{min-width:0}
+button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:14px;font-weight:850;cursor:pointer;background:linear-gradient(100deg,#704dff,#4c91ff,#16baff);box-shadow:0 12px 30px rgba(66,104,255,.25)}button:disabled{opacity:.6;cursor:wait}
+.links{display:flex;justify-content:space-between;gap:12px;margin-top:17px;font-size:12px}.link{color:#aab7ff;cursor:pointer}.muted{color:#697892}
+.msg{min-height:20px;margin-top:13px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.ok{color:#8dffd0!important}
+.notice{margin:-7px 0 19px;padding:11px 13px;border:1px solid rgba(75,178,255,.22);border-radius:12px;background:rgba(46,139,255,.07);color:#a8c2e5;font-size:12px;line-height:1.45}
+.footer{text-align:center;margin-top:22px;color:#52617a;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.hidden{display:none!important}@media(max-width:450px){.card{padding:27px 21px 22px}.pill{display:none}.names{grid-template-columns:1fr}h1{font-size:26px}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div class="bg"></div>
-<main class="shell">
-<header class="top">
-<div class="brand"><div class="brandmark">N</div><div class="brandname">NAZU</div></div>
-<div class="topright">THE NEXT<br>GENERATION<br>WEB3 NETWORK</div>
-</header>
-<section class="hero">
-<div class="eyebrow">WEB3 NETWORK · BUILT TOWARD SOLANA</div>
-<div class="heroLogo">NAZU</div>
-<div class="tag">BUILD · CONNECT · GROW</div>
-
-<div class="card">
-<div class="tabs"><div id="loginTab" class="tab active">Login</div><div id="createTab" class="tab">Create Account</div></div>
+<div class="bg"></div><div class="shade"></div>
+<main class="card">
+<div class="logo"><div class="mark">N</div><div class="brand">NAZU</div><div class="pill">Secure access</div></div>
 <div id="notice" class="notice hidden">Email verified. Finish setting up your NAZU account.</div>
-<h1 id="title">Welcome Back</h1>
-<p id="sub" class="sub">Sign in to your NAZU account to continue your journey.</p>
+<h1 id="title">Welcome back</h1>
+<p id="sub" class="sub">Sign in to continue to your NAZU account.</p>
 
 <form id="form">
 <div id="names" class="names hidden">
-<div class="field"><label>FIRST NAME</label><input id="first" type="text" autocomplete="given-name" placeholder="First name"></div>
-<div class="field"><label>LAST NAME</label><input id="last" type="text" autocomplete="family-name" placeholder="Last name"></div>
+<div><label for="first">FIRST NAME</label><input id="first" type="text" autocomplete="given-name" placeholder="First name"></div>
+<div><label for="last">LAST NAME</label><input id="last" type="text" autocomplete="family-name" placeholder="Last name"></div>
 </div>
-<div class="field"><label>EMAIL ADDRESS</label><input id="email" type="email" required autocomplete="email" placeholder="you@email.com"></div>
-<div id="passwordField" class="field"><label>PASSWORD</label><input id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="Password"></div>
-<div id="newPasswords" class="hidden">
-<div class="field"><label>NEW PASSWORD</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></div>
-<div class="field"><label>CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
+<div><label for="email">EMAIL</label><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+<div id="passwordBlock"><label for="password">PASSWORD</label><input id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="Your password"></div>
+<div id="newPasswordBlock" class="hidden">
+<label for="newPassword">NEW PASSWORD</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
+<label for="confirmPassword">CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password">
 </div>
-<div id="loginOptions" class="row"><label class="remember"><input id="remember" type="checkbox"> Remember me</label><span id="forgot" class="forgot">Forgot your password?</span></div>
-<button id="submit" type="submit">Sign In</button>
+<button id="submit" type="submit">Sign in</button>
 </form>
+
 <div id="msg" class="msg"></div>
-<div id="divider" class="divider">OR</div>
-<div id="prompt" class="createPrompt">Don’t have an account? <span id="promptAction">Create Account</span></div>
-<div id="back" class="back hidden">← Back to sign in</div>
+<div class="links">
+<span id="forgot" class="link">Forgot password?</span>
+<span id="switch" class="link">Create an account</span>
 </div>
-</section>
-<footer class="footer"><b>NAZU</b><span>Secure access · Solana layer next</span></footer>
+<div id="back" class="links hidden"><span class="link">← Back to sign in</span></div>
+<div class="footer">NAZU · Web3 network access</div>
 </main>
 
 <script>
 const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co";
 const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $=id=>document.getElementById(id);
-const form=$("form"),email=$("email"),password=$("password"),first=$("first"),last=$("last"),newPassword=$("newPassword"),confirmPassword=$("confirmPassword");
-const loginTab=$("loginTab"),createTab=$("createTab"),title=$("title"),sub=$("sub"),names=$("names"),passwordField=$("passwordField"),newPasswords=$("newPasswords"),loginOptions=$("loginOptions"),forgot=$("forgot"),submit=$("submit"),msg=$("msg"),notice=$("notice"),divider=$("divider"),prompt=$("prompt"),promptAction=$("promptAction"),back=$("back");
+
+const form=document.getElementById("form"),email=document.getElementById("email"),password=document.getElementById("password");
+const first=document.getElementById("first"),last=document.getElementById("last"),newPassword=document.getElementById("newPassword"),confirmPassword=document.getElementById("confirmPassword");
+const names=document.getElementById("names"),passwordBlock=document.getElementById("passwordBlock"),newPasswordBlock=document.getElementById("newPasswordBlock");
+const title=document.getElementById("title"),sub=document.getElementById("sub"),submit=document.getElementById("submit"),msg=document.getElementById("msg");
+const forgot=document.getElementById("forgot"),switchBtn=document.getElementById("switch"),back=document.getElementById("back"),notice=document.getElementById("notice");
+
 let mode="signin";
-const params=new URLSearchParams(location.search),verified=params.get("verified")==="1",recovery=location.hash.includes("type=recovery");
-function message(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}
+const params=new URLSearchParams(location.search);
+const verified=params.get("verified")==="1";
+const recovery=location.hash.includes("type=recovery");
+
+function setMsg(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}
+
 function render(){
- const setup=mode==="setup",create=mode==="create",reset=mode==="reset";
- loginTab.classList.toggle("active",mode==="signin"||reset);
- createTab.classList.toggle("active",create||setup);
- notice.classList.toggle("hidden",!setup);
- names.classList.toggle("hidden",!setup&&!create);
- passwordField.classList.toggle("hidden",create||setup||reset);
- newPasswords.classList.toggle("hidden",!setup&&!reset);
- loginOptions.classList.toggle("hidden",mode!=="signin");
- divider.classList.toggle("hidden",mode!=="signin"&&mode!=="create");
- prompt.classList.toggle("hidden",mode==="setup"||mode==="reset");
- back.classList.toggle("hidden",mode!=="reset");
- email.readOnly=setup;
- first.required=setup||create;last.required=setup||create;
- password.required=mode==="signin";
- newPassword.required=setup||reset;confirmPassword.required=setup||reset;
- if(setup){title.textContent="Finish Your Account";sub.textContent="Your email is verified. Create a password to activate your NAZU account.";submit.textContent="Activate Account";prompt.classList.add("hidden")}
- else if(create){title.textContent="Create Account";sub.textContent="Verify your email first, then finish your NAZU account.";submit.textContent="Send Verification";promptAction.textContent="Already have an account? Sign in"}
- else if(reset){title.textContent="Reset Password";sub.textContent="Choose a new password for your NAZU account.";submit.textContent="Change Password"}
- else{title.textContent="Welcome Back";sub.textContent="Sign in to your NAZU account to continue your journey.";submit.textContent="Sign In";promptAction.textContent="Create Account"}
+  const setup=mode==="setup", create=mode==="create", reset=mode==="reset";
+  notice.classList.toggle("hidden",!setup);
+  names.classList.toggle("hidden",!setup&&!create);
+  passwordBlock.classList.toggle("hidden",create||setup||reset);
+  newPasswordBlock.classList.toggle("hidden",!setup&&!reset);
+  email.readOnly=setup;
+  first.required=setup||create;last.required=setup||create;
+  password.required=mode==="signin";
+  newPassword.required=setup||reset;confirmPassword.required=setup||reset;
+  if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
+  else if(create){title.textContent="Create your account";sub.textContent="Enter your details. We’ll send a verification link before activation.";submit.textContent="Send verification";}
+  else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZU account.";submit.textContent="Change password";}
+  else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZU account.";submit.textContent="Sign in";}
+  forgot.classList.toggle("hidden",mode!=="signin");
+  switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset");
+  switchBtn.textContent=create?"Already have an account? Sign in":"Create an account";
+  back.classList.toggle("hidden",mode!=="reset");
 }
-async function sessionCheck(){
- const {data}=await sb.auth.getSession();if(!data.session)return;
- if(verified){email.value=data.session.user.email||"";first.value=data.session.user.user_metadata?.first_name||"";last.value=data.session.user.user_metadata?.last_name||"";mode="setup";render();return}
- if(!recovery)location.replace("dashboard.html?v=52");
+
+async function checkSession(){
+  const {data,error}=await sb.auth.getSession();
+  if(error)return;
+  if(data.session&&verified){
+    const u=data.session.user;
+    email.value=u.email||"";
+    first.value=u.user_metadata?.first_name||"";
+    last.value=u.user_metadata?.last_name||"";
+    mode="setup";render();return;
+  }
+  if(data.session&&!recovery){location.replace("dashboard.html?v=50");}
 }
+
 sb.auth.onAuthStateChange((event,session)=>{
- if(event==="PASSWORD_RECOVERY"){mode="reset";render();return}
- if(event==="SIGNED_IN"&&verified&&session){email.value=session.user.email||"";first.value=session.user.user_metadata?.first_name||"";last.value=session.user.user_metadata?.last_name||"";mode="setup";render()}
+  if(event==="PASSWORD_RECOVERY"){mode="reset";render();return;}
+  if(event==="SIGNED_IN"&&verified&&session){
+    email.value=session.user.email||"";first.value=session.user.user_metadata?.first_name||"";last.value=session.user.user_metadata?.last_name||"";
+    mode="setup";render();
+  }
 });
-function goCreate(){mode="create";message("");render()}
-loginTab.onclick=()=>{mode="signin";message("");render()};
-createTab.onclick=goCreate;
-promptAction.onclick=()=>mode==="create"?(mode="signin",message(""),render()):goCreate();
-forgot.onclick=()=>{mode="reset";message("");render()};
-back.onclick=()=>{mode="signin";message("");render()};
+
+switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");render()};
+forgot.onclick=()=>{mode="reset";setMsg("");render()};
+back.onclick=()=>{mode="signin";setMsg("");newPassword.value="";confirmPassword.value="";render()};
+
 form.onsubmit=async e=>{
- e.preventDefault();submit.disabled=true;message("");
- try{
-  if(mode==="create"){
-   if(!first.value.trim()||!last.value.trim())throw new Error("Please enter your first and last name.");
-   const {error}=await sb.auth.signInWithOtp({email:email.value.trim(),options:{shouldCreateUser:true,emailRedirectTo:"https://mr04nazmul.github.io/nazulabs/login.html?verified=1",data:{first_name:first.value.trim(),last_name:last.value.trim()}}});
-   if(error)throw error;message("Verification email sent. Open the link to continue.",true);submit.textContent="Verification Sent";return;
-  }
-  if(mode==="signin"){
-   const {data,error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});if(error)throw error;if(!data.session)throw new Error("Sign in could not be completed.");location.replace("dashboard.html?v=52");return;
-  }
-  if(mode==="reset"){
-   if(recovery){
-    if(newPassword.value.length<8)throw new Error("Password must be at least 8 characters.");
-    if(newPassword.value!==confirmPassword.value)throw new Error("Passwords do not match.");
-    const {error}=await sb.auth.updateUser({password:newPassword.value});if(error)throw error;await sb.auth.signOut();location.hash="";mode="signin";message("Password changed. You can now sign in.",true);render();return;
-   }
-   const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});if(error)throw error;message("Password reset link sent. Check your email.",true);return;
-  }
-  if(mode==="setup"){
-   if(!first.value.trim()||!last.value.trim())throw new Error("Please enter your first and last name.");
-   if(newPassword.value.length<8)throw new Error("Password must be at least 8 characters.");
-   if(newPassword.value!==confirmPassword.value)throw new Error("Passwords do not match.");
-   const {error}=await sb.auth.updateUser({password:newPassword.value,data:{first_name:first.value.trim(),last_name:last.value.trim()}});if(error)throw error;message("Account activated. Opening NAZU…",true);setTimeout(()=>location.replace("dashboard.html?v=52"),450);
-  }
- }catch(err){message(err?.message||"Something went wrong. Please try again.")}finally{submit.disabled=false}
+  e.preventDefault();submit.disabled=true;setMsg("");
+  try{
+    if(mode==="create"){
+      if(!first.value.trim()||!last.value.trim())throw new Error("Please enter your first and last name.");
+      const redirectTo="https://mr04nazmul.github.io/nazulabs/login.html?verified=1";
+      const {error}=await sb.auth.signInWithOtp({
+        email:email.value.trim(),
+        options:{shouldCreateUser:true,emailRedirectTo:redirectTo,data:{first_name:first.value.trim(),last_name:last.value.trim()}}
+      });
+      if(error)throw error;
+      setMsg("Verification email sent. Open the link to continue. Your account is not activated until you verify your email.",true);
+      submit.textContent="Verification sent";
+      return;
+    }
+
+    if(mode==="signin"){
+      const {data,error}=await sb.auth.signInWithPassword({email:email.value.trim(),password:password.value});
+      if(error)throw error;
+      if(!data.session)throw new Error("Sign in could not be completed.");
+      location.replace("dashboard.html?v=50");return;
+    }
+
+    if(mode==="reset"){
+      if(location.hash.includes("type=recovery")){
+        if(newPassword.value.length<8)throw new Error("Password must be at least 8 characters.");
+        if(newPassword.value!==confirmPassword.value)throw new Error("Passwords do not match.");
+        const {error}=await sb.auth.updateUser({password:newPassword.value});
+        if(error)throw error;
+        await sb.auth.signOut();location.hash="";
+        mode="signin";setMsg("Password changed. You can now sign in.",true);render();return;
+      }
+      const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});
+      if(error)throw error;
+      setMsg("Password reset link sent. Check your email.",true);return;
+    }
+
+    if(mode==="setup"){
+      if(!first.value.trim()||!last.value.trim())throw new Error("Please enter your first and last name.");
+      if(newPassword.value.length<8)throw new Error("Password must be at least 8 characters.");
+      if(newPassword.value!==confirmPassword.value)throw new Error("Passwords do not match.");
+      const {error}=await sb.auth.updateUser({password:newPassword.value,data:{first_name:first.value.trim(),last_name:last.value.trim()}});
+      if(error)throw error;
+      setMsg("Account activated. Opening NAZU…",true);
+      setTimeout(()=>location.replace("dashboard.html?v=50"),450);
+    }
+  }catch(err){setMsg(err?.message||"Something went wrong. Please try again.");}
+  finally{submit.disabled=false;}
 };
-if(recovery){mode="reset";render()}else{render();sessionCheck()}
+
+if(recovery){mode="reset";render();}
+else{render();checkSession();}
 </script>
 </body>
 </html>

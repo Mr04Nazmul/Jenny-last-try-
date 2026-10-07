@@ -9,33 +9,50 @@ nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:cen
 .card{border:1px solid var(--line);border-radius:24px;padding:30px;background:linear-gradient(145deg,#100e18,#080a0e);box-shadow:0 25px 70px rgba(0,0,0,.3)}.topline{display:flex;justify-content:space-between;gap:15px;align-items:center}.icon{width:58px;height:58px;border:1px solid #393149;border-radius:17px;display:grid;place-items:center;font-size:25px;color:var(--purple)}h2{margin:0;font-size:24px}p{color:var(--muted);font-size:12px;line-height:1.7}.badge{display:inline-block;border:1px solid #3b344e;background:#14111d;color:#b9aaff;border-radius:99px;padding:7px 11px;font-size:8px;font-weight:800;letter-spacing:.14em}.btn{width:100%;margin-top:22px;padding:14px 20px;border:1px solid #30303a;background:#0b0d12;color:#e8ecf2;border-radius:11px;font-weight:800;cursor:pointer}.btn:hover{border-color:var(--cyan)}.btn:disabled{opacity:.55;cursor:wait}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.stat{border:1px solid var(--line);border-radius:14px;padding:17px;background:#080a0e}.label{font-size:8px;letter-spacing:.15em;color:#596371}.value{font-size:16px;font-weight:800;margin-top:8px;word-break:break-all}.ok{color:var(--lime)}.muted{color:var(--muted);font-size:10px;margin-top:6px}.hidden{display:none}.contract{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}.contract a{color:#8ccfff;text-decoration:none;font-size:10px;word-break:break-all}.note{font-size:9px;color:#596371;margin-top:18px}
 @media(max-width:600px){.grid{grid-template-columns:1fr}.wrap{padding-top:42px}.card{padding:22px}}
-</style>
+
+.activity{margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#080a0e}.activityRow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--line)}.activityRow:last-child{border-bottom:0}.activityMain{min-width:0}.activityType{font-size:11px;font-weight:800}.activityMeta{font-size:9px;color:var(--muted);margin-top:5px}.activityAmount{font-size:11px;font-weight:800;white-space:nowrap}.in{color:var(--lime)}.out{color:#ff9b9b}.activity a{color:#8ccfff;text-decoration:none}.empty{padding:20px;text-align:center;color:var(--muted);font-size:10px}</style>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.15.0/dist/ethers.umd.min.js"></script>
 </head>
 <body>
 <nav><div class="brand">NAZU</div><a class="back" href="dashboard.html">← DASHBOARD</a></nav>
-<main class="wrap"><div class="k">ECOSYSTEM / WALLET</div><h1 class="title">Your <em>wallet.</em></h1>
+<main class="wrap"><div class="k">ECOSYSTEM / WALLET</div><div style="display:flex;justify-content:space-between;align-items:end;gap:15px"><h1 class="title" style="margin-bottom:35px">Your <em>wallet.</em></h1><span id="live" class="badge hidden" style="margin-bottom:45px">● LIVE</span></div>
 <section class="card">
 <div class="topline"><div><div class="icon">◇</div><h2 style="margin-top:18px">NAZU Wallet</h2></div><span class="badge">SEPOLIA TESTNET</span></div>
-<p>Connect your wallet to view your NAZU testnet balance. Mainnet token distribution is not active.</p>
+<p>Connect your wallet to view your NAZU balance and on-chain activity.</p>
 <button id="connectBtn" class="btn" onclick="connectWallet()">CONNECT WALLET</button>
 <div id="walletData" class="hidden">
 <div class="grid">
-<div class="stat"><div class="label">CONNECTED WALLET</div><div id="address" class="value">—</div></div>
+<div class="stat" style="grid-column:1/-1"><div class="label">NAZU BALANCE</div><div id="balance" class="value" style="font-size:30px">—</div><div class="muted">NAZU</div></div>
+<div class="stat"><div class="label">WALLET</div><div id="address" class="value">—</div></div>
 <div class="stat"><div class="label">NETWORK</div><div id="network" class="value ok">—</div></div>
-<div class="stat"><div class="label">NAZU BALANCE</div><div id="balance" class="value">—</div><div class="muted">NAZU</div></div>
-<div class="stat"><div class="label">TOTAL SUPPLY</div><div id="supply" class="value">21,000,000</div><div class="muted">NAZU</div></div>
 </div>
-<div class="contract"><div class="label">VERIFIED CONTRACT</div><a id="contractLink" target="_blank" rel="noopener" href="https://sepolia.etherscan.io/address/0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557">0xEfB0ba65e3ebf22067ffdbe67838634ee2cdf557</a></div>
+<div class="contract"><div class="label">VERIFIED CONTRACT</div><a target="_blank" rel="noopener" href="https://sepolia.etherscan.io/address/0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557">0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557</a></div>
+<div style="margin-top:28px"><div class="topline"><h2 style="font-size:16px">Recent Activity</h2><span class="label">ON-CHAIN</span></div><div id="activity" class="activity"><div class="muted">Loading activity…</div></div></div>
 </div>
-<div id="msg" class="note">Wallet connection is local to this page. No private key or seed phrase is requested.</div>
+<div id="msg" class="note">No private key or seed phrase is requested.</div>
 </section></main>
 <script>
-const CONTRACT="0xEfB0ba65e3ebf22067ffdbe67838634ee2cdf557";
-const ABI=["function balanceOf(address) view returns (uint256)","function totalSupply() view returns (uint256)","function symbol() view returns (string)"];
+const CONTRACT="0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557";
+const ABI=["function balanceOf(address) view returns (uint256)","function totalSupply() view returns (uint256)","function symbol() view returns (string)","event Transfer(address indexed from,address indexed to,uint256 value)"];
 let provider,signer;
 function short(a){return a.slice(0,6)+"…"+a.slice(-4)}
 function msg(t){document.getElementById("msg").textContent=t}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+async function loadActivity(contract,address){
+ const box=document.getElementById("activity");
+ try{
+  const from=await contract.queryFilter(contract.filters.Transfer(address,null),-50000);
+  const to=await contract.queryFilter(contract.filters.Transfer(null,address),-50000);
+  const all=[...from,...to].sort((a,b)=>Number(a.blockNumber)-Number(b.blockNumber)).reverse().slice(0,8);
+  if(!all.length){box.innerHTML='<div class="empty">No NAZU activity yet.</div>';return}
+  box.innerHTML=all.map(e=>{
+   const incoming=e.args.to.toLowerCase()===address.toLowerCase();
+   const amount=ethers.formatUnits(e.args.value,18);
+   const hash=e.transactionHash;
+   return '<div class="activityRow"><div class="activityMain"><div class="activityType '+(incoming?'in':'out')+'">'+(incoming?'RECEIVED':'SENT')+'</div><div class="activityMeta">Block '+e.blockNumber+' · <a target="_blank" rel="noopener" href="https://sepolia.etherscan.io/tx/'+hash+'">'+short(hash)+'</a></div></div><div class="activityAmount '+(incoming?'in':'out')+'">'+(incoming?'+':'-')+amount+' NAZU</div></div>';
+  }).join("");
+ }catch(e){box.innerHTML='<div class="empty">Activity could not be loaded right now.</div>';}
+}
 async function connectWallet(){
  const btn=document.getElementById("connectBtn");
  if(!window.ethereum){msg("MetaMask was not detected. Open NAZU in a browser with MetaMask installed.");return}
@@ -44,24 +61,27 @@ async function connectWallet(){
   await window.ethereum.request({method:"eth_requestAccounts"});
   provider=new ethers.BrowserProvider(window.ethereum);
   signer=await provider.getSigner();
-  const network=await provider.getNetwork();
+  let network=await provider.getNetwork();
   if(network.chainId!==11155111n){
-   msg("Please switch MetaMask to Sepolia Test Network.");
-   try{await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xaa36a7"}]});provider=new ethers.BrowserProvider(window.ethereum);signer=await provider.getSigner()}catch(e){throw new Error("NAZU requires the Sepolia test network.")}
+   msg("Switching to Sepolia Test Network…");
+   await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:"0xaa36a7"}]});
+   provider=new ethers.BrowserProvider(window.ethereum);signer=await provider.getSigner();network=await provider.getNetwork();
   }
+  if(network.chainId!==11155111n) throw new Error("NAZU requires the Sepolia test network.");
   const address=await signer.getAddress();
   const contract=new ethers.Contract(CONTRACT,ABI,provider);
-  const [bal,supply,symbol]=await Promise.all([contract.balanceOf(address),contract.totalSupply(),contract.symbol()]);
+  const [bal]=await Promise.all([contract.balanceOf(address)]);
   document.getElementById("address").textContent=short(address);
   document.getElementById("address").title=address;
   document.getElementById("network").textContent="Ethereum Sepolia";
   document.getElementById("balance").textContent=ethers.formatUnits(bal,18);
-  document.getElementById("supply").textContent=ethers.formatUnits(supply,18);
   document.getElementById("walletData").classList.remove("hidden");
+  document.getElementById("live").classList.remove("hidden");
   btn.textContent="WALLET CONNECTED";
-  msg("Connected successfully. NAZU balance is read directly from the verified Sepolia contract.");
- }catch(e){msg(e?.message||"Could not connect wallet.");}finally{btn.disabled=false}
+  msg("Connected. Balance and activity are read directly from the verified Sepolia contract.");
+  await loadActivity(contract,address);
+ }catch(e){msg(e?.shortMessage||e?.message||"Could not connect wallet.");}finally{btn.disabled=false}
 }
 if(window.ethereum){window.ethereum.on("accountsChanged",()=>location.reload());window.ethereum.on("chainChanged",()=>location.reload())}
-</script>
+</script></script>
 </body></html>

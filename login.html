@@ -115,7 +115,7 @@ sb.auth.onAuthStateChange((event,session)=>{
 
 switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");render()};
 forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";newPassword.value="";confirmPassword.value="";render()};
-back.onclick=()=>{mode="signin";setMsg("");password.value="";newPassword.value="";confirmPassword.value="";render()};
+back.onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mode="signin";setMsg("");password.value="";newPassword.value="";confirmPassword.value="";render()};
 
 form.onsubmit=async e=>{
   e.preventDefault();submit.disabled=true;setMsg("");
@@ -152,7 +152,7 @@ form.onsubmit=async e=>{
         if(newPassword.value!==confirmPassword.value)throw new Error("Passwords do not match.");
         const {error}=await sb.auth.updateUser({password:newPassword.value});
         if(error)throw error;
-        await sb.auth.signOut();location.hash="";
+        await sb.auth.signOut();history.replaceState(null,"",location.pathname);
         mode="signin";setMsg("Password changed. You can now sign in.",true);render();return;
       }
       throw new Error("Please use the reset link from your email to set a new password.");

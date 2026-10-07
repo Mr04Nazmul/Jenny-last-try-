@@ -41,21 +41,12 @@ drop policy if exists "profiles own insert" on public.profiles;
 create policy "profiles own insert" on public.profiles for insert with check (auth.uid() = id);
 
 drop policy if exists "profiles own update" on public.profiles;
-create policy "profiles own update" on public.profiles for update using (auth.uid() = id) with check (auth.uid() = id);
 
 drop policy if exists "missions public read" on public.missions;
 create policy "missions public read" on public.missions for select using (active = true);
 
 drop policy if exists "user missions own read" on public.user_missions;
 create policy "user missions own read" on public.user_missions for select using (auth.uid() = user_id);
-
-insert into public.missions (title, description, reward)
-select 'Daily Check-in', 'Keep your NAZU streak alive.', 25
-where not exists (select 1 from public.missions where title='Daily Check-in');
-
-insert into public.missions (title, description, reward)
-select 'Complete your profile', 'Set up your NAZU member profile.', 50
-where not exists (select 1 from public.missions where title='Complete your profile');
 
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public
@@ -72,3 +63,30 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
 after insert on auth.users
 for each row execute procedure public.handle_new_user();
+
+create or replace function public.daily_checkin()
+returns jsonb language plpgsql security definer set search_path = public
+as $$
+declare
+  uid uuid := auth.uid();
+  p public.profiles%rowtype;
+  reward bigint := 25;
+begin
+  if uid is null then raise exception 'Not authenticated'; end if;
+  select * into p from public.profiles where id=uid for update;
+  if p.last_checkin = current_date then
+    return jsonb_build_object('ok',false,'message','Already checked in today','points',p.points,'streak',p.streak);
+  end if;
+  update public.profiles
+  set points = points + reward,
+      streak = case when last_checkin = current_date - 1 then streak + 1 else 1 end,
+      last_checkin = current_date,
+      level = greatest(1, floor((points + reward) / 1000.0)::int + 1)
+  where id=uid
+  returning * into p;
+  return jsonb_build_object('ok',true,'message','Daily check-in complete','reward',reward,'points',p.points,'streak',p.streak,'level',p.level);
+end;
+$$;
+
+revoke all on function public.daily_checkin() from public;
+grant execute on function public.daily_checkin() to authenticated;

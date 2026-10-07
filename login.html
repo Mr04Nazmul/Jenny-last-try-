@@ -141,7 +141,7 @@ form.onsubmit=async e=>{
     }
 
     if(mode==="forgot"){
-      const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});
+      const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/index.html"});
       if(error)throw error;
       setMsg("Reset link sent. Check your Gmail inbox and Spam folder.",true);return;
     }

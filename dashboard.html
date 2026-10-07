@@ -32,20 +32,57 @@ main{width:min(1180px,92%);margin:42px auto 70px}.eyebrow{color:var(--cyan);font
 <div class="card mini"><div class="label">NETWORK</div><div class="value">ONLINE</div><p>Connection stable</p><div class="bar"><span style="width:100%"></span></div></div>
 </section>
 <section class="actions">
-<a class="action" href="#"><b>⚡ Start earning</b><span>Coming next</span></a>
-<a class="action" href="#"><b>◈ Referrals</b><span>Invite & grow</span></a>
-<a class="action" href="#"><b>◉ Missions</b><span>Daily activities</span></a>
+<a class="action" href="#earn" onclick="checkin()"><b>⚡ Daily Check-in</b><span id="checkText">+25 PTS today</span></a>
+<a class="action" href="#ref"><b>◈ Referrals</b><span id="refCode">Loading code...</span></a>
+<a class="action" href="#missions"><b>◉ Missions</b><span>Complete tasks & earn</span></a>
 </section>
-<section class="card feed"><div class="feedhead"><h2>Activity</h2><span>LIVE FEED</span></div>
-<div class="event"><div>◉ <em>Account connected</em></div><strong>DONE</strong></div>
-<div class="event"><div>◇ <em>NAZU points engine</em></div><span style="color:#69758b">WAITING</span></div>
-<div class="event"><div>⌁ <em>Network rewards</em></div><span style="color:#69758b">LOCKED</span></div>
+<section class="grid" style="margin-top:16px">
+<div class="card mini"><div class="label">LEVEL</div><div class="value" id="level">LVL 1</div><p>Grow your NAZU score</p><div class="bar"><span id="levelBar" style="width:0%"></span></div></div>
+<div class="card mini"><div class="label">STREAK</div><div class="value" id="streak">0 DAYS</div><p>Daily activity streak</p><div class="bar"><span id="streakBar" style="width:0%"></span></div></div>
+<div class="card mini"><div class="label">REFERRAL</div><div class="value" id="refCount">0</div><p>Network members</p><div class="bar"><span style="width:8%"></span></div></div>
+</section>
+<section class="card feed" id="missions"><div class="feedhead"><h2>Missions</h2><span>LIVE</span></div>
+<div class="event"><div>◉ <em>Daily Check-in</em></div><strong id="missionStatus">+25 PTS</strong></div>
+<div class="event"><div>◇ <em>Complete your profile</em></div><span style="color:#69758b">+50 PTS</span></div>
+<div class="event"><div>⌁ <em>Invite your first member</em></div><span style="color:#69758b">+100 PTS</span></div>
+</section>
+<section class="card feed" id="ref"><div class="feedhead"><h2>Your referral link</h2><span>NETWORK</span></div>
+<div class="event"><div><em id="refLink">Generate after database setup</em></div><button class="signout" onclick="copyReferral()">COPY</button></div>
 </section>
 </main>
 <script>
 const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co",SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
 const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-async function load(){try{const {data,error}=await supabaseClient.auth.getUser();if(error||!data.user){window.location.replace("login.html");return}document.getElementById("email").textContent=data.user.email||"—";document.getElementById("state").textContent="Secure session active"}catch(e){document.getElementById("state").textContent="Session check failed"}} 
-async function logout(){await supabaseClient.auth.signOut();window.location.replace("login.html")} load();
+let currentUser=null;
+async function load(){
+ try{
+  const {data,error}=await supabaseClient.auth.getUser();
+  if(error||!data.user){window.location.replace("login.html");return}
+  currentUser=data.user; document.getElementById("email").textContent=currentUser.email||"—";
+  const {data:p,error:pe}=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).maybeSingle();
+  if(pe||!p){document.getElementById("state").textContent="Account connected • database setup pending";return}
+  render(p);
+ }catch(e){document.getElementById("state").textContent="Session check failed"}
+}
+function render(p){
+ document.getElementById("points").innerHTML=(p.points||0).toLocaleString()+"<small>PTS</small>";
+ document.getElementById("level").textContent="LVL "+(p.level||1);
+ document.getElementById("streak").textContent=(p.streak||0)+" DAYS";
+ document.getElementById("levelBar").style.width=Math.min(100,((p.points||0)%1000)/10)+"%";
+ document.getElementById("streakBar").style.width=Math.min(100,(p.streak||0)*10)+"%";
+ document.getElementById("refCode").textContent=p.referral_code||"Unavailable";
+ document.getElementById("refLink").textContent=p.referral_code?location.origin+location.pathname.replace("dashboard.html","")+"?ref="+p.referral_code:"Generate after database setup";
+ if(p.last_checkin===new Date().toISOString().slice(0,10)){document.getElementById("checkText").textContent="Completed today";document.getElementById("missionStatus").textContent="DONE"}
+}
+async function checkin(){
+ const {data,error}=await supabaseClient.rpc("daily_checkin");
+ if(error){alert("Database setup is not active yet.");return}
+ render({points:data.points,level:data.level,streak:data.streak,referral_code:document.getElementById("refCode").textContent,last_checkin:new Date().toISOString().slice(0,10)});
+ document.getElementById("checkText").textContent="Completed today";
+ document.getElementById("missionStatus").textContent="DONE";
+}
+async function copyReferral(){const t=document.getElementById("refLink").textContent;if(t.startsWith("Generate"))return;navigator.clipboard&&navigator.clipboard.writeText(t);alert("Referral link copied");}
+async function logout(){await supabaseClient.auth.signOut();window.location.replace("login.html")}
+load();
 </script>
 </body></html>

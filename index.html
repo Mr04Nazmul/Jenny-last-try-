@@ -53,11 +53,11 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 <div class="logo-title">NAZU</div>
 <div class="tag">BUILD · CONNECT · GROW</div>
 <section class="card">
-<h1>Create your <span>NAZU</span> account</h1>
-<p class="desc">Create your NAZU account with your email. We’ll verify your address first, then guide you through the final account setup.</p>
+<h1>Join the <span>NAZU</span> Waitlist</h1>
+<p class="desc">Enter your email to claim your spot and be part of the NAZU ecosystem.</p>
 <div class="field"><span class="field-icon">✉</span><input id="email" type="email" placeholder="you@email.com" autocomplete="email"></div>
-<label class="check"><input id="updates" type="checkbox"><span>Send network updates, activity progress, and future access information to my email.</span></label>
-<button class="cta" id="enter" type="button">Send verification</button><div class="status" id="status"></div>
+<label class="check"><input id="updates" type="checkbox"><span>Send waitlist updates, referral progress, and launch access to my email.</span></label>
+<button class="cta" id="enter" type="button">Send code</button><div class="status" id="status"></div>
 </section>
 <footer class="footer"><b>NAZU</b><span>Secure account access · Solana layer next</span></footer>
 </main>
@@ -96,7 +96,7 @@ enter.addEventListener("click",async()=>{
     });
     if(error) throw error;
     status.textContent="Verification email sent. Open the link in your inbox to continue. Your account is not activated until the email is verified.";
-    enter.textContent="Verification sent";
+    enter.textContent="Code sent";
   }catch(error){
     status.textContent=error?.message||"Could not send the verification email. Please try again.";
     enter.disabled=false;

@@ -48,12 +48,12 @@ let mainMode=location.hash.includes("type=recovery")?"reset":"signin";
 const mainRecovery=false, mainVerified=new URLSearchParams(location.search).get("verified")==="1";
 function mainMsg(t,ok=false){q("mainAuthMsg").textContent=t;q("mainAuthMsg").classList.toggle("account-ok",ok)}
 function mainRender(){
- const setup=mainMode==="setup",create=mainMode==="create",verifyCode=mainMode==="verifyCode",reset=mainMode==="reset";
+ const setup=mainMode==="setup",create=mainMode==="create",forgotMode=mainMode==="forgot",verifyCode=mainMode==="verifyCode",reset=mainMode==="reset";
  q("mainLoginTab").classList.toggle("active",mainMode==="signin"||reset);
  q("mainCreateTab").classList.toggle("active",create||setup);
  q("mainNotice").classList.toggle("account-hidden",!setup);
  q("mainNames").classList.toggle("account-hidden",!setup&&!create);
- q("mainPasswordWrap").classList.toggle("account-hidden",create||setup||reset);
+ q("mainPasswordWrap").classList.toggle("account-hidden",create||setup||forgotMode||verifyCode||reset);
  q("mainRecoveryCodeWrap").classList.toggle("account-hidden",mainMode!=="verifyCode");
  q("mainNewPasswordWrap").classList.toggle("account-hidden",!setup&&!reset);
  q("mainEmail").readOnly=setup||verifyCode||reset;
@@ -68,6 +68,7 @@ function mainRender(){
  q("mainBack").classList.toggle("account-hidden",mainMode!=="reset"&&mainMode!=="forgot"&&mainMode!=="verifyCode");
  if(setup){q("mainAuthTitle").textContent="Finish your account";q("mainAuthSub").textContent="Your email is verified. Create a password to activate your account.";q("mainAuthSubmit").textContent="Activate account";}
  else if(create){q("mainAuthTitle").textContent="Create your account";q("mainAuthSub").textContent="Enter your details. We’ll send a verification link before activation.";q("mainAuthSubmit").textContent="Send verification";}
+ else if(forgotMode){q("mainAuthTitle").textContent="Forgot password";q("mainAuthSub").textContent="Enter your email and we’ll send a 6-digit recovery code.";q("mainAuthSubmit").textContent="Send recovery code";}
  else if(verifyCode){q("mainAuthTitle").textContent="Enter recovery code";q("mainAuthSub").textContent="Enter the 6-digit code sent to your email.";q("mainAuthSubmit").textContent="Verify code";}
  else if(reset){q("mainAuthTitle").textContent="Reset your password";q("mainAuthSub").textContent="Choose a new password for your NAZU account.";q("mainAuthSubmit").textContent="Change password";}
  else{q("mainAuthTitle").textContent="Welcome back";q("mainAuthSub").textContent="Sign in to continue to your NAZU account.";q("mainAuthSubmit").textContent="Sign in";}

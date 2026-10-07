@@ -25,7 +25,7 @@ main{width:min(1160px,92%);margin:0 auto;padding:52px 0 72px}.top{display:flex;j
 <section class="top"><div><div class="kicker">PRIVATE NETWORK / MEMBER CONSOLE</div><h1>Build your <em>signal.</em></h1></div><div class="identity">ACCOUNT<strong id="email">—</strong></div></section>
 <div class="ticker"><b>NAZU NETWORK</b><span>POINT ENGINE ONLINE</span><span>IDENTITY VERIFIED</span><span>DAILY CYCLE ACTIVE</span><span>EARLY ACCESS</span></div>
 <section class="layout">
-<div class="panel points"><div class="label">AVAILABLE POINTS</div><div class="number" id="points">0<small>PTS</small></div><div class="subrow"><span>Lifetime network score</span><b id="state">LIVE</b></div></div>
+<div class="panel points"><div class="label">AVAILABLE POINTS</div><div class="number" id="points">0<small>PTS</small></div><div class="subrow"><span>Lifetime network score</span><b id="state">LIVE</b></div><button id="nodeBtn" class="copy" style="margin-top:18px;width:100%" onclick="toggleNode()">START NODE</button><div id="nodeStatus" class="state" style="margin-top:10px">Node offline</div></div>
 <div class="panel stat"><div class="label">LEVEL</div><div class="big" id="level">LVL 1</div><p>Progress to next level</p><div class="meter"><span id="levelBar"></span></div></div>
 <div class="panel stat"><div class="label">STREAK</div><div class="big" id="streak">0 DAYS</div><p>Consecutive activity</p><div class="meter"><span id="streakBar"></span></div></div>
 </section>
@@ -45,7 +45,7 @@ main{width:min(1160px,92%);margin:0 auto;padding:52px 0 72px}.top{display:flex;j
 </main>
 <script>
 const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co",SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);let currentUser=null;
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);let currentUser=null,nodeTimer=null,nodeActive=false;
 async function load(){
  try{
   const {data,error}=await supabaseClient.auth.getUser(); if(error||!data.user){location.replace("login.html");return}
@@ -56,7 +56,7 @@ async function load(){
    const ins=await supabaseClient.from("profiles").insert({id:currentUser.id,email:currentUser.email,referral_code:code}).select("points,level,streak,referral_code,last_checkin").single();
    if(ins.error) throw ins.error; p=ins.data;
   }
-  render(p);
+  render(p); await syncNode();
  }catch(e){document.getElementById("state").textContent="SYNC ERROR";console.error(e)}
 }
 function render(p){
@@ -68,6 +68,19 @@ function render(p){
  const link=location.origin+location.pathname.replace("dashboard.html","")+"?ref="+encodeURIComponent(code);
  document.getElementById("refLink").textContent=link;
  if(p.last_checkin===new Date().toISOString().slice(0,10)){document.getElementById("checkText").textContent="Completed today";document.getElementById("missionStatus").textContent="DONE"}
+}
+async function syncNode(){
+ const {data}=await supabaseClient.from("node_sessions").select("active,total_seconds,last_heartbeat").eq("user_id",currentUser.id).maybeSingle();
+ if(data&&data.active){nodeActive=true;startNodeTimer();updateNodeUI(true,data.total_seconds)}else updateNodeUI(false,0);
+}
+function updateNodeUI(active,total){
+ nodeActive=active; const b=document.getElementById("nodeBtn"),s=document.getElementById("nodeStatus");
+ if(!b||!s)return; b.textContent=active?"STOP NODE":"START NODE"; s.innerHTML=active?"<i></i> NODE ACTIVE · earning uptime points":"Node offline";
+}
+function startNodeTimer(){if(nodeTimer)return;nodeTimer=setInterval(async()=>{if(document.hidden)return;const {data,error}=await supabaseClient.rpc("node_heartbeat");if(error||!data?.active){clearInterval(nodeTimer);nodeTimer=null;updateNodeUI(false,0);return}if(data.awarded>0){const {data:p}=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).single();if(p)render(p)}},30000)}
+async function toggleNode(){
+ if(nodeActive){const {error}=await supabaseClient.rpc("node_stop");if(error){alert("Could not stop node.");return}if(nodeTimer){clearInterval(nodeTimer);nodeTimer=null}updateNodeUI(false,0);return}
+ const {data,error}=await supabaseClient.rpc("node_start");if(error){alert("Could not start node.");return}updateNodeUI(true,0);startNodeTimer();
 }
 async function checkin(){
  const {data,error}=await supabaseClient.rpc("daily_checkin");if(error){alert("Could not complete check-in.");return}

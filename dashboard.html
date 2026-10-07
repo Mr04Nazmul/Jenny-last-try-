@@ -39,7 +39,7 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);let curren
 async function load(){
  try{
   const {data,error}=await supabaseClient.auth.getUser(); if(error||!data.user){location.replace("login.html");return}
-  currentUser=data.user; document.getElementById("menuEmail").textContent=currentUser.email||"—"; const meta=currentUser.user_metadata||{}; const full=[meta.first_name,meta.last_name].filter(Boolean).join(" ").trim(); document.getElementById("menuName").textContent=full||meta.username||"NAZU Member"; document.getElementById("displayProfileName").textContent=(full||meta.username||"NAZU MEMBER").toUpperCase();
+  currentUser=data.user; const meta=currentUser.user_metadata||{}; if(meta.account_complete===false){ await supabaseClient.auth.signOut(); location.replace("login.html?verified=1"); return; } document.getElementById("menuEmail").textContent=currentUser.email||"—"; const full=[meta.first_name,meta.last_name].filter(Boolean).join(" ").trim(); document.getElementById("menuName").textContent=full||meta.username||"NAZU Member"; document.getElementById("displayProfileName").textContent=(full||meta.username||"NAZU MEMBER").toUpperCase();
   let {data:p,error:pe}=await supabaseClient.from("profiles").select("points,level,streak").eq("id",currentUser.id).maybeSingle();
   if(!p){
    const code="NAZU-"+currentUser.id.replaceAll("-","").slice(0,8).toUpperCase();

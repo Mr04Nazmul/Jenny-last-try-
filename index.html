@@ -4,75 +4,97 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="NAZU — a participation-driven Web3 network building toward the Solana ecosystem.">
-<meta name="theme-color" content="#020611">
-<title>NAZU — Network Waitlist</title>
+<meta name="theme-color" content="#02050d">
+<title>NAZU — Web3 Network</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#020611;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 50% 18%,#123a7c 0,#071631 24%,#020611 58%,#01030a 100%)}
-body:after{content:"";position:fixed;inset:0;z-index:-4;opacity:.8;background:radial-gradient(ellipse at 50% 38%,transparent 0 27%,#0008 56%,#000 100%)}
-.space{position:fixed;inset:0;z-index:-3;overflow:hidden;background:
-radial-gradient(circle at 8% 22%,#fff 0 1px,transparent 1.5px),
-radial-gradient(circle at 18% 8%,#8fc9ff 0 1px,transparent 1.5px),
-radial-gradient(circle at 79% 17%,#fff 0 1px,transparent 1.5px),
-radial-gradient(circle at 91% 38%,#6da8ff 0 1px,transparent 1.5px),
-radial-gradient(circle at 28% 42%,#b9d9ff 0 1px,transparent 1.5px),
-radial-gradient(circle at 67% 8%,#fff 0 1px,transparent 1.5px),
-radial-gradient(circle at 54% 27%,#fff 0 1px,transparent 1.5px);
-background-size:180px 180px,260px 260px,220px 220px,300px 300px,240px 240px,190px 190px,310px 310px}
-.moon{position:absolute;width:min(82vw,760px);height:min(82vw,760px);border-radius:50%;left:50%;top:7%;transform:translateX(-50%);background:
-radial-gradient(circle at 38% 32%,#5c78a4 0,#243b61 32%,#0a172d 65%,#030813 100%);
-box-shadow:0 0 55px #3c9dff55,0 0 150px #1858b83d,inset -45px -20px 90px #000b,inset 25px 20px 45px #9ecbff22}
-.moon:before{content:"";position:absolute;inset:0;border-radius:50%;opacity:.5;background:
-radial-gradient(circle at 27% 25%,#081321 0 3%,transparent 3.5%),
-radial-gradient(circle at 61% 31%,#081321 0 5%,transparent 5.5%),
-radial-gradient(circle at 43% 58%,#081321 0 4%,transparent 4.5%),
-radial-gradient(circle at 72% 62%,#07101d 0 7%,transparent 7.5%),
-radial-gradient(circle at 28% 68%,#10233c 0 8%,transparent 8.5%),
-radial-gradient(circle at 55% 78%,#08121f 0 3%,transparent 3.5%)}
-.moon:after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid #62b8ff99;box-shadow:0 0 35px #38aaffaa}
-.horizon{position:absolute;left:-10%;right:-10%;bottom:-12%;height:43%;background:
-radial-gradient(ellipse at 50% 10%,#132f56 0 18%,transparent 45%),
-linear-gradient(180deg,transparent,#020611 34%,#01030a 78%);
-filter:blur(2px)}
-.city{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);width:min(820px,110%);height:220px;opacity:.9;background:
-linear-gradient(90deg,transparent 0 4%,#0c2948 4% 5%,transparent 5% 8%,#123a62 8% 10%,transparent 10% 15%,#0a2340 15% 17%,transparent 17% 21%,#164d7c 21% 23%,transparent 23% 28%,#0a203a 28% 31%,transparent 31% 38%,#164a76 38% 41%,transparent 41% 46%,#0b2949 46% 50%,transparent 50% 54%,#174c7a 54% 56%,transparent 56% 63%,#0a2340 63% 66%,transparent 66% 73%,#143e67 73% 75%,transparent 75% 82%,#0a203b 82% 85%,transparent 85% 91%,#153d62 91% 94%,transparent 94%);
-clip-path:polygon(0 100%,0 64%,4% 64%,4% 45%,8% 45%,8% 74%,13% 74%,13% 36%,17% 36%,17% 67%,22% 67%,22% 25%,27% 25%,27% 57%,32% 57%,32% 18%,36% 18%,36% 69%,41% 69%,41% 42%,45% 42%,45% 10%,49% 10%,49% 58%,54% 58%,54% 32%,58% 32%,58% 72%,63% 72%,63% 21%,67% 21%,67% 55%,72% 55%,72% 34%,77% 34%,77% 70%,82% 70%,82% 15%,87% 15%,87% 58%,92% 58%,92% 40%,96% 40%,96% 68%,100% 68%,100% 100%)}
-.glowline{position:absolute;left:50%;bottom:27%;width:min(850px,110%);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,#31baff,#8d6bff,#31baff,transparent);box-shadow:0 0 35px #36b8ff}
-.wrap{width:min(780px,92%);margin:auto;position:relative}
-nav{height:72px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:3}.logo{font-weight:950;font-size:25px;letter-spacing:6px;text-shadow:0 0 20px #62b8ff}.nav a{color:#9aa8c0;text-decoration:none;font-size:12px}.nav .login{border:1px solid #7aaeff55;border-radius:999px;padding:9px 14px;background:#08152bcc}
-.hero{text-align:center;padding:34px 0 0;min-height:calc(100vh - 72px);display:flex;flex-direction:column;align-items:center}
-.sol{font-size:9px;letter-spacing:3px;color:#83b9ff;text-transform:uppercase;margin-top:5px}.mark{font-size:clamp(66px,18vw,126px);font-weight:950;letter-spacing:-7px;line-height:.85;margin:30px 0 9px;text-shadow:0 0 30px #80bfff55}.tag{letter-spacing:6px;color:#9dc8f6;font-size:10px;text-transform:uppercase}
-.panel{width:100%;margin-top:28px;padding:24px;border:1px solid #6ea9ff4d;border-radius:26px;background:linear-gradient(145deg,#061326ed,#07101fe8 55%,#020812ee);box-shadow:0 25px 80px #000b,0 0 40px #287cff16;backdrop-filter:blur(18px);text-align:left}
-.ref{display:inline-block;border:1px solid #5eaaff55;border-radius:999px;padding:9px 15px;color:#a9c8ed;font-size:13px;background:#0a1a31cc}.ref b{color:#fff}.panel h1{font-size:clamp(29px,7vw,43px);line-height:1.08;margin:26px 0 12px;letter-spacing:-1.5px}.panel h1 span{background:linear-gradient(90deg,#fff,#9a7cff,#23baff);-webkit-background-clip:text;color:transparent}.desc{color:#91a6c1;font-size:15px;line-height:1.65;margin:0 0 21px}
-.field{height:58px;border:1px solid #4f6e9b66;border-radius:15px;background:#081527cc;display:flex;align-items:center;padding:0 17px;color:#7185a2}.field input{flex:1;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:15px;margin-left:10px}.field input::placeholder{color:#667994}
-.check{display:flex;gap:12px;align-items:flex-start;color:#93a4ba;font-size:13px;line-height:1.45;margin:19px 0}.check input{appearance:none;width:18px;height:18px;flex:0 0 18px;border-radius:5px;border:1px solid #506789;background:#0b1628;margin:0}.check input:checked{background:linear-gradient(135deg,#754cff,#18b8ff);box-shadow:0 0 14px #38aaff66}
-.cta{width:100%;border:0;border-radius:14px;padding:16px;background:linear-gradient(100deg,#7046ff,#4d7cff 55%,#12b9ff);color:#fff;font-size:16px;font-weight:850;box-shadow:0 12px 35px #247eff55;cursor:pointer}
-.bottom{display:flex;justify-content:space-between;align-items:center;width:100%;padding:22px 3px 35px;color:#7e91ac;font-size:11px}.bottom b{color:#c8d9ef;letter-spacing:3px}.built{color:#7595bb}
-@media(min-width:800px){.panel{padding:32px}.hero{padding-top:55px}.moon{top:4%}}
-@media(max-width:520px){nav{height:65px}.nav .login{padding:8px 12px}.hero{padding-top:18px}.moon{top:11%;width:92vw;height:92vw}.city{bottom:21%}.glowline{bottom:29%}.panel{margin-top:23px;padding:20px;border-radius:23px}.bottom{padding-bottom:25px}.mark{letter-spacing:-5px}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#01030a;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:url("nazu-world.svg") center top/cover no-repeat}
+body:after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,#01040a22 0%,#02081718 34%,#01040aaa 78%,#01030af2 100%),radial-gradient(ellipse at 50% 44%,transparent 0 30%,#0008 82%,#000 100%)}
+.page{width:min(760px,92%);margin:auto;min-height:100vh;position:relative}
+.top{height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 2px;position:relative;z-index:5}
+.brand{font-size:25px;font-weight:950;letter-spacing:7px;text-shadow:0 0 24px #5fbaff}
+.top-right{display:flex;align-items:center;gap:14px}
+.micro{font-size:8px;line-height:1.55;letter-spacing:2.5px;color:#b6d4f5;text-transform:uppercase;text-align:right;max-width:150px}
+.sign{color:#c7dcf7;text-decoration:none;font-size:12px;border:1px solid #75b8ff55;border-radius:999px;padding:10px 15px;background:#06152acc;backdrop-filter:blur(12px)}
+.hero{padding:46px 0 34px;text-align:center}
+.eyebrow{font-size:9px;letter-spacing:4px;color:#a9d2ff;text-transform:uppercase;text-shadow:0 0 16px #41aaff}
+.logo-title{font-size:clamp(76px,18vw,132px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:38px 0 12px;text-shadow:0 0 34px #75c8ff66}
+.tag{font-size:10px;letter-spacing:7px;color:#b4d5f4;text-transform:uppercase}
+.card{margin-top:40px;padding:28px;border:1px solid #5eafff9a;border-radius:27px;background:linear-gradient(145deg,#031126e8,#061426de 50%,#020817ed);box-shadow:0 30px 100px #000b,0 0 55px #277dff26,inset 0 0 50px #2b9dff08;backdrop-filter:blur(16px);text-align:left}
+.ref{display:inline-flex;align-items:center;gap:9px;border:1px solid #5aaeff88;border-radius:999px;padding:10px 16px;background:#061b36cc;color:#a9c9ef;font-size:13px;box-shadow:0 0 20px #258cff14}
+.ref .dot{width:9px;height:9px;border-radius:50%;background:#b7dfff;box-shadow:0 0 12px #7fc8ff}
+.ref b{color:#fff}
+h1{font-size:clamp(31px,7vw,46px);line-height:1.05;letter-spacing:-1.8px;margin:28px 0 13px}
+h1 span{background:linear-gradient(90deg,#fff,#a875ff,#25baff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{font-size:15px;line-height:1.7;color:#9bb0cc;margin:0 0 24px;max-width:590px}
+.field{height:61px;border:1px solid #5b78a0aa;border-radius:15px;background:#061426dc;display:flex;align-items:center;padding:0 18px;box-shadow:inset 0 0 25px #0005}
+.field-icon{font-size:20px;color:#9bb8da}
+.field input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:15px;margin-left:12px}
+.field input::placeholder{color:#7085a3}
+.check{display:flex;gap:13px;align-items:flex-start;color:#9aacc4;font-size:13px;line-height:1.5;margin:20px 0 22px;cursor:pointer}
+.check input{appearance:none;width:19px;height:19px;flex:0 0 19px;border-radius:5px;border:1px solid #5c789e;background:#071426;margin:0}
+.check input:checked{background:linear-gradient(135deg,#744bff,#18baff);box-shadow:0 0 15px #38aaff66}
+.cta{width:100%;height:58px;border:0;border-radius:14px;background:linear-gradient(100deg,#7345ff,#5279ff 53%,#13baff);color:#fff;font-size:17px;font-weight:850;box-shadow:0 15px 38px #2688ff55;cursor:pointer}
+.cta:active{transform:translateY(1px)}
+.footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:28px 4px 34px;color:#91a7c3;font-size:10px}
+.footer b{letter-spacing:5px;color:#fff}
+@media(max-width:600px){
+ .page{width:92%}.top{height:72px}.brand{font-size:22px;letter-spacing:6px}.micro{display:none}
+ .hero{padding-top:30px}.eyebrow{letter-spacing:3px}.logo-title{margin-top:34px;font-size:23vw;letter-spacing:-5px}.tag{letter-spacing:5px}
+ .card{margin-top:34px;padding:22px;border-radius:24px}.footer{padding-bottom:24px}
+}
+@media(min-width:900px){.hero{padding-top:70px}.card{padding:34px}.top{height:92px}}
 </style>
 </head>
 <body>
-<div class="space"><div class="moon"></div><div class="city"></div><div class="glowline"></div><div class="horizon"></div></div>
-<div class="wrap">
-<nav><div class="logo">NAZU</div><div class="nav"><a href="#waitlist">NETWORK</a><a class="login" href="login.html">SIGN IN</a></div></nav>
-<main class="hero">
-<div class="sol">WEB3 NETWORK · BUILT TOWARD SOLANA</div>
-<div class="mark">NAZU</div>
-<div class="tag">BUILD · CONNECT · GROW</div>
-<section class="panel" id="waitlist">
-<div class="ref">◉ &nbsp; Referred by <b>@NAZU_MEMBER</b></div>
-<h1>Join the <span>NAZU</span> Network</h1>
-<p class="desc">Create your account, secure your place in the network, and start building your contribution history.</p>
-<div class="field"><span>✉</span><input id="email" type="email" placeholder="you@email.com" autocomplete="email"></div>
-<label class="check"><input type="checkbox" id="updates"><span>Send network updates, activity progress, and future access information to my email.</span></label>
-<button class="cta" id="enter">Create account</button>
-</section>
-<div class="bottom"><b>NAZU NETWORK</b><span class="built">Foundation first · Solana layer next</span></div>
-</main>
+<div class="page">
+  <header class="top">
+    <div class="brand">NAZU</div>
+    <div class="top-right">
+      <div class="micro">THE NEXT GENERATION<br>WEB3 NETWORK</div>
+      <a class="sign" href="login.html">SIGN IN</a>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="eyebrow">WEB3 NETWORK · BUILT TOWARD SOLANA</div>
+    <div class="logo-title">NAZU</div>
+    <div class="tag">BUILD · CONNECT · GROW</div>
+
+    <section class="card" id="network">
+      <div class="ref"><span class="dot"></span><span>Referred by <b>@NAZU_MEMBER</b></span></div>
+      <h1>Join the <span>NAZU</span> Network</h1>
+      <p class="desc">Create your account, secure your place in the network, and start building your contribution history.</p>
+
+      <div class="field">
+        <span class="field-icon">✉</span>
+        <input id="email" type="email" placeholder="you@email.com" autocomplete="email">
+      </div>
+
+      <label class="check">
+        <input id="updates" type="checkbox">
+        <span>Send network updates, activity progress, and future access information to my email.</span>
+      </label>
+
+      <button class="cta" id="enter">Create account</button>
+    </section>
+
+    <footer class="footer">
+      <b>NAZU</b>
+      <span>Foundation first · Solana layer next</span>
+    </footer>
+  </main>
 </div>
+
 <script>
-document.getElementById("enter").onclick=()=>location.href="login.html";
+document.getElementById("enter").addEventListener("click",function(){
+  const email=document.getElementById("email").value.trim();
+  const url=new URL("login.html",window.location.href);
+  if(email) url.searchParams.set("email",email);
+  location.href=url.href;
+});
 </script>
 </body>
 </html>

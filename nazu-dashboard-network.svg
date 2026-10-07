@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1200">
+<defs>
+<radialGradient id="bg" cx=".5" cy=".45" r=".75"><stop stop-color="#10254c"/><stop offset=".4" stop-color="#071226"/><stop offset="1" stop-color="#02050c"/></radialGradient>
+<linearGradient id="line" x1="0" x2="1"><stop stop-color="#23baff" stop-opacity="0"/><stop offset=".5" stop-color="#65d8ff"/><stop offset="1" stop-color="#8a65ff" stop-opacity="0"/></linearGradient>
+<filter id="gl"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>
+<rect width="1800" height="1200" fill="url(#bg)"/>
+<g opacity=".22" stroke="#5d8dca" stroke-width="1">
+<path d="M0 150H1800M0 300H1800M0 450H1800M0 600H1800M0 750H1800M0 900H1800M0 1050H1800"/>
+<path d="M150 0V1200M300 0V1200M450 0V1200M600 0V1200M750 0V1200M900 0V1200M1050 0V1200M1200 0V1200M1350 0V1200M1500 0V1200M1650 0V1200"/>
+</g>
+<ellipse cx="900" cy="610" rx="610" ry="390" fill="none" stroke="#39bfff" stroke-opacity=".15" stroke-width="2"/>
+<ellipse cx="900" cy="610" rx="470" ry="300" fill="none" stroke="#8b6dff" stroke-opacity=".16" stroke-width="2"/>
+<ellipse cx="900" cy="610" rx="300" ry="190" fill="none" stroke="#42d4ff" stroke-opacity=".13" stroke-width="2"/>
+<circle cx="900" cy="610" r="130" fill="#28baff" opacity=".08" filter="url(#gl)"/>
+<circle cx="900" cy="610" r="70" fill="#06162b" stroke="#53cfff" stroke-opacity=".7" stroke-width="2"/>
+<circle cx="900" cy="610" r="18" fill="#68dcff" filter="url(#gl)"/><circle cx="900" cy="610" r="8" fill="#b9efff"/>
+<g fill="#5ed8ff">
+<circle cx="420" cy="500" r="7"/><circle cx="590" cy="250" r="6"/><circle cx="1230" cy="300" r="7"/><circle cx="1400" cy="560" r="6"/><circle cx="1180" cy="920" r="7"/><circle cx="620" cy="910" r="6"/><circle cx="330" cy="760" r="5"/>
+</g>
+<g stroke="url(#line)" stroke-width="2" opacity=".8">
+<path d="M420 500L900 610L590 250L900 610L1230 300L900 610L1400 560L900 610L1180 920L900 610L620 910L900 610L330 760L900 610"/>
+</g>
+<g fill="#b7eaff" opacity=".65"><circle cx="170" cy="180" r="2"/><circle cx="360" cy="100" r="2"/><circle cx="760" cy="160" r="1.5"/><circle cx="1120" cy="100" r="2"/><circle cx="1530" cy="210" r="1.5"/><circle cx="1650" cy="460" r="2"/><circle cx="180" cy="820" r="1.5"/><circle cx="1540" cy="980" r="2"/></g>
+<path d="M120 1010 Q450 890 900 1015 T1680 990" fill="none" stroke="#39bfff" stroke-opacity=".25" stroke-width="3"/>
+<path d="M80 1040 Q500 930 900 1050 T1720 1020" fill="none" stroke="#765fff" stroke-opacity=".18" stroke-width="2"/>
+</svg>

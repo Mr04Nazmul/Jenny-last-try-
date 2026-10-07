@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="NAZU — the next generation Web3 network.">
 <meta name="theme-color" content="#020817">
-<title>NAZU — Web3 Network</title>
+<title>NAZU — Join the Network</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#01030a;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -35,7 +36,7 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 .field-icon{font-size:20px;color:#9bb8da}.field input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:15px;margin-left:12px}.field input::placeholder{color:#7186a6}
 .check{display:flex;gap:13px;align-items:flex-start;color:#9aafcd;font-size:13px;line-height:1.5;margin:20px 0 22px;cursor:pointer}
 .check input{appearance:none;width:19px;height:19px;flex:0 0 19px;border-radius:5px;border:1px solid #5c789e;background:#071426;margin:0}.check input:checked{background:linear-gradient(135deg,#744bff,#18baff);box-shadow:0 0 15px #38aaff66}
-.cta{width:100%;height:58px;border:0;border-radius:14px;background:linear-gradient(100deg,#7042ff,#5479ff 53%,#13baff);color:#fff;font-size:17px;font-weight:850;box-shadow:0 15px 38px rgba(38,136,255,.34);cursor:pointer}
+.status{min-height:18px;margin-top:13px;text-align:center;color:#91a9c9;font-size:12px;line-height:1.45}.cta{width:100%;height:58px;border:0;border-radius:14px;background:linear-gradient(100deg,#7042ff,#5479ff 53%,#13baff);color:#fff;font-size:17px;font-weight:850;box-shadow:0 15px 38px rgba(38,136,255,.34);cursor:pointer}
 .footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:27px 4px 34px;color:#9ab0cc;font-size:10px}.footer b{letter-spacing:5px;color:#fff}
 @media(max-width:600px){.page{width:92%}.top{height:74px}.network-label{font-size:7px}.hero{padding-top:28px}.logo-title{font-size:23vw;letter-spacing:-5px;margin-top:29px}.tag{letter-spacing:5px}.card{margin-top:34px;padding:22px;border-radius:24px}.footer{padding-bottom:24px}}
 @media(min-width:900px){.hero{padding-top:60px}.card{padding:34px}}
@@ -57,14 +58,51 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 <p class="desc">Create your account to secure your place in the network and start building your contribution history.</p>
 <div class="field"><span class="field-icon">✉</span><input id="email" type="email" placeholder="you@email.com" autocomplete="email"></div>
 <label class="check"><input id="updates" type="checkbox"><span>Send network updates, activity progress, and future access information to my email.</span></label>
-<button class="cta" id="enter">Create account</button>
+<button class="cta" id="enter" type="button">Send verification</button><div class="status" id="status"></div>
 </section>
 <footer class="footer"><b>NAZU</b><span>Foundation first · Solana layer next</span></footer>
 </main>
 </div>
 <script>
-document.getElementById("enter").addEventListener("click",function(){
-const email=document.getElementById("email").value.trim();const url=new URL("login.html",window.location.href);if(email)url.searchParams.set("email",email);location.href=url.href;
+const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co";
+const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const emailInput=document.getElementById("email");
+const updates=document.getElementById("updates");
+const enter=document.getElementById("enter");
+const status=document.getElementById("status");
+
+enter.addEventListener("click",async()=>{
+  const email=emailInput.value.trim();
+  status.textContent="";
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    status.textContent="Please enter a valid email address.";
+    emailInput.focus();
+    return;
+  }
+  if(!updates.checked){
+    status.textContent="Please confirm that you want to receive network information.";
+    return;
+  }
+  enter.disabled=true;
+  enter.textContent="Sending…";
+  try{
+    const redirectTo=new URL("login.html?verified=1",window.location.href).href;
+    const {error}=await supabaseClient.auth.signInWithOtp({
+      email,
+      options:{
+        shouldCreateUser:true,
+        emailRedirectTo:redirectTo
+      }
+    });
+    if(error) throw error;
+    status.textContent="Verification email sent. Open the link in your inbox to continue. Your account is not activated until the email is verified.";
+    enter.textContent="Verification sent";
+  }catch(error){
+    status.textContent=error?.message||"Could not send the verification email. Please try again.";
+    enter.disabled=false;
+    enter.textContent="Send verification";
+  }
 });
 </script>
 </body>

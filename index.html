@@ -20,7 +20,7 @@ body:after{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradie
 .solana{width:28px;height:18px;position:relative;filter:drop-shadow(0 0 7px #45b8ff)}
 .solana i{position:absolute;left:0;width:25px;height:5px;border-radius:2px;transform:skewX(-28deg);background:linear-gradient(90deg,#19b7ff,#8b52ff)}
 .solana i:nth-child(1){top:0}.solana i:nth-child(2){top:7px;background:linear-gradient(90deg,#8b52ff,#d7faff)}.solana i:nth-child(3){top:14px;background:linear-gradient(90deg,#1cbcff,#8b52ff)}
-.network-label{text-align:right;max-width:155px}
+.top-actions{display:flex;align-items:center;gap:10px}.enter-link{display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border:1px solid rgba(92,180,255,.7);border-radius:999px;background:rgba(3,16,38,.58);color:#dcecff;text-decoration:none;font-size:9px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;box-shadow:0 0 22px rgba(45,150,255,.12);backdrop-filter:blur(10px)}.enter-link:hover{border-color:#8ed6ff;box-shadow:0 0 26px rgba(45,150,255,.24)}.network-label{text-align:right;max-width:155px}
 .hero{padding:42px 0 28px;text-align:center}
 .eyebrow{font-size:8px;letter-spacing:4px;color:#a8d0fa;text-transform:uppercase}
 .logo-title{font-size:clamp(76px,17vw,132px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:32px 0 10px;text-shadow:0 0 22px rgba(120,190,255,.35),0 0 60px rgba(45,120,255,.18)}
@@ -38,7 +38,7 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 .check input{appearance:none;width:19px;height:19px;flex:0 0 19px;border-radius:5px;border:1px solid #5c789e;background:#071426;margin:0}.check input:checked{background:linear-gradient(135deg,#744bff,#18baff);box-shadow:0 0 15px #38aaff66}
 .status{min-height:18px;margin-top:13px;text-align:center;color:#91a9c9;font-size:12px;line-height:1.45}.cta{width:100%;height:58px;border:0;border-radius:14px;background:linear-gradient(100deg,#7042ff,#5479ff 53%,#13baff);color:#fff;font-size:17px;font-weight:850;box-shadow:0 15px 38px rgba(38,136,255,.34);cursor:pointer}
 .footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:27px 4px 34px;color:#9ab0cc;font-size:10px}.footer b{letter-spacing:5px;color:#fff}
-@media(max-width:600px){.page{width:92%}.top{height:74px}.network-label{font-size:7px}.hero{padding-top:28px}.logo-title{font-size:23vw;letter-spacing:-5px;margin-top:29px}.tag{letter-spacing:5px}.card{margin-top:34px;padding:22px;border-radius:24px}.footer{padding-bottom:24px}}
+@media(max-width:600px){.page{width:92%}.top{height:74px}.top-actions{gap:7px}.enter-link{height:31px;padding:0 10px;font-size:8px;letter-spacing:1.2px}.network-label{font-size:7px}.hero{padding-top:28px}.logo-title{font-size:23vw;letter-spacing:-5px;margin-top:29px}.tag{letter-spacing:5px}.card{margin-top:34px;padding:22px;border-radius:24px}.footer{padding-bottom:24px}}
 @media(min-width:900px){.hero{padding-top:60px}.card{padding:34px}}
 </style>
 </head>
@@ -46,7 +46,7 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 <div class="page">
 <header class="top">
 <div class="powered"><span class="solana"><i></i><i></i><i></i></span><span>POWERED BY<br>SOLANA</span></div>
-<div class="network-label">THE NEXT<br>GENERATION<br>WEB3 NETWORK</div>
+<div class="top-actions"><a class="enter-link" href="login.html">Sign in / Create account</a><div class="network-label">THE NEXT<br>GENERATION<br>WEB3 NETWORK</div></div>
 </header>
 <main class="hero">
 <div class="eyebrow">WEB3 NETWORK · BUILT TOWARD SOLANA</div>

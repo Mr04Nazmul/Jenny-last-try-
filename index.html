@@ -91,7 +91,7 @@ q("mainAuthForm").onsubmit=async e=>{
     if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
     const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value});if(error)throw error;await mainSb.auth.signOut();location.hash="";mainMode="signin";mainMsg("Password changed. You can now sign in.",true);mainRender();return;
    }
-   const {error}=await mainSb.auth.resetPasswordForEmail(q("mainEmail").value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/"});if(error)throw error;mainMsg("Password reset link sent. Check your email.",true);return;
+   const {error}=await mainSb.auth.resetPasswordForEmail(q("mainEmail").value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});if(error)throw error;mainMsg("Password reset link sent. Check your email.",true);return;
   }
   if(mainMode==="setup"){
    if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");

@@ -44,7 +44,7 @@ const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co";
 const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
 const mainSb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const q=id=>document.getElementById(id);
-let mainMode="signin";
+let mainMode=location.hash.includes("type=recovery")?"reset":"signin";
 const mainRecovery=location.hash.includes("type=recovery"), mainVerified=new URLSearchParams(location.search).get("verified")==="1";
 function mainMsg(t,ok=false){q("mainAuthMsg").textContent=t;q("mainAuthMsg").classList.toggle("account-ok",ok)}
 function mainRender(){
@@ -60,6 +60,8 @@ function mainRender(){
  q("mainPassword").required=mainMode==="signin";
  q("mainNewPassword").required=setup||reset;q("mainConfirmPassword").required=setup||reset;
  q("mainForgot").classList.toggle("account-hidden",mainMode!=="signin");
+ q("mainLoginTab").classList.toggle("account-hidden",mainMode==="reset");
+ q("mainCreateTab").classList.toggle("account-hidden",mainMode==="reset");
  q("mainSwitch").classList.toggle("account-hidden",setup||reset);
  q("mainBack").classList.toggle("account-hidden",mainMode!=="reset");
  if(setup){q("mainAuthTitle").textContent="Finish your account";q("mainAuthSub").textContent="Your email is verified. Create a password to activate your account.";q("mainAuthSubmit").textContent="Activate account";}
@@ -91,7 +93,7 @@ q("mainAuthForm").onsubmit=async e=>{
     if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
     const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value});if(error)throw error;await mainSb.auth.signOut();location.hash="";mainMode="signin";mainMsg("Password changed. You can now sign in.",true);mainRender();return;
    }
-   const {error}=await mainSb.auth.resetPasswordForEmail(q("mainEmail").value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});if(error)throw error;mainMsg("Password reset link sent. Check your email.",true);return;
+   const {error}=await mainSb.auth.resetPasswordForEmail(q("mainEmail").value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/index.html"});if(error)throw error;mainMsg("Password reset link sent. Check your email.",true);return;
   }
   if(mainMode==="setup"){
    if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");
@@ -103,7 +105,8 @@ q("mainAuthForm").onsubmit=async e=>{
  }catch(err){mainMsg(err?.message||"Something went wrong. Please try again.");}finally{btn.disabled=false}
 };
 mainSb.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY"){mainMode="reset";mainRender()}if(event==="SIGNED_IN"&&mainVerified&&session){q("mainEmail").value=session.user.email||"";q("mainFirst").value=session.user.user_metadata?.first_name||"";q("mainLast").value=session.user.user_metadata?.last_name||"";mainMode="setup";mainRender()}});
-(async()=>{const {data}=await mainSb.auth.getSession();if(data.session&&mainVerified){q("mainEmail").value=data.session.user.email||"";q("mainFirst").value=data.session.user.user_metadata?.first_name||"";q("mainLast").value=data.session.user.user_metadata?.last_name||"";mainMode="setup"}else if(data.session&&!mainRecovery){location.href="dashboard.html?v=50"}mainRender()})();
+(async()=>{const {data}=await mainSb.auth.getSession();if(mainRecovery){mainMode="reset";}
+ else if(data.session&&mainVerified){q("mainEmail").value=data.session.user.email||"";q("mainFirst").value=data.session.user.user_metadata?.first_name||"";q("mainLast").value=data.session.user.user_metadata?.last_name||"";mainMode="setup"}else if(data.session&&!mainRecovery){location.href="dashboard.html?v=50"}mainRender()})();
 </script>
 </body>
 </html>

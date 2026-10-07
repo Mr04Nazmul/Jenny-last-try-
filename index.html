@@ -1,50 +1,43 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="NAZU — a Web3 network built on the Solana ecosystem.">
-<meta name="theme-color" content="#050505">
-<title>NAZU — Web3 Network</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NAZU — a user-powered Web3 network building toward the Solana ecosystem.">
+<meta name="theme-color" content="#050505"><title>NAZU — Build What Comes Next</title>
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050505;color:#f5f5f5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
-body:before{content:"";position:fixed;width:620px;height:620px;left:-240px;top:-260px;background:radial-gradient(circle,#8b5cf655,transparent 68%);filter:blur(30px);z-index:-1}body:after{content:"";position:fixed;width:700px;height:700px;right:-300px;bottom:-300px;background:radial-gradient(circle,#14f19544,transparent 65%);filter:blur(35px);z-index:-1}
-nav{width:min(1180px,92%);margin:22px auto;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:900;font-size:25px;letter-spacing:5px}.nav{display:flex;gap:10px;align-items:center}.nav a{color:#aaa;text-decoration:none;font-size:13px;padding:10px 13px}.signin{border:1px solid #ffffff1c!important;border-radius:12px;color:#fff!important;background:#ffffff09}
-main{width:min(1180px,92%);margin:92px auto 80px}.hero{max-width:850px}.tag{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff18;background:#ffffff08;padding:8px 12px;border-radius:999px;color:#b7b7b7;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:#14f195;box-shadow:0 0 16px #14f195}
-h1{font-size:clamp(58px,9vw,116px);line-height:.9;letter-spacing:-7px;margin:25px 0 28px;font-weight:850}.grad{background:linear-gradient(100deg,#fff 10%,#b99cff 45%,#14f195 90%);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{max-width:670px;color:#929292;font-size:18px;line-height:1.7}.buttons{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}.btn{padding:14px 20px;border-radius:13px;text-decoration:none;font-size:14px;font-weight:750}.primary{background:#f5f5f5;color:#050505}.ghost{border:1px solid #ffffff1c;background:#ffffff07;color:#fff}
-.grid{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;margin-top:85px}.panel{border:1px solid #ffffff10;background:linear-gradient(145deg,#ffffff09,#ffffff03);border-radius:24px;padding:28px;min-height:230px}.label{font-size:10px;letter-spacing:1.8px;color:#707070;text-transform:uppercase}.panel h2{font-size:25px;margin:12px 0}.panel p{color:#888;line-height:1.65;font-size:14px}.status{display:flex;gap:8px;align-items:center;margin-top:26px;color:#bdbdbd;font-size:12px}.mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}.mini div{border:1px solid #ffffff0d;border-radius:15px;padding:16px;background:#0005}.mini strong{display:block;font-size:18px;margin-bottom:5px}.mini span{color:#707070;font-size:11px}
-.section{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{border:1px solid #ffffff0d;background:#ffffff05;border-radius:20px;padding:22px}.num{font-size:11px;color:#666}.card h3{margin:25px 0 8px;font-size:17px}.card p{margin:0;color:#777;font-size:13px;line-height:1.6}
-footer{width:min(1180px,92%);margin:70px auto 35px;padding-top:20px;border-top:1px solid #ffffff0d;color:#555;font-size:11px;display:flex;justify-content:space-between}
-@media(max-width:760px){nav .nav a:not(.signin){display:none}.grid,.section{grid-template-columns:1fr}h1{letter-spacing:-4px}.hero{margin-top:60px}main{margin-top:60px}}
-</style>
-</head>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#050505;color:#f4f4f5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;width:700px;height:700px;left:-330px;top:-330px;background:radial-gradient(circle,#9945ff55,transparent 67%);filter:blur(30px);z-index:-1}body:after{content:"";position:fixed;width:800px;height:800px;right:-380px;bottom:-380px;background:radial-gradient(circle,#14f19542,transparent 64%);filter:blur(40px);z-index:-1}
+nav{width:min(1180px,92%);margin:24px auto;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:950;font-size:24px;letter-spacing:5px}.nav{display:flex;gap:7px;align-items:center}.nav a{color:#9a9a9a;text-decoration:none;font-size:13px;padding:10px 13px}.nav a:hover{color:#fff}.signin{border:1px solid #ffffff18!important;border-radius:12px;color:#fff!important;background:#ffffff08}
+main{width:min(1180px,92%);margin:105px auto 90px}.eyebrow{display:flex;align-items:center;gap:9px;color:#929292;font-size:11px;letter-spacing:1.8px;text-transform:uppercase}.live{width:7px;height:7px;border-radius:50%;background:#14f195;box-shadow:0 0 18px #14f195}
+h1{max-width:980px;font-size:clamp(62px,10vw,126px);line-height:.88;letter-spacing:-8px;margin:24px 0 30px;font-weight:900}.grad{background:linear-gradient(100deg,#fff 8%,#b993ff 43%,#14f195 90%);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{max-width:680px;color:#919191;font-size:18px;line-height:1.75}.buttons{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}.btn{padding:14px 20px;border-radius:13px;text-decoration:none;font-size:14px;font-weight:800}.primary{background:#f5f5f5;color:#050505}.ghost{border:1px solid #ffffff18;background:#ffffff07;color:#fff}
+.signal{margin-top:90px;border:1px solid #ffffff12;border-radius:28px;background:linear-gradient(135deg,#ffffff09,#ffffff02);padding:26px}.signalTop{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #ffffff0d;padding-bottom:20px}.label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6f6f6f}.online{font-size:11px;color:#b8b8b8}.online b{color:#14f195}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}.metric{padding:20px 8px 10px}.metric strong{display:block;font-size:25px}.metric span{display:block;color:#666;font-size:11px;margin-top:5px}
+.section{margin-top:16px;display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.panel{border:1px solid #ffffff10;border-radius:24px;background:#ffffff05;padding:27px;min-height:260px}.panel h2{font-size:27px;margin:12px 0}.panel p{color:#858585;line-height:1.7;font-size:14px;max-width:560px}.future{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;height:135px}.future strong{font-size:35px}.pill{border:1px solid #ffffff15;border-radius:999px;padding:8px 11px;color:#888;font-size:10px;letter-spacing:1px}
+.cards{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{border:1px solid #ffffff0d;background:#ffffff04;border-radius:20px;padding:23px;min-height:180px}.num{color:#5f5f5f;font-size:10px;letter-spacing:1px}.card h3{margin:30px 0 8px;font-size:18px}.card p{margin:0;color:#777;font-size:13px;line-height:1.65}
+footer{width:min(1180px,92%);margin:70px auto 35px;padding-top:22px;border-top:1px solid #ffffff0d;color:#555;font-size:11px;display:flex;justify-content:space-between}
+@media(max-width:760px){nav .nav a:not(.signin){display:none}main{margin-top:70px}h1{letter-spacing:-5px}.metrics{grid-template-columns:1fr 1fr}.section,.cards{grid-template-columns:1fr}.signal{padding:20px}}
+</style></head>
 <body>
-<nav><div class="brand">NAZU</div><div class="nav"><a href="#network">Network</a><a href="#vision">Vision</a><a class="signin" href="login.html">Sign in</a></div></nav>
+<nav><div class="brand">NAZU</div><div class="nav"><a href="#network">Network</a><a href="#future">Future</a><a class="signin" href="login.html">Sign in</a></div></nav>
 <main>
-<section class="hero">
-<div class="tag"><span class="dot"></span> Solana ecosystem · NAZU network</div>
-<h1>Build the <span class="grad">network.</span></h1>
-<p class="lead">NAZU is building a user-powered Web3 network on the Solana ecosystem — starting with participation, points, activities and network infrastructure.</p>
-<div class="buttons"><a class="btn primary" href="login.html">Enter NAZU&nbsp; →</a><a class="btn ghost" href="#vision">Explore vision</a></div>
+<section>
+<div class="eyebrow"><span class="live"></span> NAZU Web3 Network · Solana ecosystem</div>
+<h1>Build what comes <span class="grad">next.</span></h1>
+<p class="lead">NAZU is building the network layer first — connecting people, participation and infrastructure today, with a future path toward the Solana ecosystem.</p>
+<div class="buttons"><a class="btn primary" href="login.html">Enter NAZU&nbsp; →</a><a class="btn ghost" href="#network">Explore network</a></div>
 </section>
-<section class="grid" id="network">
-<div class="panel">
-<div class="label">Network foundation</div><h2>Participation becomes infrastructure.</h2>
-<p>Accounts, node activity, missions, referrals and points are being built as the foundation of the NAZU ecosystem.</p>
-<div class="status"><span class="dot"></span> Network foundation active</div>
-</div>
-<div class="panel">
-<div class="label">Future layer</div><h2>NAZU Token</h2>
-<p>A future native token layer is planned for the ecosystem. Token details are not live yet.</p>
-<div class="mini"><div><strong>SOON</strong><span>Token layer</span></div><div><strong>BUILDING</strong><span>Infrastructure</span></div></div>
-</div>
+<section class="signal" id="network">
+<div class="signalTop"><span class="label">Network status</span><span class="online"><b>●</b> Foundation active</span></div>
+<div class="metrics"><div class="metric"><strong>01</strong><span>Network layer</span></div><div class="metric"><strong>24/7</strong><span>Node concept</span></div><div class="metric"><strong>LIVE</strong><span>Points system</span></div><div class="metric"><strong>SOON</strong><span>Solana layer</span></div></div>
 </section>
-<section class="section" id="vision">
-<div class="card"><span class="num">01</span><h3>Network</h3><p>Grow a real user and node network before introducing the future token layer.</p></div>
-<div class="card"><span class="num">02</span><h3>Activities</h3><p>Participation, missions and contribution history form the points foundation.</p></div>
-<div class="card"><span class="num">03</span><h3>Solana</h3><p>Future blockchain components are planned around the Solana ecosystem.</p></div>
+<section class="section" id="future">
+<div class="panel"><div class="label">The foundation</div><h2>Participation becomes a network.</h2><p>NAZU starts with accounts, points, node activity, activities and member growth. Every part is designed as infrastructure for the ecosystem rather than a single dashboard.</p><div class="future"><strong>BUILDING</strong><span class="pill">PHASE 01</span></div></div>
+<div class="panel"><div class="label">Future ecosystem</div><h2>Solana</h2><p>Future blockchain components are planned around the Solana ecosystem. The token layer is not live yet.</p><div class="future"><strong>COMING</strong><span class="pill">PHASE 02+</span></div></div>
+</section>
+<section class="cards">
+<div class="card"><span class="num">01 / NETWORK</span><h3>Node infrastructure</h3><p>Build participation and contribution history before the blockchain layer.</p></div>
+<div class="card"><span class="num">02 / ACTIVITY</span><h3>Points & activities</h3><p>Turn meaningful participation into a transparent network history.</p></div>
+<div class="card"><span class="num">03 / ECOSYSTEM</span><h3>Solana-ready</h3><p>Keep the foundation ready for future Solana-based components.</p></div>
 </section>
 </main>
-<footer><span>NAZU NETWORK</span><span>Built for the next phase.</span></footer>
-</body>
-</html>
+<footer><span>NAZU NETWORK</span><span>Foundation first. Ecosystem next.</span></footer>
+</body></html>

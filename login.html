@@ -83,7 +83,7 @@ function render(){
   newPassword.required=setup||reset;confirmPassword.required=setup||reset;
   if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
   else if(create){title.textContent="Create your account";sub.textContent="Enter your details. We’ll send a verification link before activation.";submit.textContent="Send verification";}
-  else else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send you a secure reset link.";submit.textContent="Send reset link";}
+  else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send you a secure reset link.";submit.textContent="Send reset link";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZU account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZU account.";submit.textContent="Sign in";}
   forgot.classList.toggle("hidden",mode!=="signin");

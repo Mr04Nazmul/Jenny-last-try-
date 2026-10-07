@@ -41,12 +41,20 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 @media(max-width:600px){.page{width:92%}.top{height:74px}.top-actions{gap:7px}.enter-link{height:31px;padding:0 10px;font-size:8px;letter-spacing:1.2px}.network-label{font-size:7px}.hero{padding-top:28px}.logo-title{font-size:23vw;letter-spacing:-5px;margin-top:29px}.tag{letter-spacing:5px}.card{margin-top:34px;padding:22px;border-radius:24px}.footer{padding-bottom:24px}}
 @media(min-width:900px){.hero{padding-top:60px}.card{padding:34px}}
 </style>
+<style id="auth-modal-style">
+.auth-modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,3,12,.72);backdrop-filter:blur(14px)}
+.auth-modal.open{display:flex}
+.auth-shell{position:relative;width:min(470px,100%);height:min(760px,calc(100vh - 28px));border:1px solid rgba(100,180,255,.35);border-radius:28px;overflow:hidden;background:#02050c;box-shadow:0 30px 100px rgba(0,0,0,.7),0 0 50px rgba(50,130,255,.16)}
+.auth-shell iframe{width:100%;height:100%;border:0;display:block}
+.auth-close{position:absolute;right:12px;top:12px;z-index:3;width:34px;height:34px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(3,10,22,.78);color:#fff;font-size:20px;line-height:1;cursor:pointer}
+@media(max-width:520px){.auth-modal{padding:0}.auth-shell{width:100%;height:100%;border-radius:0;border:0}.auth-close{right:10px;top:10px}}
+</style>
 </head>
 <body>
 <div class="page">
 <header class="top">
 <div class="powered"><span class="solana"><i></i><i></i><i></i></span><span>POWERED BY<br>SOLANA</span></div>
-<div class="top-actions"><a class="enter-link" href="login.html">Sign in / Create account</a><div class="network-label">THE NEXT<br>GENERATION<br>WEB3 NETWORK</div></div>
+<div class="top-actions"><a class="enter-link" href="login.html" id="openAuth">Sign in / Create account</a><div class="network-label">THE NEXT<br>GENERATION<br>WEB3 NETWORK</div></div>
 </header>
 <main class="hero">
 <div class="eyebrow">WEB3 NETWORK · BUILT TOWARD SOLANA</div>
@@ -60,6 +68,12 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 <button class="cta" id="enter" type="button">Send code</button><div class="status" id="status"></div>
 </section>
 <footer class="footer"><b>NAZU</b><span>Secure account access · Solana layer next</span></footer>
+<div class="auth-modal" id="authModal" aria-hidden="true">
+<div class="auth-shell">
+<button class="auth-close" id="closeAuth" type="button" aria-label="Close">×</button>
+<iframe src="login.html" title="NAZU account access"></iframe>
+</div>
+</div>
 </main>
 </div>
 <script>
@@ -103,6 +117,14 @@ enter.addEventListener("click",async()=>{
     enter.textContent="Send verification";
   }
 });
+</script>
+<script>
+const openAuth=document.getElementById("openAuth"),authModal=document.getElementById("authModal"),closeAuth=document.getElementById("closeAuth");
+function showAuth(e){if(e)e.preventDefault();authModal.classList.add("open");authModal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+function hideAuth(){authModal.classList.remove("open");authModal.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+openAuth.addEventListener("click",showAuth);closeAuth.addEventListener("click",hideAuth);
+authModal.addEventListener("click",e=>{if(e.target===authModal)hideAuth()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&authModal.classList.contains("open"))hideAuth()});
 </script>
 </body>
 </html>

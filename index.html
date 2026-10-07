@@ -9,37 +9,38 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#01030a;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+html,body{margin:0;min-height:100%;background:#01040c;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 body{overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;z-index:-3;background:#01030a url("nazu-world.svg") center top/cover no-repeat}
-body:after{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(0,4,13,.08),rgba(0,5,18,.04) 42%,rgba(0,3,12,.45) 100%)}
-.page{width:min(760px,92%);margin:auto;min-height:100vh;position:relative}
-.top{height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
-.powered,.network-label{font-size:8px;line-height:1.55;letter-spacing:3px;color:#a9c9ef;text-transform:uppercase;text-shadow:0 0 14px #36a9ff}
-.powered{display:flex;align-items:center;gap:11px}
-.solana{width:28px;height:18px;position:relative;filter:drop-shadow(0 0 7px #45b8ff)}
-.solana i{position:absolute;left:0;width:25px;height:5px;border-radius:2px;transform:skewX(-28deg);background:linear-gradient(90deg,#19b7ff,#8b52ff)}
-.solana i:nth-child(1){top:0}.solana i:nth-child(2){top:7px;background:linear-gradient(90deg,#8b52ff,#d7faff)}.solana i:nth-child(3){top:14px;background:linear-gradient(90deg,#1cbcff,#8b52ff)}
-.top-actions{display:flex;align-items:center;gap:10px}.enter-link{display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border:1px solid rgba(92,180,255,.7);border-radius:999px;background:rgba(3,16,38,.58);color:#dcecff;text-decoration:none;font-size:9px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;box-shadow:0 0 22px rgba(45,150,255,.12);backdrop-filter:blur(10px)}.enter-link:hover{border-color:#8ed6ff;box-shadow:0 0 26px rgba(45,150,255,.24)}.network-label{text-align:right;max-width:155px}
-.hero{padding:42px 0 28px;text-align:center}
-.eyebrow{font-size:8px;letter-spacing:4px;color:#a8d0fa;text-transform:uppercase}
-.logo-title{font-size:clamp(76px,17vw,132px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:32px 0 10px;text-shadow:0 0 22px rgba(120,190,255,.35),0 0 60px rgba(45,120,255,.18)}
-.tag{font-size:10px;letter-spacing:7px;color:#a9cdf2;text-transform:uppercase;text-shadow:0 0 14px #2d9cff}
-.card{margin:40px auto 0;padding:28px;max-width:660px;border:1px solid rgba(83,178,255,.78);border-radius:27px;background:linear-gradient(145deg,rgba(3,14,37,.94),rgba(2,10,29,.90));box-shadow:0 25px 90px rgba(0,0,0,.5),0 0 45px rgba(39,125,255,.22),inset 0 0 35px rgba(40,160,255,.06);backdrop-filter:blur(12px);text-align:left}
-.ref{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(76,174,255,.8);border-radius:999px;padding:9px 15px;background:rgba(4,27,58,.75);color:#a9c9ef;font-size:13px}
-.ref .dot{width:9px;height:9px;border-radius:50%;background:#aee1ff;box-shadow:0 0 12px #54baff}
-.ref b{color:#fff}
-h1{font-size:clamp(30px,6vw,46px);line-height:1.05;letter-spacing:-1.8px;margin:28px 0 13px}
-h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.desc{font-size:15px;line-height:1.65;color:#9db5d8;margin:0 0 24px;max-width:590px}
-.field{height:61px;border:1px solid rgba(86,120,170,.7);border-radius:15px;background:rgba(5,19,43,.72);display:flex;align-items:center;padding:0 18px}
-.field-icon{font-size:20px;color:#9bb8da}.field input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font:inherit;font-size:15px;margin-left:12px}.field input::placeholder{color:#7186a6}
-.check{display:flex;gap:13px;align-items:flex-start;color:#9aafcd;font-size:13px;line-height:1.5;margin:20px 0 22px;cursor:pointer}
-.check input{appearance:none;width:19px;height:19px;flex:0 0 19px;border-radius:5px;border:1px solid #5c789e;background:#071426;margin:0}.check input:checked{background:linear-gradient(135deg,#744bff,#18baff);box-shadow:0 0 15px #38aaff66}
-.status{min-height:18px;margin-top:13px;text-align:center;color:#91a9c9;font-size:12px;line-height:1.45}.cta{width:100%;height:58px;border:0;border-radius:14px;background:linear-gradient(100deg,#7042ff,#5479ff 53%,#13baff);color:#fff;font-size:17px;font-weight:850;box-shadow:0 15px 38px rgba(38,136,255,.34);cursor:pointer}
-.footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:27px 4px 34px;color:#9ab0cc;font-size:10px}.footer b{letter-spacing:5px;color:#fff}
-@media(max-width:600px){.page{width:92%}.top{height:74px}.top-actions{gap:7px}.enter-link{height:31px;padding:0 10px;font-size:8px;letter-spacing:1.2px}.network-label{font-size:7px}.hero{padding-top:28px}.logo-title{font-size:23vw;letter-spacing:-5px;margin-top:29px}.tag{letter-spacing:5px}.card{margin-top:34px;padding:22px;border-radius:24px}.footer{padding-bottom:24px}}
-@media(min-width:900px){.hero{padding-top:60px}.card{padding:34px}}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:#01040c url("nazu-world.svg") center top/cover no-repeat}
+body:after{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(0,4,14,.04),rgba(0,5,18,.02) 45%,rgba(0,3,12,.48) 100%)}
+.page{width:min(760px,92%);margin:auto;min-height:100vh;position:relative;padding-bottom:32px}
+.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 3px}
+.brand{display:flex;align-items:center;gap:10px}.brand-mark{font-size:31px;font-weight:1000;line-height:1;background:linear-gradient(135deg,#49a9ff,#fff 45%,#9e5cff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px rgba(56,160,255,.4)}.brand-name{font-size:16px;font-weight:800;letter-spacing:6px}
+.build{font-size:8px;letter-spacing:3.5px;color:#d0ddf4;text-transform:uppercase;text-align:right;text-shadow:0 0 12px #328cff}
+.hero{padding:25px 0 0;text-align:center}
+.eyebrow{display:none}
+.logo-title{font-size:clamp(76px,16vw,128px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:0 0 10px;text-shadow:0 0 22px rgba(150,210,255,.42),0 0 65px rgba(45,120,255,.3)}
+.tag{font-size:9px;letter-spacing:6px;color:#c3d6f1;text-transform:uppercase;text-shadow:0 0 13px #2d9cff}
+.account-panel{width:min(600px,100%);margin:66px auto 0;padding:0 0 25px;border:1px solid rgba(83,178,255,.72);border-radius:27px;background:linear-gradient(145deg,rgba(3,14,37,.92),rgba(2,8,25,.88));box-shadow:0 25px 90px rgba(0,0,0,.55),0 0 45px rgba(39,125,255,.22),inset 0 0 35px rgba(40,160,255,.05);backdrop-filter:blur(14px);overflow:hidden}
+.account-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 66px;border-bottom:1px solid rgba(112,146,194,.22)}
+.account-tab{height:68px;border:0;background:transparent!important;color:#aabbd5;font-size:16px;font-weight:500;cursor:pointer;box-shadow:none!important;border-radius:0!important;position:relative}
+.account-tab.active{color:#fff}.account-tab.active:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;border-radius:4px;background:linear-gradient(90deg,#16baff,#7545ff);box-shadow:0 0 16px rgba(90,100,255,.72)}
+.account-inner{padding:35px 50px 0}.account-inner h2{font-size:31px;letter-spacing:-1.2px;margin:0 0 10px}.account-sub{margin:0 0 24px;color:#a0b4d2;font-size:15px;line-height:1.5}
+.account-inner label{display:block;color:#b8c8df;font-size:10px;font-weight:700;letter-spacing:.05em;margin:0 0 7px}
+.account-inner input[type=email],.account-inner input[type=password],.account-inner input[type=text]{width:100%;height:53px;padding:0 16px;border:1px solid rgba(81,125,177,.7);border-radius:13px;background:rgba(5,18,42,.72);color:#fff;outline:none;font:inherit;font-size:15px;margin:0 0 15px}
+.account-inner input:focus{border-color:#6cbdff;box-shadow:0 0 0 4px rgba(91,160,255,.1)}
+.account-names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.account-names input{min-width:0}
+.account-submit{width:100%;height:57px;border:0;border-radius:13px;background:linear-gradient(100deg,#733fff,#596dff 53%,#16baff);color:#fff;font-size:17px;font-weight:850;cursor:pointer;box-shadow:0 15px 38px rgba(39,124,255,.3)}
+.account-submit:disabled{opacity:.6;cursor:wait}
+.account-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px;color:#a879ff;font-size:12px}.account-link{cursor:pointer}.account-msg{min-height:20px;margin-top:12px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.account-ok{color:#8dffd0!important}
+.account-back{margin-top:15px;text-align:center;color:#aab7d0;font-size:12px;cursor:pointer}.account-hidden{display:none!important}
+.footer{display:none}
+@media(max-width:600px){
+ .page{width:92%;padding-bottom:20px}.top{height:62px}.brand-mark{font-size:27px}.brand-name{font-size:14px;letter-spacing:5px}.build{font-size:7px;letter-spacing:2.4px}
+ .hero{padding-top:24px}.logo-title{font-size:22vw;letter-spacing:-5px}.tag{font-size:8px;letter-spacing:4.8px}
+ .account-panel{margin-top:65px;border-radius:23px}.account-tabs{margin:0 24px}.account-inner{padding:29px 25px 0}.account-inner h2{font-size:28px}.account-names{grid-template-columns:1fr}
+}
+@media(min-width:900px){.hero{padding-top:38px}.account-panel{margin-top:78px}}
 </style>
 
 <style id="account-panel-style">
@@ -63,104 +64,10 @@ h1 span{background:linear-gradient(90deg,#fff,#8a55ff,#19c1ff);-webkit-backgroun
 <body>
 <div class="page">
 <header class="top">
-<div class="powered"><span class="solana"><i></i><i></i><i></i></span><span>POWERED BY<br>SOLANA</span></div>
-<div class="top-actions"><a class="enter-link" href="#account-panel">Sign in / Create account</a><div class="network-label">THE NEXT<br>GENERATION<br>WEB3 NETWORK</div></div>
+  <div class="brand"><div class="brand-mark">N</div><div class="brand-name">NAZU</div></div>
+  <div class="build">BUILD · CONNECT · GROW</div>
 </header>
 <main class="hero">
-<div class="eyebrow">WEB3 NETWORK · BUILT TOWARD SOLANA</div>
-<div class="logo-title">NAZU</div>
-<div class="tag">BUILD · CONNECT · GROW</div>
-
+  <div class="logo-title">NAZU</div>
+  <div class="tag">BUILD · CONNECT · GROW</div>
 <section class="account-panel" id="account-panel" aria-label="NAZU account access">
-<div class="account-tabs"><button class="account-tab active" id="mainLoginTab" type="button">Login</button><button class="account-tab" id="mainCreateTab" type="button">Create Account</button></div>
-<div class="account-inner">
-<div id="mainNotice" class="account-msg account-hidden">Email verified. Finish setting up your NAZU account.</div>
-<h2 id="mainAuthTitle">Welcome back</h2>
-<p id="mainAuthSub" class="account-sub">Sign in to continue to your NAZU account.</p>
-<form id="mainAuthForm">
-<div id="mainNames" class="account-names account-hidden">
-<div><label for="mainFirst">FIRST NAME</label><input id="mainFirst" type="text" autocomplete="given-name" placeholder="First name"></div>
-<div><label for="mainLast">LAST NAME</label><input id="mainLast" type="text" autocomplete="family-name" placeholder="Last name"></div>
-</div>
-<label for="mainEmail">EMAIL ADDRESS</label><input id="mainEmail" type="email" required autocomplete="email" placeholder="you@example.com">
-<div id="mainPasswordWrap"><label for="mainPassword">PASSWORD</label><input id="mainPassword" type="password" minlength="8" required autocomplete="current-password" placeholder="Password"></div>
-<div id="mainNewPasswordWrap" class="account-hidden"><label for="mainNewPassword">NEW PASSWORD</label><input id="mainNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><label for="mainConfirmPassword">CONFIRM PASSWORD</label><input id="mainConfirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
-<button class="account-submit" id="mainAuthSubmit" type="submit">Sign in</button>
-</form>
-<div id="mainAuthMsg" class="account-msg"></div>
-<div class="account-links"><span id="mainForgot" class="account-link">Forgot password?</span><span id="mainSwitch" class="account-link">Create an account</span></div>
-<div id="mainBack" class="account-back account-hidden">← Back to sign in</div>
-</div>
-</section>
-<footer class="footer"><b>NAZU</b><span>Secure account access · Solana layer next</span></footer>
->
-</main>
-</div>
-<script>
-const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co";
-const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
-const mainSb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const q=id=>document.getElementById(id);
-let mainMode="signin";
-const mainRecovery=location.hash.includes("type=recovery"), mainVerified=new URLSearchParams(location.search).get("verified")==="1";
-function mainMsg(t,ok=false){q("mainAuthMsg").textContent=t;q("mainAuthMsg").classList.toggle("account-ok",ok)}
-function mainRender(){
- const setup=mainMode==="setup",create=mainMode==="create",reset=mainMode==="reset";
- q("mainLoginTab").classList.toggle("active",mainMode==="signin"||reset);
- q("mainCreateTab").classList.toggle("active",create||setup);
- q("mainNotice").classList.toggle("account-hidden",!setup);
- q("mainNames").classList.toggle("account-hidden",!setup&&!create);
- q("mainPasswordWrap").classList.toggle("account-hidden",create||setup||reset);
- q("mainNewPasswordWrap").classList.toggle("account-hidden",!setup&&!reset);
- q("mainEmail").readOnly=setup;
- q("mainFirst").required=setup||create;q("mainLast").required=setup||create;
- q("mainPassword").required=mainMode==="signin";
- q("mainNewPassword").required=setup||reset;q("mainConfirmPassword").required=setup||reset;
- q("mainForgot").classList.toggle("account-hidden",mainMode!=="signin");
- q("mainSwitch").classList.toggle("account-hidden",setup||reset);
- q("mainBack").classList.toggle("account-hidden",mainMode!=="reset");
- if(setup){q("mainAuthTitle").textContent="Finish your account";q("mainAuthSub").textContent="Your email is verified. Create a password to activate your account.";q("mainAuthSubmit").textContent="Activate account";}
- else if(create){q("mainAuthTitle").textContent="Create your account";q("mainAuthSub").textContent="Enter your details. We’ll send a verification link before activation.";q("mainAuthSubmit").textContent="Send verification";}
- else if(reset){q("mainAuthTitle").textContent="Reset your password";q("mainAuthSub").textContent="Choose a new password for your NAZU account.";q("mainAuthSubmit").textContent="Change password";}
- else{q("mainAuthTitle").textContent="Welcome back";q("mainAuthSub").textContent="Sign in to continue to your NAZU account.";q("mainAuthSubmit").textContent="Sign in";}
- q("mainSwitch").textContent=create?"Already have an account? Sign in":"Create an account";
-}
-q("mainLoginTab").onclick=()=>{mainMode="signin";mainMsg("");mainRender()};
-q("mainCreateTab").onclick=()=>{mainMode="create";mainMsg("");mainRender()};
-q("mainSwitch").onclick=()=>{mainMode=mainMode==="create"?"signin":"create";mainMsg("");mainRender()};
-q("mainForgot").onclick=()=>{mainMode="reset";mainMsg("");mainRender()};
-q("mainBack").onclick=()=>{mainMode="signin";mainMsg("");q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
-q("mainAuthForm").onsubmit=async e=>{
- e.preventDefault();const btn=q("mainAuthSubmit");btn.disabled=true;mainMsg("");
- try{
-  if(mainMode==="create"){
-   if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");
-   const {error}=await mainSb.auth.signInWithOtp({email:q("mainEmail").value.trim(),options:{shouldCreateUser:true,emailRedirectTo:"https://mr04nazmul.github.io/nazulabs/login.html?verified=1",data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim()}}});
-   if(error)throw error;mainMsg("Verification email sent. Open the link to continue. Your account is not activated until you verify your email.",true);btn.textContent="Verification sent";return;
-  }
-  if(mainMode==="signin"){
-   const {data,error}=await mainSb.auth.signInWithPassword({email:q("mainEmail").value.trim(),password:q("mainPassword").value});
-   if(error)throw error;if(!data.session)throw new Error("Sign in could not be completed.");location.href="dashboard.html?v=50";return;
-  }
-  if(mainMode==="reset"){
-   if(mainRecovery){
-    if(q("mainNewPassword").value.length<8)throw new Error("Password must be at least 8 characters.");
-    if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
-    const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value});if(error)throw error;await mainSb.auth.signOut();location.hash="";mainMode="signin";mainMsg("Password changed. You can now sign in.",true);mainRender();return;
-   }
-   const {error}=await mainSb.auth.resetPasswordForEmail(q("mainEmail").value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/"});if(error)throw error;mainMsg("Password reset link sent. Check your email.",true);return;
-  }
-  if(mainMode==="setup"){
-   if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");
-   if(q("mainNewPassword").value.length<8)throw new Error("Password must be at least 8 characters.");
-   if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
-   const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value,data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim()}});if(error)throw error;
-   mainMsg("Account activated. Opening NAZU…",true);setTimeout(()=>location.href="dashboard.html?v=50",450);
-  }
- }catch(err){mainMsg(err?.message||"Something went wrong. Please try again.");}finally{btn.disabled=false}
-};
-mainSb.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY"){mainMode="reset";mainRender()}if(event==="SIGNED_IN"&&mainVerified&&session){q("mainEmail").value=session.user.email||"";q("mainFirst").value=session.user.user_metadata?.first_name||"";q("mainLast").value=session.user.user_metadata?.last_name||"";mainMode="setup";mainRender()}});
-(async()=>{const {data}=await mainSb.auth.getSession();if(data.session&&mainVerified){q("mainEmail").value=data.session.user.email||"";q("mainFirst").value=data.session.user.user_metadata?.first_name||"";q("mainLast").value=data.session.user.user_metadata?.last_name||"";mainMode="setup"}else if(data.session&&!mainRecovery){location.href="dashboard.html?v=50"}mainRender()})();
-</script>
-</body>
-</html>

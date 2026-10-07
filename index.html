@@ -87,7 +87,7 @@ enter.addEventListener("click",async()=>{
   enter.disabled=true;
   enter.textContent="Sending…";
   try{
-    const redirectTo=new URL("login.html?verified=1",window.location.href).href;
+    const redirectTo="https://mr04nazmul.github.io/nazulabs/login.html?verified=1";
     const {error}=await supabaseClient.auth.signInWithOtp({
       email,
       options:{

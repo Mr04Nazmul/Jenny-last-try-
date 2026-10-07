@@ -188,7 +188,7 @@ form.onsubmit=async e=>{
     }
 
     if(recoveryMode&&!recoveryStep){
-      const redirectUrl=new URL("login.html",window.location.href).href;
+      const redirectUrl="https://mr04nazmul.github.io/nazulabs/login.html";
       const {error}=await supabaseClient.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:redirectUrl});
       if(error)throw error;
       msg.textContent="Reset link sent. Check your email.";
@@ -207,7 +207,7 @@ form.onsubmit=async e=>{
     }
 
     if(registerMode){
-      const redirectTo=new URL("login.html?verified=1",window.location.href).href;
+      const redirectTo="https://mr04nazmul.github.io/nazulabs/login.html?verified=1";
       const {error}=await supabaseClient.auth.signInWithOtp({
         email:email.value.trim(),
         options:{

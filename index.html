@@ -74,7 +74,7 @@ q("mainLoginTab").onclick=()=>{mainMode="signin";mainMsg("");mainRender()};
 q("mainCreateTab").onclick=()=>{mainMode="create";mainMsg("");mainRender()};
 q("mainSwitch").onclick=()=>{mainMode=mainMode==="create"?"signin":"create";mainMsg("");mainRender()};
 q("mainForgot").onclick=()=>{mainMode="reset";mainMsg("");mainRender()};
-q("mainBack").onclick=()=>{mainMode="signin";mainMsg("");q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
+q("mainBack").onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mainMode="signin";mainMsg("");q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
 q("mainAuthForm").onsubmit=async e=>{
  e.preventDefault();const btn=q("mainAuthSubmit");btn.disabled=true;mainMsg("");
  try{
@@ -91,7 +91,7 @@ q("mainAuthForm").onsubmit=async e=>{
    if(mainRecovery){
     if(q("mainNewPassword").value.length<8)throw new Error("Password must be at least 8 characters.");
     if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
-    const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value});if(error)throw error;await mainSb.auth.signOut();location.hash="";mainMode="signin";mainMsg("Password changed. You can now sign in.",true);mainRender();return;
+    const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value});if(error)throw error;await mainSb.auth.signOut();history.replaceState(null,"",location.pathname);mainMode="signin";mainMsg("Password changed. You can now sign in.",true);mainRender();return;
    }
    const {error}=await mainSb.auth.resetPasswordForEmail(q("mainEmail").value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});if(error)throw error;mainMsg("Password reset link sent. Check your email.",true);return;
   }

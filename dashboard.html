@@ -5,16 +5,9 @@
 <title>NAZU | Network Console</title>
 <style>
 :root{--bg:#050608;--panel:#0b0d12;--panel2:#0e1118;--line:#1c212b;--text:#f4f6fb;--muted:#737b8b;--cyan:#65e6ff;--lime:#b8ff72;--purple:#9d83ff}
-*{box-sizing:border-box}html{background:#03050a}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:
-radial-gradient(900px 500px at 50% -12%,rgba(89,92,255,.18),transparent 62%),
-radial-gradient(650px 500px at 100% 38%,rgba(0,210,255,.10),transparent 62%),
-radial-gradient(700px 520px at 0% 82%,rgba(105,52,255,.12),transparent 62%),
-linear-gradient(180deg,#050817 0%,#03050a 48%,#020308 100%);position:relative}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background:
-linear-gradient(rgba(120,150,255,.035) 1px,transparent 1px),
-linear-gradient(90deg,rgba(120,150,255,.035) 1px,transparent 1px),
-radial-gradient(circle at 50% 32%,transparent 0 24%,rgba(55,93,180,.10) 48%,transparent 72%);background-size:54px 54px,54px 54px,100% 100%;mask-image:linear-gradient(to bottom,#000 0%,#000 72%,transparent 100%)}
-body:after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(1,4,10,.2),rgba(1,4,10,.72));z-index:-1}
+*{box-sizing:border-box}html{background:#03050a}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#01030a url("nazu-world.svg") center top/cover fixed no-repeat;position:relative}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;background:linear-gradient(rgba(120,150,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(120,150,255,.08) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,#000 0%,#000 72%,transparent 100%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(1,4,10,.08),rgba(1,4,10,.34) 58%,rgba(1,4,10,.72));z-index:-1}
 .nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,4vw,58px);background:rgba(5,6,8,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.22em}.symbol{width:31px;height:31px;border:1px solid #3a414d;border-radius:9px;display:grid;place-items:center;font-size:11px;box-shadow:inset 0 0 18px rgba(101,230,255,.07)}.navmeta{display:flex;align-items:center;gap:18px}.live{font-size:10px;letter-spacing:.12em;color:#a8b1bf}.live i{display:inline-block;width:6px;height:6px;background:var(--lime);border-radius:50%;margin-right:7px;box-shadow:0 0 10px var(--lime)}.logout{border:1px solid var(--line);background:#0a0c10;color:#aab2c0;border-radius:9px;padding:8px 12px;font-size:11px;cursor:pointer}.logout:hover{border-color:#38404c;color:#fff}
 main{width:min(1160px,92%);margin:0 auto;padding:52px 0 72px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:25px;margin-bottom:35px}.kicker{font-size:10px;letter-spacing:.22em;color:#697383;margin-bottom:13px}.top h1{font-size:clamp(38px,6vw,72px);line-height:.92;letter-spacing:-.055em;margin:0;font-weight:850}.top h1 em{font-style:normal;color:var(--cyan)}.identity{text-align:right;color:#5f6878;font-size:10px;letter-spacing:.12em}.identity strong{display:block;color:#c2c9d4;font-size:12px;letter-spacing:0;margin-top:7px;max-width:260px;overflow:hidden;text-overflow:ellipsis}
 .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:17px;display:flex;gap:28px;overflow:hidden;white-space:nowrap;color:#596271;font-size:9px;letter-spacing:.17em}.ticker b{color:#8791a1;font-weight:700}

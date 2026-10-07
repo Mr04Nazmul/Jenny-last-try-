@@ -72,10 +72,10 @@ const recovery=location.hash.includes("type=recovery");
 function setMsg(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}
 
 function render(){
-  const setup=mode==="setup", create=mode==="create", reset=mode==="reset";
+  const setup=mode==="setup", create=mode==="create", forgotMode=mode==="forgot", reset=mode==="reset";
   notice.classList.toggle("hidden",!setup);
   names.classList.toggle("hidden",!setup&&!create);
-  passwordBlock.classList.toggle("hidden",create||setup||reset);
+  passwordBlock.classList.toggle("hidden",create||setup||forgotMode||reset);
   newPasswordBlock.classList.toggle("hidden",!setup&&!reset);
   email.readOnly=setup;
   first.required=setup||create;last.required=setup||create;
@@ -83,12 +83,13 @@ function render(){
   newPassword.required=setup||reset;confirmPassword.required=setup||reset;
   if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
   else if(create){title.textContent="Create your account";sub.textContent="Enter your details. We’ll send a verification link before activation.";submit.textContent="Send verification";}
+  else else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send you a secure reset link.";submit.textContent="Send reset link";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZU account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZU account.";submit.textContent="Sign in";}
   forgot.classList.toggle("hidden",mode!=="signin");
   switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset");
   switchBtn.textContent=create?"Already have an account? Sign in":"Create an account";
-  back.classList.toggle("hidden",mode!=="reset");
+  back.classList.toggle("hidden",mode!=="reset"&&mode!=="forgot");
 }
 
 async function checkSession(){
@@ -113,8 +114,8 @@ sb.auth.onAuthStateChange((event,session)=>{
 });
 
 switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");render()};
-forgot.onclick=()=>{mode="reset";setMsg("");render()};
-back.onclick=()=>{mode="signin";setMsg("");newPassword.value="";confirmPassword.value="";render()};
+forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";newPassword.value="";confirmPassword.value="";render()};
+back.onclick=()=>{mode="signin";setMsg("");password.value="";newPassword.value="";confirmPassword.value="";render()};
 
 form.onsubmit=async e=>{
   e.preventDefault();submit.disabled=true;setMsg("");
@@ -139,6 +140,12 @@ form.onsubmit=async e=>{
       location.replace("dashboard.html?v=50");return;
     }
 
+    if(mode==="forgot"){
+      const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});
+      if(error)throw error;
+      setMsg("Reset link sent. Check your Gmail inbox and Spam folder.",true);return;
+    }
+
     if(mode==="reset"){
       if(location.hash.includes("type=recovery")){
         if(newPassword.value.length<8)throw new Error("Password must be at least 8 characters.");
@@ -148,9 +155,7 @@ form.onsubmit=async e=>{
         await sb.auth.signOut();location.hash="";
         mode="signin";setMsg("Password changed. You can now sign in.",true);render();return;
       }
-      const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:"https://mr04nazmul.github.io/nazulabs/login.html"});
-      if(error)throw error;
-      setMsg("Password reset link sent. Check your email.",true);return;
+      throw new Error("Please use the reset link from your email to set a new password.");
     }
 
     if(mode==="setup"){

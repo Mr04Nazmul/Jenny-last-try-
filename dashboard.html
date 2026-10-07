@@ -54,10 +54,15 @@ function render(p){
  document.getElementById("points").innerHTML=pts.toLocaleString()+"<small>PTS</small>";
  document.getElementById("level").textContent="LVL "+level;document.getElementById("streak").textContent=streak+" DAYS";
  document.getElementById("levelBar").style.width=Math.min(100,(pts%1000)/10)+"%";document.getElementById("streakBar").style.width=Math.min(100,streak*10)+"%";
- document.getElementById("refCode").textContent=code;document.getElementById("refCodeLarge").textContent=code;
-
- document.getElementById("refLink").textContent=link;
- if(p.last_checkin===new Date().toISOString().slice(0,10)){document.getElementById("checkText").textContent="Completed today";document.getElementById("missionStatus").textContent="DONE"}
+ const refCode=document.getElementById("refCode"),refCodeLarge=document.getElementById("refCodeLarge"),refLink=document.getElementById("refLink");
+ if(refCode) refCode.textContent=code;
+ if(refCodeLarge) refCodeLarge.textContent=code;
+ if(refLink) refLink.textContent=link;
+ if(p.last_checkin===new Date().toISOString().slice(0,10)){
+  const checkText=document.getElementById("checkText"),missionStatus=document.getElementById("missionStatus");
+  if(checkText) checkText.textContent="Completed today";
+  if(missionStatus) missionStatus.textContent="DONE";
+ }
 }
 async function syncNode(){return}
 

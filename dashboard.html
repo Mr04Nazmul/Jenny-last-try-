@@ -1,88 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NAZU | Command Center</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NAZU | Network Console</title>
 <style>
-:root{--bg:#05070d;--panel:rgba(13,17,28,.72);--line:rgba(255,255,255,.09);--muted:#8993a7;--cyan:#57e8ff;--violet:#9b7bff;--green:#68f7b0}
-*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;min-height:100vh;color:#f7f9ff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 80% 5%,rgba(87,232,255,.12),transparent 28%),radial-gradient(circle at 15% 35%,rgba(155,123,255,.1),transparent 30%),var(--bg);overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
-.nav{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,72px);border-bottom:1px solid var(--line);background:rgba(5,7,13,.55);backdrop-filter:blur(22px);position:sticky;top:0;z-index:5}
-.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:4px;font-size:21px}.mark{width:34px;height:34px;border:1px solid rgba(87,232,255,.6);border-radius:11px;display:grid;place-items:center;color:var(--cyan);box-shadow:0 0 28px rgba(87,232,255,.18);font-size:13px}
-.navright{display:flex;align-items:center;gap:14px}.online{font-size:11px;color:#9feac7;display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-.signout{background:transparent;color:#b9c2d4;border:1px solid var(--line);border-radius:10px;padding:9px 13px;cursor:pointer}.signout:hover{border-color:rgba(87,232,255,.4);color:#fff}
-main{width:min(1180px,92%);margin:42px auto 70px}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:3px;font-weight:800;margin-bottom:12px}.hero{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:30px}.hero h1{font-size:clamp(34px,6vw,64px);line-height:.98;letter-spacing:-2.5px;margin:0 0 14px;font-weight:850}.hero h1 span{background:linear-gradient(100deg,#fff 20%,#8cefff 60%,#a68cff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:var(--muted);margin:0;font-size:14px}.uid{font-size:11px;color:#69758b;text-align:right}.uid strong{display:block;color:#aeb7c9;font-weight:600;margin-top:4px;max-width:260px;overflow:hidden;text-overflow:ellipsis}
-.status{display:flex;align-items:center;gap:10px;color:#aeb7c9;font-size:12px;margin:0 0 18px}.status i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
-.grid{display:grid;grid-template-columns:1.45fr .7fr .7fr;gap:16px}.card{position:relative;background:linear-gradient(145deg,rgba(17,23,38,.86),rgba(8,11,19,.78));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.24);overflow:hidden}.card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-75px;top:-80px;background:rgba(87,232,255,.08);filter:blur(12px)}
-.card.big{min-height:205px}.label{font-size:10px;letter-spacing:2px;color:#7f8ba0;font-weight:800}.points{font-size:58px;line-height:1;margin-top:28px;font-weight:850;letter-spacing:-3px}.points small{font-size:15px;color:#7f8ba0;letter-spacing:0;margin-left:7px;font-weight:600}.trend{margin-top:17px;color:#71e8b0;font-size:12px}.mini{min-height:205px}.mini .value{font-size:28px;font-weight:800;margin-top:30px}.mini p{color:#707b90;font-size:12px;margin-top:9px}.bar{height:5px;background:#202838;border-radius:10px;margin-top:22px;overflow:hidden}.bar span{display:block;width:18%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--violet));border-radius:10px}
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.action{padding:17px;border:1px solid var(--line);background:rgba(12,16,27,.68);border-radius:16px;color:#dce3ef;text-decoration:none;font-size:13px}.action b{display:block;font-size:14px;margin-bottom:5px}.action span{color:#68748a;font-size:11px}.action:hover{border-color:rgba(87,232,255,.35);transform:translateY(-1px)}
-.feed{margin-top:16px}.feedhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.feedhead h2{font-size:14px;margin:0}.feedhead span{font-size:10px;color:#657087;letter-spacing:1px}.event{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid var(--line);font-size:12px}.event div{display:flex;gap:10px;align-items:center}.event em{font-style:normal;color:#8b97ab}.event strong{color:#6ef0b0}
-@media(max-width:760px){.nav{height:68px}.online{display:none}main{margin-top:30px}.hero{align-items:start;flex-direction:column}.uid{text-align:left}.grid{grid-template-columns:1fr}.card.big,.mini{min-height:180px}.points{font-size:52px}.actions{grid-template-columns:1fr}.hero h1{letter-spacing:-1.7px}}
+:root{--bg:#050608;--panel:#0b0d12;--panel2:#0e1118;--line:#1c212b;--text:#f4f6fb;--muted:#737b8b;--cyan:#65e6ff;--lime:#b8ff72;--purple:#9d83ff}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(800px 420px at 75% -10%,rgba(101,230,255,.08),transparent 60%),radial-gradient(700px 400px at -10% 75%,rgba(157,131,255,.07),transparent 60%),var(--bg)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}
+.nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,4vw,58px);background:rgba(5,6,8,.78);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.22em}.symbol{width:31px;height:31px;border:1px solid #3a414d;border-radius:9px;display:grid;place-items:center;font-size:11px;box-shadow:inset 0 0 18px rgba(101,230,255,.07)}.navmeta{display:flex;align-items:center;gap:18px}.live{font-size:10px;letter-spacing:.12em;color:#a8b1bf}.live i{display:inline-block;width:6px;height:6px;background:var(--lime);border-radius:50%;margin-right:7px;box-shadow:0 0 10px var(--lime)}.logout{border:1px solid var(--line);background:#0a0c10;color:#aab2c0;border-radius:9px;padding:8px 12px;font-size:11px;cursor:pointer}.logout:hover{border-color:#38404c;color:#fff}
+main{width:min(1160px,92%);margin:0 auto;padding:52px 0 72px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:25px;margin-bottom:35px}.kicker{font-size:10px;letter-spacing:.22em;color:#697383;margin-bottom:13px}.top h1{font-size:clamp(38px,6vw,72px);line-height:.92;letter-spacing:-.055em;margin:0;font-weight:850}.top h1 em{font-style:normal;color:var(--cyan)}.identity{text-align:right;color:#5f6878;font-size:10px;letter-spacing:.12em}.identity strong{display:block;color:#c2c9d4;font-size:12px;letter-spacing:0;margin-top:7px;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:17px;display:flex;gap:28px;overflow:hidden;white-space:nowrap;color:#596271;font-size:9px;letter-spacing:.17em}.ticker b{color:#8791a1;font-weight:700}
+.layout{display:grid;grid-template-columns:1.55fr .72fr .72fr;gap:12px}.panel{background:linear-gradient(145deg,rgba(14,17,23,.96),rgba(8,10,14,.96));border:1px solid var(--line);border-radius:17px;padding:22px;position:relative;overflow:hidden}.panel:after{content:"";position:absolute;width:130px;height:130px;border:1px solid rgba(101,230,255,.07);border-radius:50%;right:-70px;bottom:-70px}.points{min-height:238px;display:flex;flex-direction:column;justify-content:space-between}.label{font-size:9px;letter-spacing:.18em;color:#687180;font-weight:800}.number{font-size:clamp(54px,7vw,82px);font-weight:850;letter-spacing:-.065em;line-height:1}.number small{font-size:12px;color:#646d7b;letter-spacing:.08em;margin-left:8px}.subrow{display:flex;justify-content:space-between;color:#5f6876;font-size:10px}.subrow b{color:var(--lime);font-weight:700}.stat{min-height:238px}.stat .big{font-size:30px;font-weight:800;letter-spacing:-.03em;margin-top:42px}.stat p{font-size:11px;color:#626b79;margin:8px 0 0}.meter{height:3px;background:#20242c;margin-top:26px;border-radius:4px;overflow:hidden}.meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .4s}
+.section{margin-top:12px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.sectionhead h2{font-size:12px;margin:0;letter-spacing:.04em}.sectionhead span{font-size:9px;color:#56606e;letter-spacing:.15em}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.action{min-height:108px;padding:17px;border:1px solid var(--line);border-radius:14px;background:#090b0f;color:#e4e8ee;text-decoration:none;transition:.2s}.action:hover{border-color:#303846;transform:translateY(-2px);background:#0c0f14}.action .icon{font-size:17px;color:var(--cyan);margin-bottom:14px}.action b{display:block;font-size:12px}.action span{display:block;color:#626b79;font-size:10px;margin-top:5px}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mission,.ref{min-height:190px}.row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid var(--line);font-size:11px}.row:first-of-type{margin-top:8px}.row span{color:#687180}.reward{color:var(--lime)!important;font-weight:700}.code{font-size:21px;letter-spacing:.06em;font-weight:800;margin:24px 0 8px}.refurl{font-size:10px;color:#5f6876;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.copy{margin-top:17px;border:1px solid #2a313c;background:#0a0d12;color:#cdd3dd;border-radius:9px;padding:9px 12px;font-size:10px;cursor:pointer}.copy:hover{border-color:#45505e;color:#fff}
+.state{margin-top:14px;color:#555e6d;font-size:9px;letter-spacing:.1em}.state i{display:inline-block;width:5px;height:5px;background:var(--lime);border-radius:50%;margin-right:6px}
+@media(max-width:780px){main{padding-top:35px}.top{flex-direction:column;align-items:flex-start}.identity{text-align:left}.layout{grid-template-columns:1fr}.points,.stat{min-height:190px}.actions{grid-template-columns:1fr}.bottom{grid-template-columns:1fr}.navmeta .live{display:none}.top h1{font-size:48px}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<nav class="nav"><div class="brand"><div class="mark">N</div>NAZU</div><div class="navright"><div class="online"><i class="dot"></i> SYSTEM ONLINE</div><button class="signout" onclick="logout()">Sign out</button></div></nav>
+<nav class="nav"><div class="brand"><div class="symbol">N</div>NAZU</div><div class="navmeta"><div class="live"><i></i>SYSTEM OPERATIONAL</div><button class="logout" onclick="logout()">SIGN OUT</button></div></nav>
 <main>
-<div class="hero"><div><div class="eyebrow">NAZU NETWORK / MEMBER AREA</div><h1>Welcome to <span>NAZU.</span></h1><p>Your personal command center is ready.</p></div><div class="uid">SIGNED IN AS<strong id="email">—</strong></div></div>
-<div class="status"><i></i><span id="state">Secure session active</span></div>
-<section class="grid">
-<div class="card big"><div class="label">TOTAL NAZU POINTS</div><div class="points" id="points">0<small>PTS</small></div><div class="trend">↗ Earning system ready</div></div>
-<div class="card mini"><div class="label">ACCOUNT</div><div class="value">ACTIVE</div><p>Identity verified</p><div class="bar"><span></span></div></div>
-<div class="card mini"><div class="label">NETWORK</div><div class="value">ONLINE</div><p>Connection stable</p><div class="bar"><span style="width:100%"></span></div></div>
+<section class="top"><div><div class="kicker">PRIVATE NETWORK / MEMBER CONSOLE</div><h1>Build your <em>signal.</em></h1></div><div class="identity">ACCOUNT<strong id="email">—</strong></div></section>
+<div class="ticker"><b>NAZU NETWORK</b><span>POINT ENGINE ONLINE</span><span>IDENTITY VERIFIED</span><span>DAILY CYCLE ACTIVE</span><span>EARLY ACCESS</span></div>
+<section class="layout">
+<div class="panel points"><div class="label">AVAILABLE POINTS</div><div class="number" id="points">0<small>PTS</small></div><div class="subrow"><span>Lifetime network score</span><b id="state">LIVE</b></div></div>
+<div class="panel stat"><div class="label">LEVEL</div><div class="big" id="level">LVL 1</div><p>Progress to next level</p><div class="meter"><span id="levelBar"></span></div></div>
+<div class="panel stat"><div class="label">STREAK</div><div class="big" id="streak">0 DAYS</div><p>Consecutive activity</p><div class="meter"><span id="streakBar"></span></div></div>
 </section>
-<section class="actions">
-<a class="action" href="#earn" onclick="checkin()"><b>⚡ Daily Check-in</b><span id="checkText">+25 PTS today</span></a>
-<a class="action" href="#ref"><b>◈ Referrals</b><span id="refCode">Loading code...</span></a>
-<a class="action" href="#missions"><b>◉ Missions</b><span>Complete tasks & earn</span></a>
+<section class="section"><div class="sectionhead"><h2>QUICK ACTIONS</h2><span>01 — 03</span></div><div class="actions">
+<a class="action" href="#checkin" onclick="checkin()"><div class="icon">↗</div><b>Daily Check-in</b><span id="checkText">Claim +25 points</span></a>
+<a class="action" href="#ref"><div class="icon">⌁</div><b>Invite Network</b><span id="refCode">Referral code loading</span></a>
+<a class="action" href="#missions"><div class="icon">◇</div><b>Missions</b><span>Complete activity to earn</span></a>
+</div></section>
+<section class="section bottom">
+<div class="panel mission" id="missions"><div class="sectionhead"><h2>ACTIVE MISSIONS</h2><span>LIVE</span></div>
+<div class="row"><span>Daily Check-in</span><b class="reward" id="missionStatus">+25 PTS</b></div>
+<div class="row"><span>Complete your profile</span><b class="reward">+50 PTS</b></div>
+<div class="row"><span>Invite first member</span><b class="reward">+100 PTS</b></div></div>
+<div class="panel ref" id="ref"><div class="sectionhead"><h2>YOUR NETWORK KEY</h2><span>REFERRAL</span></div><div class="code" id="refCodeLarge">—</div><div class="refurl" id="refLink">Preparing secure referral link…</div><button class="copy" onclick="copyReferral()">COPY LINK</button></div>
 </section>
-<section class="grid" style="margin-top:16px">
-<div class="card mini"><div class="label">LEVEL</div><div class="value" id="level">LVL 1</div><p>Grow your NAZU score</p><div class="bar"><span id="levelBar" style="width:0%"></span></div></div>
-<div class="card mini"><div class="label">STREAK</div><div class="value" id="streak">0 DAYS</div><p>Daily activity streak</p><div class="bar"><span id="streakBar" style="width:0%"></span></div></div>
-<div class="card mini"><div class="label">REFERRAL</div><div class="value" id="refCount">0</div><p>Network members</p><div class="bar"><span style="width:8%"></span></div></div>
-</section>
-<section class="card feed" id="missions"><div class="feedhead"><h2>Missions</h2><span>LIVE</span></div>
-<div class="event"><div>◉ <em>Daily Check-in</em></div><strong id="missionStatus">+25 PTS</strong></div>
-<div class="event"><div>◇ <em>Complete your profile</em></div><span style="color:#69758b">+50 PTS</span></div>
-<div class="event"><div>⌁ <em>Invite your first member</em></div><span style="color:#69758b">+100 PTS</span></div>
-</section>
-<section class="card feed" id="ref"><div class="feedhead"><h2>Your referral link</h2><span>NETWORK</span></div>
-<div class="event"><div><em id="refLink">Generate after database setup</em></div><button class="signout" onclick="copyReferral()">COPY</button></div>
-</section>
+<div class="state"><i></i> Secure session · NAZU early network</div>
 </main>
 <script>
 const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co",SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let currentUser=null;
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);let currentUser=null;
 async function load(){
  try{
-  const {data,error}=await supabaseClient.auth.getUser();
-  if(error||!data.user){window.location.replace("login.html");return}
+  const {data,error}=await supabaseClient.auth.getUser(); if(error||!data.user){location.replace("login.html");return}
   currentUser=data.user; document.getElementById("email").textContent=currentUser.email||"—";
-  const {data:p,error:pe}=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).maybeSingle();
-  if(pe||!p){document.getElementById("state").textContent="Account connected • database setup pending";return}
+  let {data:p,error:pe}=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).maybeSingle();
+  if(!p){
+   const code="NAZU-"+currentUser.id.replaceAll("-","").slice(0,8).toUpperCase();
+   const ins=await supabaseClient.from("profiles").insert({id:currentUser.id,email:currentUser.email,referral_code:code}).select("points,level,streak,referral_code,last_checkin").single();
+   if(ins.error) throw ins.error; p=ins.data;
+  }
   render(p);
- }catch(e){document.getElementById("state").textContent="Session check failed"}
+ }catch(e){document.getElementById("state").textContent="SYNC ERROR";console.error(e)}
 }
 function render(p){
- document.getElementById("points").innerHTML=(p.points||0).toLocaleString()+"<small>PTS</small>";
- document.getElementById("level").textContent="LVL "+(p.level||1);
- document.getElementById("streak").textContent=(p.streak||0)+" DAYS";
- document.getElementById("levelBar").style.width=Math.min(100,((p.points||0)%1000)/10)+"%";
- document.getElementById("streakBar").style.width=Math.min(100,(p.streak||0)*10)+"%";
- document.getElementById("refCode").textContent=p.referral_code||"Unavailable";
- document.getElementById("refLink").textContent=p.referral_code?location.origin+location.pathname.replace("dashboard.html","")+"?ref="+p.referral_code:"Generate after database setup";
+ const pts=p.points||0,level=p.level||1,streak=p.streak||0,code=p.referral_code||"NAZU";
+ document.getElementById("points").innerHTML=pts.toLocaleString()+"<small>PTS</small>";
+ document.getElementById("level").textContent="LVL "+level;document.getElementById("streak").textContent=streak+" DAYS";
+ document.getElementById("levelBar").style.width=Math.min(100,(pts%1000)/10)+"%";document.getElementById("streakBar").style.width=Math.min(100,streak*10)+"%";
+ document.getElementById("refCode").textContent=code;document.getElementById("refCodeLarge").textContent=code;
+ const link=location.origin+location.pathname.replace("dashboard.html","")+"?ref="+encodeURIComponent(code);
+ document.getElementById("refLink").textContent=link;
  if(p.last_checkin===new Date().toISOString().slice(0,10)){document.getElementById("checkText").textContent="Completed today";document.getElementById("missionStatus").textContent="DONE"}
 }
 async function checkin(){
- const {data,error}=await supabaseClient.rpc("daily_checkin");
- if(error){alert("Database setup is not active yet.");return}
- render({points:data.points,level:data.level,streak:data.streak,referral_code:document.getElementById("refCode").textContent,last_checkin:new Date().toISOString().slice(0,10)});
- document.getElementById("checkText").textContent="Completed today";
- document.getElementById("missionStatus").textContent="DONE";
+ const {data,error}=await supabaseClient.rpc("daily_checkin");if(error){alert("Could not complete check-in.");return}
+ const {data:p}=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).single();if(p)render(p)
 }
-async function copyReferral(){const t=document.getElementById("refLink").textContent;if(t.startsWith("Generate"))return;navigator.clipboard&&navigator.clipboard.writeText(t);alert("Referral link copied");}
-async function logout(){await supabaseClient.auth.signOut();window.location.replace("login.html")}
+async function copyReferral(){const t=document.getElementById("refLink").textContent;if(!t||t.includes("Preparing"))return;navigator.clipboard&&await navigator.clipboard.writeText(t);alert("Referral link copied")}
+async function logout(){await supabaseClient.auth.signOut();location.replace("login.html")}
 load();
 </script>
 </body></html>

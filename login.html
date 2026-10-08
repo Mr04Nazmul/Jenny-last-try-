@@ -75,6 +75,29 @@ const title=document.getElementById("title"),sub=document.getElementById("sub"),
 const forgot=document.getElementById("forgot"),switchBtn=document.getElementById("switch"),back=document.getElementById("back"),notice=document.getElementById("notice");
 const socialAuth=document.getElementById("socialAuth"),googleBtn=document.getElementById("googleBtn"),xBtn=document.getElementById("xBtn");
 
+googleBtn.onclick=async()=>{
+  googleBtn.disabled=true;
+  setMsg("Opening Google sign-in…");
+  try{
+    const {error}=await sb.auth.signInWithOAuth({
+      provider:"google",
+      options:{
+        redirectTo:location.href.split("#")[0]
+      }
+    });
+    if(error)throw error;
+  }catch(err){
+    setMsg(err?.message||"Google sign-in could not be started.");
+    googleBtn.disabled=false;
+  }
+};
+
+xBtn.onclick=async()=>{
+  xBtn.disabled=true;
+  setMsg("X sign-in is not available yet.");
+  setTimeout(()=>{xBtn.disabled=false;},1200);
+};
+
 let mode="signin";
 const PENDING_SIGNUP_KEY="nazorix_pending_signup_v1";
 const params=new URLSearchParams(location.search);

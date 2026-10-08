@@ -30,9 +30,118 @@ body{margin:0;background:#050608;color:#f5f7fb;font-family:Inter,system-ui,sans-
 <main class="wrap"><div class="k">NETWORK / NODE CENTER</div><h1 class="title">Run your <em>node.</em></h1>
 <section class="node"><div class="status"><i id="dot" class="dot"></i><span id="status">NODE OFFLINE</span></div><div class="timer" id="timer">00:00:00</div><div class="earned">SESSION UPTIME · <b id="points">0 PTS</b></div><button class="btn" id="btn" onclick="toggleNode()">START NODE</button><div class="note">Uptime points are recorded to your NAZORIX account.</div></section></main>
 <script>
-const sb=supabase.createClient("https://vjygltfnrmyghlwyjtwu.supabase.co","sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh");let active=false,sec=0,timer=null;
-async function load(){const {data,error}=await sb.auth.getUser();if(error||!data.user){location.replace("login.html");return}const {data:n}=await sb.from("node_sessions").select("active,total_seconds").eq("user_id",data.user.id).maybeSingle();if(n&&n.active){active=true;sec=n.total_seconds||0;ui();start()}else ui()}
-function ui(){document.getElementById("status").textContent=active?"NODE ACTIVE · EARNING":"NODE OFFLINE";document.getElementById("dot").className="dot"+(active?" on":"");document.getElementById("btn").textContent=active?"STOP NODE":"START NODE";document.getElementById("timer").textContent=new Date(sec*1000).toISOString().slice(11,19)}
-function start(){if(timer)return;timer=setInterval(async()=>{if(!active)return;sec++;ui();if(sec>=18000){active=false;clearInterval(timer);timer=null;ui();return}if(sec%30===0){const {data:n}=await sb.from("node_sessions").select("active,total_seconds").eq("user_id",(await sb.auth.getUser()).data.user.id).maybeSingle();if(n){active=!!n.active;sec=Math.max(sec,n.total_seconds||0);ui();if(!active){clearInterval(timer);timer=null}}}},1000)}
-async function toggleNode(){if(active){const {error}=await sb.rpc("node_stop");if(error){alert("Could not stop node.");return}active=false;clearInterval(timer);timer=null;ui();return}const {error}=await sb.rpc("node_start");if(error){alert("Could not start node.");return}active=true;sec=0;ui();start()}load();
-</script></body></html>
+const sb=supabase.createClient("https://vjygltfnrmyghlwyjtwu.supabase.co","sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh");
+let active=false,startedAt=null,sec=0,timer=null,heartbeatTimer=null,userId=null;
+
+function formatTime(total){
+  total=Math.max(0,Math.min(18000,Math.floor(total||0)));
+  const h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=total%60;
+  return [h,m,s].map((v,i)=>i===0?String(v).padStart(2,"0"):String(v).padStart(2,"0")).join(":");
+}
+
+function elapsedFromStart(){
+  if(!startedAt)return sec;
+  return Math.min(18000,Math.max(0,Math.floor((Date.now()-new Date(startedAt).getTime())/1000)));
+}
+
+function ui(){
+  sec=active?elapsedFromStart():sec;
+  document.getElementById("status").textContent=active?"NODE ACTIVE · EARNING":"NODE OFFLINE";
+  document.getElementById("dot").className="dot"+(active?" on":"");
+  document.getElementById("btn").textContent=active?"STOP NODE":"START NODE";
+  document.getElementById("timer").textContent=formatTime(sec);
+}
+
+function stopTimers(){
+  if(timer){clearInterval(timer);timer=null}
+  if(heartbeatTimer){clearInterval(heartbeatTimer);heartbeatTimer=null}
+}
+
+async function heartbeat(){
+  if(!active)return;
+  const {data,error}=await sb.rpc("node_heartbeat");
+  if(error){console.error("Node heartbeat error",error);return}
+  if(data){
+    sec=Math.min(18000,Number(data.elapsed||sec));
+    if(data.active===false){
+      active=false;
+      startedAt=null;
+      stopTimers();
+    }
+  }
+  ui();
+}
+
+function startTimers(){
+  stopTimers();
+  ui();
+  timer=setInterval(()=>{
+    if(!active)return;
+    sec=elapsedFromStart();
+    ui();
+    if(sec>=18000){
+      active=false;
+      startedAt=null;
+      stopTimers();
+      ui();
+    }
+  },1000);
+  heartbeatTimer=setInterval(heartbeat,30000);
+}
+
+async function load(){
+  const {data,error}=await sb.auth.getUser();
+  if(error||!data.user){location.replace("login.html");return}
+  userId=data.user.id;
+
+  const {data:n,error:ne}=await sb.from("node_sessions")
+    .select("active,started_at,total_seconds")
+    .eq("user_id",userId)
+    .maybeSingle();
+
+  if(ne){console.error("Node load error",ne);ui();return}
+
+  if(n&&n.active&&n.started_at){
+    active=true;
+    startedAt=n.started_at;
+    sec=elapsedFromStart();
+    ui();
+    await heartbeat();
+    if(active)startTimers();
+    else ui();
+  }else{
+    active=false;
+    startedAt=null;
+    sec=n?.total_seconds||0;
+    ui();
+  }
+}
+
+async function toggleNode(){
+  if(active){
+    const {error}=await sb.rpc("node_stop");
+    if(error){alert("Could not stop node.");return}
+    active=false;
+    startedAt=null;
+    sec=0;
+    stopTimers();
+    ui();
+    return;
+  }
+
+  const {data,error}=await sb.rpc("node_start");
+  if(error){alert("Could not start node.");return}
+
+  active=true;
+  startedAt=data?.started_at||new Date().toISOString();
+  sec=0;
+  ui();
+  startTimers();
+}
+
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden&&active)heartbeat();
+});
+
+load();
+</script>></body></html>

@@ -265,11 +265,11 @@ form.onsubmit=async e=>{
       const {error:updateError}=await sb.auth.updateUser({data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:true,referred_by:ref||null}});
       if(updateError)throw updateError;
       if(ref){
-        const {data:owner}=await sb.from("profiles").select("id,referral_code").eq("referral_code",ref).maybeSingle();
-        if(owner && owner.id!==data.user.id){
-          const {error:profileError}=await sb.from("profiles").upsert({id:data.user.id,email:data.user.email,referred_by:ref},{onConflict:"id"});
-          if(profileError)console.warn("Referral attribution could not be saved",profileError);
-          else await sb.rpc("award_referral_reward",{p_ref:ref});
+        const {error:profileError}=await sb.from("profiles").upsert({id:data.user.id,email:data.user.email,referred_by:ref},{onConflict:"id"});
+        if(profileError)console.warn("Referral attribution could not be saved",profileError);
+        else{
+          const {error:rewardError}=await sb.rpc("award_referral_reward",{p_ref:ref});
+          if(rewardError)console.warn("Referral reward could not be credited",rewardError);
         }
       }
       clearPendingSignup();

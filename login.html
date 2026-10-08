@@ -235,10 +235,23 @@ form.onsubmit=async e=>{
         throw error;
       }
 
-      // Keep the verification step across accidental refreshes/navigation.
+      // If Supabase has Confirm Email disabled, signUp returns a live session
+      // and no confirmation email is sent. For NAZORIX we still require a
+      // 6-digit email code before activating the account, so send an OTP
+      // explicitly in that case.
+      if(data?.session){
+        const {error:otpError}=await sb.auth.signInWithOtp({
+          email:signupEmail,
+          options:{shouldCreateUser:false}
+        });
+        if(otpError)throw otpError;
+        await sb.auth.signOut();
+        setMsg("Verification code sent. Enter the 6-digit code from your email to finish creating the account.",true);
+      }else{
+        setMsg("Verification code sent. Enter the 6-digit code from your email to finish creating the account.",true);
+      }
       savePendingSignup();
       mode="verifySignup";
-      setMsg("Verification code sent. Enter the code from your email to finish creating the account.",true);
       render();
       return;
     }

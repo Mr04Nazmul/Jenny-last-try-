@@ -49,7 +49,7 @@ function ui(){
   document.getElementById("status").textContent=active?"NODE ACTIVE · EARNING":"NODE OFFLINE";
   document.getElementById("dot").className="dot"+(active?" on":"");
   document.getElementById("btn").textContent=active?"STOP NODE":"START NODE";
-  document.getElementById("timer").textContent=formatTime(sec);
+  document.getElementById("timer").textContent=formatTime(sec);\n  document.getElementById("points").textContent=Math.floor(sec/1200)+" PTS";
 }
 
 function stopTimers(){

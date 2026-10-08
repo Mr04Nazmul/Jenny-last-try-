@@ -3,141 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="NAZORIX — the next generation Web3 network.">
-<meta name="theme-color" content="#020817">
-<title>NAZORIX — Join the Network</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="theme-color" content="#030712">
+<meta name="description" content="NAZU — a network participation platform built for nodes, points, referrals and the next generation of digital ecosystems.">
+<meta name="keywords" content="NAZU, NAZU Network, NAZU token, NAZU crypto, Web3, network participation, nodes, points">
+<meta property="og:title" content="NAZU — The Network Participation Layer">
+<meta property="og:description" content="Participate. Build reputation. Earn points. Join the NAZU network.">
+<title>NAZU — The Network Participation Layer</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#01040c;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-3;background:#01040c url("nazu-world.svg") center top/cover no-repeat}body:after{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(0,4,14,.03),rgba(0,5,18,.02) 45%,rgba(0,3,12,.5) 100%)}.page{width:min(760px,92%);margin:auto;min-height:100vh;position:relative;padding-bottom:32px}.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 3px}.brand{display:flex;align-items:center;gap:10px}.brand-mark{font-size:31px;font-weight:1000;line-height:1;background:linear-gradient(135deg,#49a9ff,#fff 45%,#9e5cff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px rgba(56,160,255,.4)}.brand-name{font-size:16px;font-weight:800;letter-spacing:6px}.build{font-size:8px;letter-spacing:3.5px;color:#d0ddf4;text-transform:uppercase;text-align:right;text-shadow:0 0 12px #328cff}.hero{padding:30px 0 0;text-align:center}.logo-title{font-size:clamp(76px,16vw,128px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:0 0 10px;text-shadow:0 0 22px rgba(150,210,255,.42),0 0 65px rgba(45,120,255,.3)}.tag{font-size:9px;letter-spacing:6px;color:#c3d6f1;text-transform:uppercase;text-shadow:0 0 13px #2d9cff}.account-panel{width:min(600px,100%);margin:70px auto 0;padding:0 0 25px;border:1px solid rgba(83,178,255,.74);border-radius:27px;background:linear-gradient(145deg,rgba(3,14,37,.92),rgba(2,8,25,.88));box-shadow:0 25px 90px rgba(0,0,0,.55),0 0 45px rgba(39,125,255,.22),inset 0 0 35px rgba(40,160,255,.05);backdrop-filter:blur(14px);overflow:hidden}.account-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 66px;border-bottom:1px solid rgba(112,146,194,.22)}.account-tab{height:68px;border:0;background:transparent!important;color:#aabbd5;font-size:16px;font-weight:500;cursor:pointer;box-shadow:none!important;border-radius:0!important;position:relative}.account-tab.active{color:#fff}.account-tab.active:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;border-radius:4px;background:linear-gradient(90deg,#16baff,#7545ff);box-shadow:0 0 16px rgba(90,100,255,.72)}.account-inner{padding:35px 50px 0}.account-inner h2{font-size:31px;letter-spacing:-1.2px;margin:0 0 10px}.account-sub{margin:0 0 24px;color:#a0b4d2;font-size:15px;line-height:1.5}.account-inner label{display:block;color:#b8c8df;font-size:10px;font-weight:700;letter-spacing:.05em;margin:0 0 7px}.account-inner input[type=email],.account-inner input[type=password],.account-inner input[type=text],.account-inner input[type=number]{width:100%;height:53px;padding:0 16px;border:1px solid rgba(81,125,177,.7);border-radius:13px;background:rgba(5,18,42,.72);color:#fff;outline:none;font:inherit;font-size:15px;margin:0 0 15px}.account-inner input:focus{border-color:#6cbdff;box-shadow:0 0 0 4px rgba(91,160,255,.1)}.account-names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.account-names input{min-width:0}.account-submit{width:100%;height:57px;border:0;border-radius:13px;background:linear-gradient(100deg,#733fff,#596dff 53%,#16baff);color:#fff;font-size:17px;font-weight:850;cursor:pointer;box-shadow:0 15px 38px rgba(39,124,255,.3)}.account-submit:disabled{opacity:.6;cursor:wait}.account-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px;color:#a879ff;font-size:12px}.account-link{cursor:pointer}.account-msg{min-height:20px;margin-top:12px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.account-ok{color:#8dffd0!important}.account-back{margin-top:15px;text-align:center;color:#aab7d0;font-size:12px;cursor:pointer}.account-hidden{display:none!important}.footer{display:none}@media(max-width:600px){.page{width:92%;padding-bottom:20px}.top{height:62px}.brand-mark{font-size:27px}.brand-name{font-size:14px;letter-spacing:5px}.build{font-size:7px;letter-spacing:2.4px}.hero{padding-top:24px}.logo-title{font-size:22vw;letter-spacing:-5px}.tag{font-size:8px;letter-spacing:4.8px}.account-panel{margin-top:65px;border-radius:23px}.account-tabs{margin:0 24px}.account-inner{padding:29px 25px 0}.account-inner h2{font-size:28px}.account-names{grid-template-columns:1fr}}@media(min-width:900px){.hero{padding-top:38px}.account-panel{margin-top:78px}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#02050d;color:#f5f8ff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 50% -10%,rgba(42,125,255,.22),transparent 38%),radial-gradient(circle at 10% 40%,rgba(91,52,255,.12),transparent 28%),#02050d}
+body:after{content:"";position:fixed;inset:0;z-index:-4;opacity:.28;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:60px 60px;mask-image:linear-gradient(to bottom,#000,transparent 75%)}
+a{text-decoration:none;color:inherit}.wrap{width:min(1160px,92%);margin:auto}.nav{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07)}.brand{display:flex;align-items:center;gap:11px}.mark{font-size:31px;font-weight:1000;background:linear-gradient(135deg,#54b8ff,#fff 45%,#9b63ff);-webkit-background-clip:text;background-clip:text;color:transparent}.brand b{font-size:15px;letter-spacing:6px}.navlinks{display:flex;gap:28px;color:#8795ae;font-size:12px}.navlinks a:hover{color:#fff}.nav-actions{display:flex;gap:9px}.btn{border:1px solid rgba(255,255,255,.13);border-radius:11px;padding:11px 16px;font-size:12px;font-weight:800;background:rgba(255,255,255,.045)}.btn.primary{border:0;background:linear-gradient(100deg,#6f3dff,#347dff);box-shadow:0 10px 30px rgba(55,100,255,.28)}.hero{text-align:center;padding:105px 0 80px;position:relative}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid rgba(76,169,255,.22);border-radius:99px;background:rgba(48,128,255,.07);color:#9ecbff;font-size:10px;letter-spacing:2.4px;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:#39d9a2;box-shadow:0 0 13px #39d9a2}.hero h1{font-size:clamp(54px,9vw,104px);line-height:.9;letter-spacing:-5px;margin:25px auto 22px;max-width:1000px}.grad{background:linear-gradient(105deg,#fff 10%,#8ecbff 48%,#a16cff 88%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:650px;margin:auto;color:#8f9db5;font-size:16px;line-height:1.75}.hero-actions{margin-top:32px;display:flex;justify-content:center;gap:12px}.hero-actions .btn{padding:14px 21px}.hero-glow{position:absolute;left:50%;top:30px;width:600px;height:350px;transform:translateX(-50%);background:rgba(44,117,255,.13);filter:blur(90px);z-index:-1}.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(255,255,255,.025);overflow:hidden}.stat{padding:24px;text-align:center;border-right:1px solid rgba(255,255,255,.07)}.stat:last-child{border:0}.stat strong{display:block;font-size:24px}.stat span{display:block;color:#65738a;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;margin-top:5px}.section{padding:105px 0}.section-head{max-width:650px;margin-bottom:42px}.kicker{color:#72b8ff;font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}.section h2{font-size:clamp(34px,5vw,55px);letter-spacing:-2.5px;margin:12px 0}.section-head p{color:#7e8ba2;line-height:1.7}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{padding:27px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:linear-gradient(145deg,rgba(14,25,47,.7),rgba(6,10,20,.72));min-height:220px;transition:.25s}.card:hover{transform:translateY(-5px);border-color:rgba(91,171,255,.28);box-shadow:0 20px 50px rgba(0,0,0,.25)}.icon{font-size:25px;margin-bottom:35px}.card h3{margin:0 0 9px;font-size:18px}.card p{margin:0;color:#7c899f;font-size:13px;line-height:1.65}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.step{padding:22px;border-top:1px solid rgba(98,166,255,.35)}.num{color:#679fff;font-size:10px;letter-spacing:2px}.step h3{font-size:16px;margin:15px 0 7px}.step p{font-size:12px;color:#748198;line-height:1.6}.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.phase{padding:27px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:#070c17}.phase.active{border-color:rgba(70,168,255,.35);box-shadow:inset 0 0 35px rgba(40,125,255,.05)}.phase small{color:#6faeff;letter-spacing:2px}.phase h3{margin:10px 0 15px}.phase ul{padding:0;margin:0;list-style:none;color:#8290a6;font-size:12px;line-height:2}.phase li:before{content:"✓";color:#4abaff;margin-right:9px}.cta{padding:65px 30px;text-align:center;border:1px solid rgba(93,164,255,.22);border-radius:28px;background:radial-gradient(circle at 50% 0,rgba(62,131,255,.18),transparent 60%),rgba(8,14,27,.8)}.cta h2{font-size:clamp(34px,5vw,56px);margin:0 0 12px;letter-spacing:-2px}.cta p{color:#7e8ca3;margin:0 auto 26px;max-width:560px;line-height:1.7}.footer{padding:55px 0 30px;color:#59667a;font-size:11px}.footer-row{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.07);padding-top:22px}.footer b{color:#b9c5d8;letter-spacing:4px}.mobile-menu{display:none}@media(max-width:760px){.nav{height:65px}.navlinks{display:none}.nav-actions .btn:first-child{display:none}.mobile-menu{display:block}.hero{padding:78px 0 55px}.hero h1{letter-spacing:-3px}.hero p{font-size:14px}.hero-actions{flex-direction:column;align-items:stretch}.stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid rgba(255,255,255,.07)}.stat:last-child{border-bottom:0}.section{padding:75px 0}.cards,.roadmap{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.footer-row{gap:15px;flex-direction:column}}@media(max-width:420px){.steps{grid-template-columns:1fr}.brand b{letter-spacing:4px}}
 </style>
-
-
 </head>
 <body>
-<div class="page"><header class="top"><div class="brand"><div class="brand-mark">N</div><div class="brand-name">NAZORIX</div></div><div class="build">BUILD · CONNECT · GROW</div></header><main class="hero"><div class="logo-title">NAZORIX</div><div class="tag">BUILD · CONNECT · GROW</div><section class="account-panel" id="account-panel" aria-label="NAZORIX account access">
-<div class="account-tabs"><button class="account-tab active" id="mainLoginTab" type="button">Login</button><button class="account-tab" id="mainCreateTab" type="button">Create Account</button></div>
-<div class="account-inner">
-<div id="mainNotice" class="account-msg account-hidden">Email verified. Finish setting up your NAZORIX account.</div>
-<h2 id="mainAuthTitle">Welcome back</h2>
-<p id="mainAuthSub" class="account-sub">Sign in to continue to your NAZORIX account.</p>
-<form id="mainAuthForm">
-<div id="mainNames" class="account-names account-hidden">
-<div><label for="mainFirst">FIRST NAME</label><input id="mainFirst" type="text" autocomplete="given-name" placeholder="First name"></div>
-<div><label for="mainLast">LAST NAME</label><input id="mainLast" type="text" autocomplete="family-name" placeholder="Last name"></div>
+<div class="wrap">
+<nav class="nav">
+<a class="brand" href="#"><span class="mark">N</span><b>NAZU</b></a>
+<div class="navlinks"><a href="#network">Network</a><a href="#how">How it works</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a></div>
+<div class="nav-actions"><a class="btn" href="login.html">Login</a><a class="btn primary" href="login.html?mode=create">Join NAZU</a><span class="mobile-menu">☰</span></div>
+</nav>
+<section class="hero">
+<div class="hero-glow"></div>
+<div class="eyebrow"><span class="dot"></span> Network participation layer</div>
+<h1>Participate in the<br><span class="grad">next digital network.</span></h1>
+<p>NAZU is building a participation-first ecosystem where people can connect, run nodes, collect points, grow through referrals and prepare for the next phase of the network.</p>
+<div class="hero-actions"><a class="btn primary" href="login.html?mode=create">Start participating →</a><a class="btn" href="#network">Explore the network</a></div>
+</section>
+<div class="stats">
+<div class="stat"><strong>01</strong><span>Network phase</span></div>
+<div class="stat"><strong>24/7</strong><span>Built for participation</span></div>
+<div class="stat"><strong>∞</strong><span>Future potential</span></div>
 </div>
-<label for="mainEmail">EMAIL ADDRESS</label><input id="mainEmail" type="email" required autocomplete="email" placeholder="you@example.com">
-<div id="mainPasswordWrap"><label for="mainPassword">PASSWORD</label><input id="mainPassword" type="password" minlength="8" required autocomplete="current-password" placeholder="Password"></div>
-<div id="mainSignupCodeWrap" class="account-hidden"><label for="mainSignupCode">VERIFICATION CODE</label><input id="mainSignupCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="Enter 8-digit code"><div id="mainResendCode" class="account-back">↻ Resend code</div></div>
-<div id="mainRecoveryCodeWrap" class="account-hidden"><label for="mainRecoveryCode">RECOVERY CODE</label><input id="mainRecoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="8-digit code"></div><div id="mainNewPasswordWrap" class="account-hidden"><label for="mainNewPassword">NEW PASSWORD</label><input id="mainNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><label for="mainConfirmPassword">CONFIRM PASSWORD</label><input id="mainConfirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
-<button class="account-submit" id="mainAuthSubmit" type="submit">Sign in</button>
-</form>
-<div id="mainAuthMsg" class="account-msg"></div>
-<div class="account-links"><span id="mainForgot" class="account-link">Forgot password?</span><span id="mainSwitch" class="account-link">Create an account</span></div>
-<div id="mainBack" class="account-back account-hidden">← Back to sign in</div>
+<section class="section" id="network">
+<div class="section-head"><div class="kicker">The network</div><h2>More than an account.<br>It’s participation.</h2><p>NAZU brings the core pieces of a modern network platform into one place, with a focus on transparent participation and measurable contribution.</p></div>
+<div class="cards">
+<article class="card"><div class="icon">◈</div><h3>Node participation</h3><p>Participate through network-related node activity and track your session and contribution from one dashboard.</p></article>
+<article class="card"><div class="icon">✦</div><h3>Points system</h3><p>Build participation history through points designed to measure activity inside the NAZU ecosystem.</p></article>
+<article class="card"><div class="icon">⌁</div><h3>Referral growth</h3><p>Invite people with your referral link and grow the network together while keeping attribution simple.</p></article>
 </div>
 </section>
-
->
-</main>
+<section class="section" id="how">
+<div class="section-head"><div class="kicker">How it works</div><h2>Simple to enter.<br>Built to evolve.</h2></div>
+<div class="steps">
+<div class="step"><div class="num">01 / JOIN</div><h3>Create your account</h3><p>Set up your NAZU profile and enter the network.</p></div>
+<div class="step"><div class="num">02 / PARTICIPATE</div><h3>Activate your activity</h3><p>Use the platform and participate in available network features.</p></div>
+<div class="step"><div class="num">03 / GROW</div><h3>Collect points</h3><p>Your participation can build points and network history.</p></div>
+<div class="step"><div class="num">04 / EVOLVE</div><h3>Watch the ecosystem</h3><p>Future phases may introduce additional utility and ecosystem features.</p></div>
 </div>
-<script>
-const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co";
-const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
-const mainSb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const q=id=>document.getElementById(id);
-let mainMode=location.hash.includes("type=recovery")?"reset":"signin";
-const mainRecovery=false, mainVerified=new URLSearchParams(location.search).get("verified")==="1";
-let mainSignupEmail="";
-function mainMsg(t,ok=false){q("mainAuthMsg").textContent=t;q("mainAuthMsg").classList.toggle("account-ok",ok)}
-function mainRender(){
- const setup=mainMode==="setup",create=mainMode==="create",forgotMode=mainMode==="forgot",verifyCode=mainMode==="verifyCode",verifySignup=mainMode==="verifySignup",reset=mainMode==="reset";
- q("mainLoginTab").classList.toggle("active",mainMode==="signin"||reset);
- q("mainCreateTab").classList.toggle("active",create||setup);
- q("mainNotice").classList.toggle("account-hidden",!setup);
- q("mainNames").classList.toggle("account-hidden",!setup&&!create);
- q("mainPasswordWrap").classList.toggle("account-hidden",create||setup||forgotMode||verifyCode||verifySignup||reset);
- q("mainSignupCodeWrap").classList.toggle("account-hidden",mainMode!=="verifySignup");
- q("mainRecoveryCodeWrap").classList.toggle("account-hidden",mainMode!=="verifyCode");
- q("mainNewPasswordWrap").classList.toggle("account-hidden",!setup&&!reset);
- q("mainEmail").readOnly=setup||verifyCode||verifySignup||reset;
- q("mainFirst").required=setup||create;q("mainLast").required=setup||create;
- q("mainPassword").required=mainMode==="signin";
- q("mainRecoveryCode").required=verifyCode;
- q("mainSignupCode").required=verifySignup;
- q("mainNewPassword").required=setup||reset;q("mainConfirmPassword").required=setup||reset;
- q("mainForgot").classList.toggle("account-hidden",mainMode!=="signin");
- q("mainLoginTab").classList.toggle("account-hidden",mainMode==="reset");
- q("mainCreateTab").classList.toggle("account-hidden",mainMode==="reset");
- q("mainSwitch").classList.toggle("account-hidden",setup||reset||verifyCode||verifySignup);
- q("mainBack").classList.toggle("account-hidden",mainMode!=="reset"&&mainMode!=="forgot"&&mainMode!=="verifyCode"&&mainMode!=="verifySignup");
- if(setup){q("mainAuthTitle").textContent="Finish your account";q("mainAuthSub").textContent="Your email is verified. Create a password to activate your account.";q("mainAuthSubmit").textContent="Activate account";}
- else if(create){q("mainAuthTitle").textContent="Create your account";q("mainAuthSub").textContent="Enter your details. We’ll send a verification link before activation.";q("mainAuthSubmit").textContent="Send code";}
- else if(verifySignup){q("mainAuthTitle").textContent="Verify your email";q("mainAuthSub").textContent="Enter the 8-digit code sent to your email. Your account will be created only after the code is verified.";q("mainAuthSubmit").textContent="Create Account";}
- else if(forgotMode){q("mainAuthTitle").textContent="Forgot password";q("mainAuthSub").textContent="Enter your email and we’ll send a 6-digit recovery code.";q("mainAuthSubmit").textContent="Send recovery code";}
- else if(verifyCode){q("mainAuthTitle").textContent="Enter recovery code";q("mainAuthSub").textContent="Enter the 8-digit code sent to your email.";q("mainAuthSubmit").textContent="Verify code";}
- else if(reset){q("mainAuthTitle").textContent="Reset your password";q("mainAuthSub").textContent="Choose a new password for your NAZORIX account.";q("mainAuthSubmit").textContent="Change password";}
- else{q("mainAuthTitle").textContent="Welcome back";q("mainAuthSub").textContent="Sign in to continue to your NAZORIX account.";q("mainAuthSubmit").textContent="Sign in";}
- q("mainSwitch").textContent=create?"Already have an account? Sign in":"Create an account";
- if(verifySignup){q("mainAuthSubmit").disabled=!/^\d{8}$/.test(q("mainSignupCode").value.trim());}
-}
-q("mainLoginTab").onclick=()=>{mainMode="signin";mainMsg("");mainRender()};
-q("mainCreateTab").onclick=()=>{mainMode="create";mainMsg("");mainRender()};
-q("mainSwitch").onclick=()=>{mainMode=mainMode==="create"?"signin":"create";mainMsg("");mainRender()};
-q("mainSignupCode").oninput=()=>{if(mainMode==="verifySignup")q("mainAuthSubmit").disabled=!/^\d{8}$/.test(q("mainSignupCode").value.trim());};
-q("mainResendCode").onclick=async()=>{if(!mainSignupEmail)return;const r=await mainSb.auth.signInWithOtp({email:mainSignupEmail,options:{shouldCreateUser:true}});mainMsg(r.error?r.error.message:"A new verification code has been sent to your email.",!r.error);};
-q("mainForgot").onclick=()=>{mainMode="forgot";mainMsg("");q("mainPassword").value="";q("mainRecoveryCode").value="";q("mainSignupCode").value="";q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
-q("mainBack").onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mainMode="signin";mainMsg("");q("mainRecoveryCode").value="";q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
-q("mainAuthForm").onsubmit=async e=>{
- e.preventDefault();const btn=q("mainAuthSubmit");btn.disabled=true;mainMsg("");
- try{
-  if(mainMode==="create"){
-   if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");
-   const email=q("mainEmail").value.trim(); if(!email)throw new Error("Please enter your email address.");
-   const {error}=await mainSb.auth.signInWithOtp({email,options:{shouldCreateUser:true,data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim(),account_complete:false}}});
-   if(error)throw error;
-   mainSignupEmail=email;mainMode="verifySignup";q("mainEmail").value=email;q("mainSignupCode").value="";
-   mainMsg("Verification code sent. Check your Gmail inbox and enter the 8-digit code below.",true);mainRender();return;
-  }
-  if(mainMode==="verifySignup"){
-   const code=q("mainSignupCode").value.trim();
-   if(!/^\d{8}$/.test(code))throw new Error("Enter the 8-digit verification code.");
-   const {data,error}=await mainSb.auth.verifyOtp({email:(mainSignupEmail||q("mainEmail").value.trim()),token:code,type:"email"});
-   if(error)throw error;
-   if(!data.session)throw new Error("Verification succeeded but the account session was not created. Please try again.");
-   await mainSb.auth.updateUser({data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim(),account_complete:true}});
-   mainMsg("Account created successfully. Opening NAZU…",true);
-   setTimeout(()=>location.href="dashboard.html?v=50",450);
-   return;
-  }
-  if(mainMode==="signin"){
-   const {data,error}=await mainSb.auth.signInWithPassword({email:q("mainEmail").value.trim(),password:q("mainPassword").value});
-   if(error)throw error;if(!data.session)throw new Error("Sign in could not be completed.");location.href="dashboard.html?v=50";return;
-  }
-  if(mainMode==="forgot"){
-   const {error}=await mainSb.auth.signInWithOtp({email:q("mainEmail").value.trim(),options:{shouldCreateUser:false}});if(error)throw error;
-   mainMode="verifyCode";mainMsg("Recovery code sent. Check your Gmail inbox.",true);mainRender();return;
-  }
-  if(mainMode==="verifyCode"){
-   if(!/^\d{8}$/.test(q("mainRecoveryCode").value.trim()))throw new Error("Enter the 8-digit recovery code.");
-   const {error}=await mainSb.auth.verifyOtp({email:q("mainEmail").value.trim(),token:q("mainRecoveryCode").value.trim(),type:"email"});if(error)throw error;
-   mainMode="reset";q("mainRecoveryCode").value="";mainMsg("Code verified. Choose a new password.",true);mainRender();return;
-  }
-  if(mainMode==="reset"){
-   if(q("mainNewPassword").value.length<8)throw new Error("Password must be at least 8 characters.");
-   if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
-   const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value});if(error)throw error;await mainSb.auth.signOut();history.replaceState(null,"",location.pathname);mainMode="signin";mainMsg("Password changed. You can now sign in.",true);mainRender();return;
-  }
-  if(mainMode==="setup"){
-   if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");
-   if(q("mainNewPassword").value.length<8)throw new Error("Password must be at least 8 characters.");
-   if(q("mainNewPassword").value!==q("mainConfirmPassword").value)throw new Error("Passwords do not match.");
-   const {error}=await mainSb.auth.updateUser({password:q("mainNewPassword").value,data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim()}});if(error)throw error;
-   mainMsg("Account activated. Opening NAZORIX…",true);setTimeout(()=>location.href="dashboard.html?v=50",450);
-  }
- }catch(err){mainMsg(err?.message||"Something went wrong. Please try again.");}finally{btn.disabled=mainMode==="verifySignup"&&!/^\d{8}$/.test(q("mainSignupCode").value.trim())}
-};
-mainSb.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY"){mainMode="reset";mainRender()}if(event==="SIGNED_IN"&&mainVerified&&session){q("mainEmail").value=session.user.email||"";q("mainFirst").value=session.user.user_metadata?.first_name||"";q("mainLast").value=session.user.user_metadata?.last_name||"";mainMode="setup";mainRender()}});
-(async()=>{const {data}=await mainSb.auth.getSession();if(data.session&&mainVerified){q("mainEmail").value=data.session.user.email||"";q("mainFirst").value=data.session.user.user_metadata?.first_name||"";q("mainLast").value=data.session.user.user_metadata?.last_name||"";mainMode="setup"}else if(data.session&&!mainRecovery){location.href="dashboard.html?v=50"}mainRender()})();
-</script>
+</section>
+<section class="section" id="roadmap">
+<div class="section-head"><div class="kicker">Roadmap</div><h2>One network.<br>Multiple phases.</h2></div>
+<div class="roadmap">
+<div class="phase active"><small>PHASE 01</small><h3>Network Foundation</h3><ul><li>Accounts & profiles</li><li>Points infrastructure</li><li>Referral system</li><li>Node participation</li></ul></div>
+<div class="phase"><small>PHASE 02</small><h3>Network Expansion</h3><ul><li>More participation features</li><li>Community growth</li><li>Eligibility systems</li><li>Ecosystem tooling</li></ul></div>
+<div class="phase"><small>PHASE 03</small><h3>Future Ecosystem</h3><ul><li>Potential token utility</li><li>Broader ecosystem</li><li>Airdrop framework, if introduced</li><li>Long-term network development</li></ul></div>
+</div>
+</section>
+<section class="section" id="faq">
+<div class="section-head"><div class="kicker">FAQ</div><h2>Built with the future in mind.</h2></div>
+<div class="cards">
+<article class="card"><h3>Is NAZU a token already?</h3><p>NAZU is currently focused on its network participation platform. Any future token or economy would be introduced in a later phase.</p></article>
+<article class="card"><h3>How do points work?</h3><p>Points are intended to reflect participation inside the platform. Specific eligibility and future utility can change as the network evolves.</p></article>
+<article class="card"><h3>Can I join now?</h3><p>Yes. Create an account and start exploring the current participation features.</p></article>
+</div>
+</section>
+<section class="cta">
+<h2>Enter the NAZU network.</h2>
+<p>Create your account, start participating and follow the project as the ecosystem evolves.</p>
+<a class="btn primary" href="login.html?mode=create">Create your NAZU account →</a>
+</section>
+<footer class="footer"><div class="footer-row"><b>NAZU</b><span>© 2026 NAZU Network · BUILD · CONNECT · GROW</span></div></footer>
+</div>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <title>NAZORIX — Join the Network</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#01040c;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-3;background:#01040c url("nazu-world.svg") center top/cover no-repeat}body:after{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(0,4,14,.03),rgba(0,5,18,.02) 45%,rgba(0,3,12,.5) 100%)}.page{width:min(760px,92%);margin:auto;min-height:100vh;position:relative;padding-bottom:32px}.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 3px}.brand{display:flex;align-items:center;gap:10px}.brand-mark{font-size:31px;font-weight:1000;line-height:1;background:linear-gradient(135deg,#49a9ff,#fff 45%,#9e5cff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px rgba(56,160,255,.4)}.brand-name{font-size:16px;font-weight:800;letter-spacing:6px}.build{font-size:8px;letter-spacing:3.5px;color:#d0ddf4;text-transform:uppercase;text-align:right;text-shadow:0 0 12px #328cff}.hero{padding:30px 0 0;text-align:center}.logo-title{font-size:clamp(76px,16vw,128px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:0 0 10px;text-shadow:0 0 22px rgba(150,210,255,.42),0 0 65px rgba(45,120,255,.3)}.tag{font-size:9px;letter-spacing:6px;color:#c3d6f1;text-transform:uppercase;text-shadow:0 0 13px #2d9cff}.account-panel{width:min(600px,100%);margin:70px auto 0;padding:0 0 25px;border:1px solid rgba(83,178,255,.74);border-radius:27px;background:linear-gradient(145deg,rgba(3,14,37,.92),rgba(2,8,25,.88));box-shadow:0 25px 90px rgba(0,0,0,.55),0 0 45px rgba(39,125,255,.22),inset 0 0 35px rgba(40,160,255,.05);backdrop-filter:blur(14px);overflow:hidden}.account-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 66px;border-bottom:1px solid rgba(112,146,194,.22)}.account-tab{height:68px;border:0;background:transparent!important;color:#aabbd5;font-size:16px;font-weight:500;cursor:pointer;box-shadow:none!important;border-radius:0!important;position:relative}.account-tab.active{color:#fff}.account-tab.active:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;border-radius:4px;background:linear-gradient(90deg,#16baff,#7545ff);box-shadow:0 0 16px rgba(90,100,255,.72)}.account-inner{padding:35px 50px 0}.account-inner h2{font-size:31px;letter-spacing:-1.2px;margin:0 0 10px}.account-sub{margin:0 0 24px;color:#a0b4d2;font-size:15px;line-height:1.5}.account-inner label{display:block;color:#b8c8df;font-size:10px;font-weight:700;letter-spacing:.05em;margin:0 0 7px}.account-inner input[type=email],.account-inner input[type=password],.account-inner input[type=text]{width:100%;height:53px;padding:0 16px;border:1px solid rgba(81,125,177,.7);border-radius:13px;background:rgba(5,18,42,.72);color:#fff;outline:none;font:inherit;font-size:15px;margin:0 0 15px}.account-inner input:focus{border-color:#6cbdff;box-shadow:0 0 0 4px rgba(91,160,255,.1)}.account-names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.account-names input{min-width:0}.account-submit{width:100%;height:57px;border:0;border-radius:13px;background:linear-gradient(100deg,#733fff,#596dff 53%,#16baff);color:#fff;font-size:17px;font-weight:850;cursor:pointer;box-shadow:0 15px 38px rgba(39,124,255,.3)}.account-submit:disabled{opacity:.6;cursor:wait}.account-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px;color:#a879ff;font-size:12px}.account-link{cursor:pointer}.account-msg{min-height:20px;margin-top:12px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.account-ok{color:#8dffd0!important}.account-back{margin-top:15px;text-align:center;color:#aab7d0;font-size:12px;cursor:pointer}.account-hidden{display:none!important}.footer{display:none}@media(max-width:600px){.page{width:92%;padding-bottom:20px}.top{height:62px}.brand-mark{font-size:27px}.brand-name{font-size:14px;letter-spacing:5px}.build{font-size:7px;letter-spacing:2.4px}.hero{padding-top:24px}.logo-title{font-size:22vw;letter-spacing:-5px}.tag{font-size:8px;letter-spacing:4.8px}.account-panel{margin-top:65px;border-radius:23px}.account-tabs{margin:0 24px}.account-inner{padding:29px 25px 0}.account-inner h2{font-size:28px}.account-names{grid-template-columns:1fr}}@media(min-width:900px){.hero{padding-top:38px}.account-panel{margin-top:78px}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#01040c;color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-x:hidden}body:before{content:"";position:fixed;inset:0;z-index:-3;background:#01040c url("nazu-world.svg") center top/cover no-repeat}body:after{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(0,4,14,.03),rgba(0,5,18,.02) 45%,rgba(0,3,12,.5) 100%)}.page{width:min(760px,92%);margin:auto;min-height:100vh;position:relative;padding-bottom:32px}.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 3px}.brand{display:flex;align-items:center;gap:10px}.brand-mark{font-size:31px;font-weight:1000;line-height:1;background:linear-gradient(135deg,#49a9ff,#fff 45%,#9e5cff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px rgba(56,160,255,.4)}.brand-name{font-size:16px;font-weight:800;letter-spacing:6px}.build{font-size:8px;letter-spacing:3.5px;color:#d0ddf4;text-transform:uppercase;text-align:right;text-shadow:0 0 12px #328cff}.hero{padding:30px 0 0;text-align:center}.logo-title{font-size:clamp(76px,16vw,128px);line-height:.82;font-weight:1000;letter-spacing:-7px;margin:0 0 10px;text-shadow:0 0 22px rgba(150,210,255,.42),0 0 65px rgba(45,120,255,.3)}.tag{font-size:9px;letter-spacing:6px;color:#c3d6f1;text-transform:uppercase;text-shadow:0 0 13px #2d9cff}.account-panel{width:min(600px,100%);margin:70px auto 0;padding:0 0 25px;border:1px solid rgba(83,178,255,.74);border-radius:27px;background:linear-gradient(145deg,rgba(3,14,37,.92),rgba(2,8,25,.88));box-shadow:0 25px 90px rgba(0,0,0,.55),0 0 45px rgba(39,125,255,.22),inset 0 0 35px rgba(40,160,255,.05);backdrop-filter:blur(14px);overflow:hidden}.account-tabs{display:grid;grid-template-columns:1fr 1fr;margin:0 66px;border-bottom:1px solid rgba(112,146,194,.22)}.account-tab{height:68px;border:0;background:transparent!important;color:#aabbd5;font-size:16px;font-weight:500;cursor:pointer;box-shadow:none!important;border-radius:0!important;position:relative}.account-tab.active{color:#fff}.account-tab.active:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;border-radius:4px;background:linear-gradient(90deg,#16baff,#7545ff);box-shadow:0 0 16px rgba(90,100,255,.72)}.account-inner{padding:35px 50px 0}.account-inner h2{font-size:31px;letter-spacing:-1.2px;margin:0 0 10px}.account-sub{margin:0 0 24px;color:#a0b4d2;font-size:15px;line-height:1.5}.account-inner label{display:block;color:#b8c8df;font-size:10px;font-weight:700;letter-spacing:.05em;margin:0 0 7px}.account-inner input[type=email],.account-inner input[type=password],.account-inner input[type=text],.account-inner input[type=number]{width:100%;height:53px;padding:0 16px;border:1px solid rgba(81,125,177,.7);border-radius:13px;background:rgba(5,18,42,.72);color:#fff;outline:none;font:inherit;font-size:15px;margin:0 0 15px}.account-inner input:focus{border-color:#6cbdff;box-shadow:0 0 0 4px rgba(91,160,255,.1)}.account-names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.account-names input{min-width:0}.account-submit{width:100%;height:57px;border:0;border-radius:13px;background:linear-gradient(100deg,#733fff,#596dff 53%,#16baff);color:#fff;font-size:17px;font-weight:850;cursor:pointer;box-shadow:0 15px 38px rgba(39,124,255,.3)}.account-submit:disabled{opacity:.6;cursor:wait}.account-links{display:flex;justify-content:space-between;gap:12px;margin-top:17px;color:#a879ff;font-size:12px}.account-link{cursor:pointer}.account-msg{min-height:20px;margin-top:12px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.account-ok{color:#8dffd0!important}.account-back{margin-top:15px;text-align:center;color:#aab7d0;font-size:12px;cursor:pointer}.account-hidden{display:none!important}.footer{display:none}@media(max-width:600px){.page{width:92%;padding-bottom:20px}.top{height:62px}.brand-mark{font-size:27px}.brand-name{font-size:14px;letter-spacing:5px}.build{font-size:7px;letter-spacing:2.4px}.hero{padding-top:24px}.logo-title{font-size:22vw;letter-spacing:-5px}.tag{font-size:8px;letter-spacing:4.8px}.account-panel{margin-top:65px;border-radius:23px}.account-tabs{margin:0 24px}.account-inner{padding:29px 25px 0}.account-inner h2{font-size:28px}.account-names{grid-template-columns:1fr}}@media(min-width:900px){.hero{padding-top:38px}.account-panel{margin-top:78px}}
 </style>
 
 
@@ -27,6 +27,7 @@
 </div>
 <label for="mainEmail">EMAIL ADDRESS</label><input id="mainEmail" type="email" required autocomplete="email" placeholder="you@example.com">
 <div id="mainPasswordWrap"><label for="mainPassword">PASSWORD</label><input id="mainPassword" type="password" minlength="8" required autocomplete="current-password" placeholder="Password"></div>
+<div id="mainSignupCodeWrap" class="account-hidden"><label for="mainSignupCode">VERIFICATION CODE</label><input id="mainSignupCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter 6-digit code"></div>
 <div id="mainRecoveryCodeWrap" class="account-hidden"><label for="mainRecoveryCode">RECOVERY CODE</label><input id="mainRecoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></div><div id="mainNewPasswordWrap" class="account-hidden"><label for="mainNewPassword">NEW PASSWORD</label><input id="mainNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><label for="mainConfirmPassword">CONFIRM PASSWORD</label><input id="mainConfirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
 <button class="account-submit" id="mainAuthSubmit" type="submit">Sign in</button>
 </form>
@@ -46,46 +47,66 @@ const mainSb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const q=id=>document.getElementById(id);
 let mainMode=location.hash.includes("type=recovery")?"reset":"signin";
 const mainRecovery=false, mainVerified=new URLSearchParams(location.search).get("verified")==="1";
+let mainSignupEmail="";
 function mainMsg(t,ok=false){q("mainAuthMsg").textContent=t;q("mainAuthMsg").classList.toggle("account-ok",ok)}
 function mainRender(){
- const setup=mainMode==="setup",create=mainMode==="create",forgotMode=mainMode==="forgot",verifyCode=mainMode==="verifyCode",reset=mainMode==="reset";
+ const setup=mainMode==="setup",create=mainMode==="create",forgotMode=mainMode==="forgot",verifyCode=mainMode==="verifyCode",verifySignup=mainMode==="verifySignup",reset=mainMode==="reset";
  q("mainLoginTab").classList.toggle("active",mainMode==="signin"||reset);
  q("mainCreateTab").classList.toggle("active",create||setup);
  q("mainNotice").classList.toggle("account-hidden",!setup);
  q("mainNames").classList.toggle("account-hidden",!setup&&!create);
- q("mainPasswordWrap").classList.toggle("account-hidden",create||setup||forgotMode||verifyCode||reset);
+ q("mainPasswordWrap").classList.toggle("account-hidden",create||setup||forgotMode||verifyCode||verifySignup||reset);
+ q("mainSignupCodeWrap").classList.toggle("account-hidden",mainMode!=="verifySignup");
  q("mainRecoveryCodeWrap").classList.toggle("account-hidden",mainMode!=="verifyCode");
  q("mainNewPasswordWrap").classList.toggle("account-hidden",!setup&&!reset);
- q("mainEmail").readOnly=setup||verifyCode||reset;
+ q("mainEmail").readOnly=setup||verifyCode||verifySignup||reset;
  q("mainFirst").required=setup||create;q("mainLast").required=setup||create;
  q("mainPassword").required=mainMode==="signin";
  q("mainRecoveryCode").required=verifyCode;
+ q("mainSignupCode").required=verifySignup;
  q("mainNewPassword").required=setup||reset;q("mainConfirmPassword").required=setup||reset;
  q("mainForgot").classList.toggle("account-hidden",mainMode!=="signin");
  q("mainLoginTab").classList.toggle("account-hidden",mainMode==="reset");
  q("mainCreateTab").classList.toggle("account-hidden",mainMode==="reset");
- q("mainSwitch").classList.toggle("account-hidden",setup||reset||verifyCode);
- q("mainBack").classList.toggle("account-hidden",mainMode!=="reset"&&mainMode!=="forgot"&&mainMode!=="verifyCode");
+ q("mainSwitch").classList.toggle("account-hidden",setup||reset||verifyCode||verifySignup);
+ q("mainBack").classList.toggle("account-hidden",mainMode!=="reset"&&mainMode!=="forgot"&&mainMode!=="verifyCode"&&mainMode!=="verifySignup");
  if(setup){q("mainAuthTitle").textContent="Finish your account";q("mainAuthSub").textContent="Your email is verified. Create a password to activate your account.";q("mainAuthSubmit").textContent="Activate account";}
  else if(create){q("mainAuthTitle").textContent="Create your account";q("mainAuthSub").textContent="Enter your details. We’ll send a verification link before activation.";q("mainAuthSubmit").textContent="Send verification";}
+ else if(verifySignup){q("mainAuthTitle").textContent="Verify your email";q("mainAuthSub").textContent="Enter the 6-digit code sent to your email. Your account will be created only after the code is verified.";q("mainAuthSubmit").textContent="Create Account";}
  else if(forgotMode){q("mainAuthTitle").textContent="Forgot password";q("mainAuthSub").textContent="Enter your email and we’ll send a 6-digit recovery code.";q("mainAuthSubmit").textContent="Send recovery code";}
  else if(verifyCode){q("mainAuthTitle").textContent="Enter recovery code";q("mainAuthSub").textContent="Enter the 6-digit code sent to your email.";q("mainAuthSubmit").textContent="Verify code";}
  else if(reset){q("mainAuthTitle").textContent="Reset your password";q("mainAuthSub").textContent="Choose a new password for your NAZORIX account.";q("mainAuthSubmit").textContent="Change password";}
  else{q("mainAuthTitle").textContent="Welcome back";q("mainAuthSub").textContent="Sign in to continue to your NAZORIX account.";q("mainAuthSubmit").textContent="Sign in";}
  q("mainSwitch").textContent=create?"Already have an account? Sign in":"Create an account";
+ if(verifySignup){q("mainAuthSubmit").disabled=!/^\\d{6}$/.test(q("mainSignupCode").value.trim());}
 }
 q("mainLoginTab").onclick=()=>{mainMode="signin";mainMsg("");mainRender()};
 q("mainCreateTab").onclick=()=>{mainMode="create";mainMsg("");mainRender()};
 q("mainSwitch").onclick=()=>{mainMode=mainMode==="create"?"signin":"create";mainMsg("");mainRender()};
-q("mainForgot").onclick=()=>{mainMode="forgot";mainMsg("");q("mainPassword").value="";q("mainRecoveryCode").value="";q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
+q("mainSignupCode").oninput=()=>{if(mainMode==="verifySignup")q("mainAuthSubmit").disabled=!/^\\d{6}$/.test(q("mainSignupCode").value.trim());};
+q("mainForgot").onclick=()=>{mainMode="forgot";mainMsg("");q("mainPassword").value="";q("mainRecoveryCode").value="";q("mainSignupCode").value="";q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
 q("mainBack").onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mainMode="signin";mainMsg("");q("mainRecoveryCode").value="";q("mainNewPassword").value="";q("mainConfirmPassword").value="";mainRender()};
 q("mainAuthForm").onsubmit=async e=>{
  e.preventDefault();const btn=q("mainAuthSubmit");btn.disabled=true;mainMsg("");
  try{
   if(mainMode==="create"){
    if(!q("mainFirst").value.trim()||!q("mainLast").value.trim())throw new Error("Please enter your first and last name.");
-   const {error}=await mainSb.auth.signInWithOtp({email:q("mainEmail").value.trim(),options:{shouldCreateUser:true,emailRedirectTo:"https://mr04nazmul.github.io/nazulabs/login.html?verified=1",data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim()}}});
-   if(error)throw error;mainMsg("Verification email sent. Open the link to continue. Your account is not activated until you verify your email.",true);btn.textContent="Verification sent";return;
+   const email=q("mainEmail").value.trim(); if(!email)throw new Error("Please enter your email address.");
+   const {error}=await mainSb.auth.signInWithOtp({email,options:{shouldCreateUser:true,data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim(),account_complete:false}}});
+   if(error)throw error;
+   mainSignupEmail=email;mainMode="verifySignup";q("mainEmail").value=email;q("mainSignupCode").value="";
+   mainMsg("Verification code sent. Check your Gmail inbox and enter the 6-digit code below.",true);mainRender();return;
+  }
+  if(mainMode==="verifySignup"){
+   const code=q("mainSignupCode").value.trim();
+   if(!/^\\d{6}$/.test(code))throw new Error("Enter the 6-digit verification code.");
+   const {data,error}=await mainSb.auth.verifyOtp({email:(mainSignupEmail||q("mainEmail").value.trim()),token:code,type:"email"});
+   if(error)throw error;
+   if(!data.session)throw new Error("Verification succeeded but the account session was not created. Please try again.");
+   await mainSb.auth.updateUser({data:{first_name:q("mainFirst").value.trim(),last_name:q("mainLast").value.trim(),account_complete:true}});
+   mainMsg("Account created successfully. Opening NAZU…",true);
+   setTimeout(()=>location.href="dashboard.html?v=50",450);
+   return;
   }
   if(mainMode==="signin"){
    const {data,error}=await mainSb.auth.signInWithPassword({email:q("mainEmail").value.trim(),password:q("mainPassword").value});

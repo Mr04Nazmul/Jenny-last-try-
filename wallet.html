@@ -41,7 +41,7 @@ nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:cen
 <main class="wrap"><div class="k">ECOSYSTEM / WALLET</div><div style="display:flex;justify-content:space-between;align-items:end;gap:15px"><h1 class="title" style="margin-bottom:35px">Your <em>wallet.</em></h1><span id="live" class="badge hidden" style="margin-bottom:45px">● LIVE</span></div>
 <section class="card">
 <div class="topline"><div><div class="icon">◇</div><h2 style="margin-top:18px">NAZORIX Wallet</h2></div><span class="badge">SEPOLIA TESTNET</span></div>
-<p>Connect your wallet to view your Sepolia assets and on-chain activity. NAZORIX is excluded from the asset list.</p>
+<p>Connect your wallet to view your Sepolia ETH balance and on-chain activity. Token balances are not displayed here.</p>
 <button id="connectBtn" class="btn" onclick="connectWallet()">CONNECT WALLET</button>
 <div id="disconnectWrap" class="hidden"><button id="disconnectBtn" class="btn" onclick="disconnectWallet()">DISCONNECT WALLET</button></div>
 <div class="contract" style="margin-top:18px"><div class="label">WALLET CONNECTION POLICY</div><p style="margin:8px 0 0">Your first connected wallet is permanently linked to your NAZORIX account. You may disconnect and reconnect it anytime, but you cannot replace it with another wallet. Only the same wallet can be connected again.</p></div>
@@ -51,7 +51,7 @@ nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:cen
 <div class="stat"><div class="label">WALLET</div><div id="address" class="value">—</div></div>
 <div class="stat"><div class="label">NETWORK</div><div id="network" class="value ok">—</div></div>
 </div>
-<div style="margin-top:18px"><div class="topline"><h2 style="font-size:16px">Sepolia Tokens</h2><span class="label">NAZORIX EXCLUDED</span></div><div id="tokens" class="activity"><div class="empty">Connect wallet to load token balances.</div></div></div>
+<div style="margin-top:18px"><div class="topline"><h2 style="font-size:16px">Sepolia Faucet</h2><span class="label">TEST ETH</span></div><div class="stat" style="margin-top:10px"><div class="label">GET SEPOLIA ETH</div><div class="muted" style="font-size:11px;line-height:1.7;margin-top:8px">Need test ETH for gas? Use a Sepolia faucet to request free test ETH for your connected wallet.</div><a class="btn" style="display:block;text-align:center;text-decoration:none;margin-top:14px" target="_blank" rel="noopener" href="https://www.alchemy.com/faucets/ethereum-sepolia">OPEN SEPOLIA FAUCET ↗</a></div></div>
 <div class="contract"><div class="label">VERIFIED CONTRACT</div><a target="_blank" rel="noopener" href="https://sepolia.etherscan.io/address/0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557">0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557</a></div>
 <div style="margin-top:28px"><div class="topline"><h2 style="font-size:16px">Recent Activity</h2><span class="label">ON-CHAIN</span></div><div id="activity" class="activity"><div class="muted">Loading activity…</div></div></div>
 </div>
@@ -79,6 +79,11 @@ async function loadActivity(contract,address){
   }).join("");
  }catch(e){box.innerHTML='<div class="empty">Activity could not be loaded right now.</div>';}
 }
+async function disconnectWallet(){
+ try{
+  if(window.ethereum){try{await window.ethereum.request({method:"wallet_revokePermissions",params:[{eth_accounts:{}}]});}catch{} }
+ }finally{location.reload();}
+}
 async function connectWallet(){
  const btn=document.getElementById("connectBtn");
  if(!window.ethereum){msg("MetaMask was not detected. Open NAZORIX in a browser with MetaMask installed.");return}
@@ -104,6 +109,7 @@ async function connectWallet(){
   document.getElementById("walletData").classList.remove("hidden");
   document.getElementById("live").classList.remove("hidden");
   btn.textContent="WALLET CONNECTED";
+  document.getElementById("disconnectWrap").classList.remove("hidden");
   msg("Connected. Balance and activity are read directly from the verified Sepolia contract.");
   await loadActivity(contract,address);
  }catch(e){msg(e?.shortMessage||e?.message||"Could not connect wallet.");}finally{btn.disabled=false}

@@ -59,21 +59,52 @@
 <script>
 const SUPABASE_URL="https://vjygltfnrmyghlwyjtwu.supabase.co",SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
 const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);let currentUser=null,nodeTimer=null,nodeActive=false;
+async function getStableSession(){
+ for(let attempt=0;attempt<3;attempt++){
+  const {data,error}=await supabaseClient.auth.getSession();
+  if(!error&&data.session)return data.session;
+  if(attempt<2)await new Promise(r=>setTimeout(r,700));
+ }
+ return null;
+}
 async function load(){
  try{
-  const {data:sessionData,error:sessionError}=await supabaseClient.auth.getSession();
-  if(sessionError||!sessionData.session){location.replace("login.html");return}
-  const {data,error}=await supabaseClient.auth.getUser(); if(error||!data.user){location.replace("login.html");return}
-  currentUser=data.user; const meta=currentUser.user_metadata||{};
-  if(!currentUser.email_confirmed_at){location.replace("login.html");return;} document.getElementById("menuEmail").textContent=currentUser.email||"—"; const full=[meta.first_name,meta.last_name].filter(Boolean).join(" ").trim(); const shownName=full||meta.username||"NAZORIX Member"; document.getElementById("menuName").textContent=shownName; if(document.getElementById("topName"))document.getElementById("topName").textContent=shownName; if(document.getElementById("topHandle"))document.getElementById("topHandle").textContent=meta.username?"@"+meta.username:"NAZORIX MEMBER"; if(document.getElementById("topAvatar"))document.getElementById("topAvatar").textContent=shownName.slice(0,1).toUpperCase();
-  let {data:p,error:pe}=await supabaseClient.from("profiles").select("points,level,streak").eq("id",currentUser.id).maybeSingle();
+  const session=await getStableSession();
+  if(!session){location.replace("login.html");return}
+  const {data,error}=await supabaseClient.auth.getUser();
+  if(error||!data.user){
+   await new Promise(r=>setTimeout(r,700));
+   const retry=await supabaseClient.auth.getUser();
+   if(retry.error||!retry.data.user){location.replace("login.html");return}
+   currentUser=retry.data.user;
+  }else currentUser=data.user;
+  const meta=currentUser.user_metadata||{};
+  if(!currentUser.email_confirmed_at){location.replace("login.html");return}
+  document.getElementById("menuEmail").textContent=currentUser.email||"—";
+  const full=[meta.first_name,meta.last_name].filter(Boolean).join(" ").trim();
+  const shownName=full||meta.username||"NAZORIX Member";
+  document.getElementById("menuName").textContent=shownName;
+  if(document.getElementById("topName"))document.getElementById("topName").textContent=shownName;
+  if(document.getElementById("topHandle"))document.getElementById("topHandle").textContent=meta.username?"@"+meta.username:"NAZORIX MEMBER";
+  if(document.getElementById("topAvatar"))document.getElementById("topAvatar").textContent=shownName.slice(0,1).toUpperCase();
+
+  let {data:p,error:pe}=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).maybeSingle();
+  if(pe)throw pe;
   if(!p){
    const code="__NAZORIX_CODE__-"+currentUser.id.replaceAll("-","").slice(0,8).toUpperCase();
    const ins=await supabaseClient.from("profiles").insert({id:currentUser.id,email:currentUser.email,referral_code:code}).select("points,level,streak,referral_code,last_checkin").single();
-   if(ins.error) throw ins.error; p=ins.data;
+   if(ins.error){
+    const retryProfile=await supabaseClient.from("profiles").select("points,level,streak,referral_code,last_checkin").eq("id",currentUser.id).maybeSingle();
+    if(retryProfile.error||!retryProfile.data)throw ins.error;
+    p=retryProfile.data;
+   }else p=ins.data;
   }
   render(p); await syncNode();
- }catch(e){console.error("NAZORIX dashboard sync error",e)}
+ }catch(e){
+  console.error("NAZORIX dashboard sync error",e);
+  const status=document.getElementById("nodeSystemStatus");
+  if(status)status.textContent="● Sync retrying";
+ }
 }
 function render(p){
  const pts=p.points||0,level=p.level||1,streak=p.streak||0,code=p.referral_code||"NAZORIX";
@@ -90,7 +121,7 @@ function render(p){
   if(missionStatus) missionStatus.textContent="DONE";
  }
 }
-async function syncNode(){try{const {data:n}=await supabaseClient.from("node_sessions").select("active").eq("user_id",currentUser.id).maybeSingle();const on=!!(n&&n.active);const count=document.getElementById("activeNodes"),status=document.getElementById("nodeSystemStatus");if(count)count.textContent=on?"1 / 1":"0 / 1";if(status)status.textContent=on?"● Node active":"● Node offline"}catch(e){console.error("Node status sync error",e)}}
+async function syncNode(){try{const {data:n,error}=await supabaseClient.from("node_sessions").select("active").eq("user_id",currentUser.id).maybeSingle();if(error)throw error;const on=!!(n&&n.active);const count=document.getElementById("activeNodes"),status=document.getElementById("nodeSystemStatus"),labels=document.querySelectorAll(".online");if(count)count.textContent=on?"1 / 1":"0 / 1";if(status)status.textContent=on?"● Node active":"● Node offline";labels.forEach(x=>{x.innerHTML="<i></i>"+(on?"Online":"Offline");x.style.color=on?"var(--green)":"#8c9bb5"})}catch(e){console.error("Node status sync error",e)}}
 
 function getSetting(k,d=false){return localStorage.getItem("nazu_"+k)===null?d:localStorage.getItem("nazu_"+k)==="1"}function applySettings(){document.body.classList.toggle("compact-mode",getSetting("compact"));document.body.classList.toggle("reduce-motion",getSetting("motion"));["compact","motion"].forEach(k=>{const e=document.getElementById(k+"Toggle");if(e)e.classList.toggle("on",getSetting(k))});const s=document.getElementById("sessionToggle");if(s)s.classList.toggle("on",getSetting("session",true))}function toggleSetting(k){localStorage.setItem("nazu_"+k,getSetting(k)?"0":"1");applySettings()}function resetSettings(){["compact","motion"].forEach(k=>localStorage.removeItem("nazu_"+k));localStorage.setItem("nazu_session","1");applySettings()}function toggleMenu(){document.getElementById("accountMenu").classList.toggle("show")}function closeSheets(){document.querySelectorAll(".sheet").forEach(x=>x.classList.remove("show"));document.getElementById("accountMenu").classList.remove("show")}function openProfile(){closeSheets();const m=currentUser?.user_metadata||{};document.getElementById("profileFirstName").value=m.first_name||"";document.getElementById("profileLastName").value=m.last_name||"";document.getElementById("profileUsername").value=m.username||"";document.getElementById("profileEmail").value=currentUser?.email||"";document.getElementById("profileSheet").classList.add("show")}function openSettings(){closeSheets();document.getElementById("settingsSheet").classList.add("show")}function openSecurity(){closeSheets();document.getElementById("securitySheet").classList.add("show")}function openAbout(){closeSheets();document.getElementById("aboutSheet").classList.add("show")}async function saveProfile(){const first_name=document.getElementById("profileFirstName").value.trim(),last_name=document.getElementById("profileLastName").value.trim(),username=document.getElementById("profileUsername").value.trim();const {error}=await supabaseClient.auth.updateUser({data:{first_name,last_name,username}});if(error){alert("Could not save profile.");return}const full=[first_name,last_name].filter(Boolean).join(" ").trim();document.getElementById("menuName").textContent=full||username||"NAZORIX Member";document.getElementById("displayProfileName").textContent=(full||username||"NAZORIX MEMBER").toUpperCase();document.getElementById("menuAvatar").textContent=(full||username||"N").slice(0,1).toUpperCase();closeSheets();alert("Profile updated")}async function logout(){await supabaseClient.auth.signOut();location.replace("login.html")}
 function filterQuests(category,btn){document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.quest[data-category]').forEach(q=>q.classList.toggle('hidden',category!=='all'&&q.dataset.category!==category))}

@@ -12,7 +12,7 @@ body{min-height:100vh;display:grid;place-items:center;background:#02050c;overflo
 .logo{display:flex;align-items:center;gap:11px;margin-bottom:25px}.mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#8064ff,#3d9cff);box-shadow:0 0 28px rgba(90,120,255,.35)}.brand{font-weight:850;font-size:21px;letter-spacing:.08em}.pill{margin-left:auto;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#87ffd0;border:1px solid rgba(87,255,196,.22);padding:6px 9px;border-radius:99px}
 h1{margin:0 0 8px;font-size:29px;letter-spacing:-.04em}.sub{margin:0 0 24px;color:#94a4bd;font-size:14px;line-height:1.5}
 label{display:block;margin:0 0 7px;color:#b8c4d9;font-size:11px;font-weight:750;letter-spacing:.06em}input{width:100%;padding:14px 15px;margin:0 0 16px;border-radius:13px;border:1px solid #2a3750;outline:none;background:rgba(3,8,18,.78);color:#fff;font-size:15px}input:focus{border-color:#7561ff;box-shadow:0 0 0 4px rgba(117,97,255,.11)}
-.names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.names input{min-width:0}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:11px}.names input{min-width:0}.referral{margin:-2px 0 2px}.referral input{margin-bottom:8px}.referral-note{display:block;margin:-3px 0 14px;color:#65758e;font-size:9px}
 button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:14px;font-weight:850;cursor:pointer;background:linear-gradient(100deg,#704dff,#4c91ff,#16baff);box-shadow:0 12px 30px rgba(66,104,255,.25)}button:disabled{opacity:.6;cursor:wait}
 .links{display:flex;justify-content:space-between;gap:12px;margin-top:17px;font-size:12px}.link{color:#aab7ff;cursor:pointer}.muted{color:#697892}
 .msg{min-height:20px;margin-top:13px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.ok{color:#8dffd0!important}
@@ -38,6 +38,7 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 <div><label for="email">EMAIL</label><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
 <div id="passwordBlock"><label for="password">PASSWORD</label><input id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="Your password"></div>
 <div id="confirmCreateBlock" class="hidden"><label for="confirmCreatePassword">CONFIRM PASSWORD</label><input id="confirmCreatePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
+<div id="referralBlock" class="referral hidden"><label for="referralCode">REFERRAL CODE <span style="color:#61718a;font-weight:500">(OPTIONAL)</span></label><input id="referralCode" type="text" maxlength="64" autocomplete="off" placeholder="Enter referral code"><span class="referral-note">If someone invited you, their code will be filled automatically.</span></div>
 <div id="codeBlock" class="hidden"><label for="recoveryCode">VERIFICATION CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></div>
 <div id="newPasswordBlock" class="hidden">
 <label for="newPassword">NEW PASSWORD</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
@@ -61,14 +62,15 @@ const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const form=document.getElementById("form"),email=document.getElementById("email"),password=document.getElementById("password");
-const first=document.getElementById("first"),last=document.getElementById("last"),recoveryCode=document.getElementById("recoveryCode"),newPassword=document.getElementById("newPassword"),confirmPassword=document.getElementById("confirmPassword"),confirmCreatePassword=document.getElementById("confirmCreatePassword");
-const names=document.getElementById("names"),passwordBlock=document.getElementById("passwordBlock"),confirmCreateBlock=document.getElementById("confirmCreateBlock"),codeBlock=document.getElementById("codeBlock"),newPasswordBlock=document.getElementById("newPasswordBlock");
+const first=document.getElementById("first"),last=document.getElementById("last"),referralCode=document.getElementById("referralCode"),recoveryCode=document.getElementById("recoveryCode"),newPassword=document.getElementById("newPassword"),confirmPassword=document.getElementById("confirmPassword"),confirmCreatePassword=document.getElementById("confirmCreatePassword");
+const names=document.getElementById("names"),referralBlock=document.getElementById("referralBlock"),passwordBlock=document.getElementById("passwordBlock"),confirmCreateBlock=document.getElementById("confirmCreateBlock"),codeBlock=document.getElementById("codeBlock"),newPasswordBlock=document.getElementById("newPasswordBlock");
 const title=document.getElementById("title"),sub=document.getElementById("sub"),submit=document.getElementById("submit"),msg=document.getElementById("msg");
 const forgot=document.getElementById("forgot"),switchBtn=document.getElementById("switch"),back=document.getElementById("back"),notice=document.getElementById("notice");
 
 let mode="signin";
 const params=new URLSearchParams(location.search);
 const verified=params.get("verified")==="1";
+const incomingRef=(params.get("ref")||"").trim().replace(/[^a-zA-Z0-9_-]/g,"").slice(0,64);
 const recovery=location.hash.includes("type=recovery");
 
 function setMsg(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}
@@ -76,7 +78,7 @@ function setMsg(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}
 function render(){
   const setup=mode==="setup", create=mode==="create", forgotMode=mode==="forgot", verifyCode=mode==="verifyCode", verifySignup=mode==="verifySignup", reset=mode==="reset";
   notice.classList.toggle("hidden",!setup);
-  names.classList.toggle("hidden",!setup&&!create);
+  names.classList.toggle("hidden",!setup&&!create); referralBlock.classList.toggle("hidden",!create);
   passwordBlock.classList.toggle("hidden",!["signin","create"].includes(mode));
   confirmCreateBlock.classList.toggle("hidden",mode!=="create");
   codeBlock.classList.toggle("hidden",!verifyCode&&!verifySignup);
@@ -103,6 +105,7 @@ function render(){
 async function checkSession(){
   const {data,error}=await sb.auth.getSession();
   if(error)return;
+  if(incomingRef && referralCode) referralCode.value=incomingRef;
   if(data.session&&verified){
     const u=data.session.user;
     email.value=u.email||"";
@@ -135,7 +138,7 @@ form.onsubmit=async e=>{
       const {data,error}=await sb.auth.signUp({
         email:email.value.trim(),
         password:password.value,
-        options:{data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:false}}
+        options:{data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:false,referred_by:referralCode.value.trim()||null}}
       });
       if(error)throw error;
       if(data.session)throw new Error("Email verification is required. Please keep Confirm email enabled in Supabase.");
@@ -150,8 +153,16 @@ form.onsubmit=async e=>{
       const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
       if(error)throw error;
       if(!data.session)throw new Error("Email verification did not create a session. Please try again.");
-      const {error:updateError}=await sb.auth.updateUser({data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:true}});
+      const ref=(referralCode.value.trim()||data.user.user_metadata?.referred_by||"").trim();
+      const {error:updateError}=await sb.auth.updateUser({data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:true,referred_by:ref||null}});
       if(updateError)throw updateError;
+      if(ref){
+        const {data:owner}=await sb.from("profiles").select("id,referral_code").eq("referral_code",ref).maybeSingle();
+        if(owner && owner.id!==data.user.id){
+          const {error:profileError}=await sb.from("profiles").upsert({id:data.user.id,email:data.user.email,referred_by:ref},{onConflict:"id"});
+          if(profileError)console.warn("Referral attribution could not be saved",profileError);
+        }
+      }
       setMsg("Email verified. Account created successfully. Opening NAZORIX…",true);
       setTimeout(()=>location.replace("dashboard.html?v=50"),450);
       return;
@@ -199,6 +210,7 @@ form.onsubmit=async e=>{
   finally{submit.disabled=false;}
 };
 
+if(incomingRef && referralCode) referralCode.value=incomingRef;
 render();checkSession();
 </script>
 </body>

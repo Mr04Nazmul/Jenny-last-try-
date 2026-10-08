@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NAZU | Sign in</title>
+<title>NAZORIX | Sign in</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}
 body{min-height:100vh;display:grid;place-items:center;background:#02050c;overflow:auto}
@@ -25,10 +25,10 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 <body>
 <div class="bg"></div><div class="shade"></div>
 <main class="card">
-<div class="logo"><div class="mark">N</div><div class="brand">NAZU</div><div class="pill">Secure access</div></div>
-<div id="notice" class="notice hidden">Email verified. Finish setting up your NAZU account.</div>
+<div class="logo"><div class="mark">N</div><div class="brand">NAZORIX</div><div class="pill">Secure access</div></div>
+<div id="notice" class="notice hidden">Email verified. Finish setting up your NAZORIX account.</div>
 <h1 id="title">Welcome back</h1>
-<p id="sub" class="sub">Sign in to continue to your NAZU account.</p>
+<p id="sub" class="sub">Sign in to continue to your NAZORIX account.</p>
 
 <form id="form">
 <div id="names" class="names hidden">
@@ -51,7 +51,7 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 <span id="switch" class="link">Create an account</span>
 </div>
 <div id="back" class="links hidden"><span class="link">← Back to sign in</span></div>
-<div class="footer">NAZU · Web3 network access</div>
+<div class="footer">NAZORIX · Web3 network access</div>
 </main>
 
 <script>
@@ -88,8 +88,8 @@ function render(){
   else if(create){title.textContent="Create your account";sub.textContent="Enter your details. We’ll send a verification link before activation.";submit.textContent="Send verification";}
   else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send a 6-digit recovery code.";submit.textContent="Send recovery code";}
   else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code sent to your email.";submit.textContent="Verify code";}
-  else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZU account.";submit.textContent="Change password";}
-  else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZU account.";submit.textContent="Sign in";}
+  else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
+  else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZORIX account.";submit.textContent="Sign in";}
   forgot.classList.toggle("hidden",mode!=="signin");
   switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset"||mode==="verifyCode");
   switchBtn.textContent=create?"Already have an account? Sign in":"Create an account";
@@ -172,7 +172,7 @@ form.onsubmit=async e=>{
       if(newPassword.value!==confirmPassword.value)throw new Error("Passwords do not match.");
       const {error}=await sb.auth.updateUser({password:newPassword.value,data:{first_name:first.value.trim(),last_name:last.value.trim()}});
       if(error)throw error;
-      setMsg("Account activated. Opening NAZU…",true);
+      setMsg("Account activated. Opening NAZORIX…",true);
       setTimeout(()=>location.replace("dashboard.html?v=50"),450);
     }
   }catch(err){setMsg(err?.message||"Something went wrong. Please try again.");}

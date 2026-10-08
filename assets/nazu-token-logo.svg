@@ -5,10 +5,9 @@
 </defs>
 <circle cx="32" cy="32" r="30" fill="#090a0d" stroke="url(#g)" stroke-width="3"/>
 <circle cx="32" cy="32" r="25" fill="none" stroke="#c99025" stroke-width="1.2"/>
-<g filter="url(#glow)" fill="none" stroke="url(#g)" stroke-linecap="round">
+<g filter="url(#glow)" fill="none" stroke="url(#g)" stroke-linecap="round" stroke-width="2">
  <path d="M13 34c7-9 14-10 21-2s13 7 18-2"/>
  <path d="M13 30c7 9 14 10 21 2s13-7 18 2"/>
 </g>
-<path d="M21 45V20l11 13 11-13v25h-6V30l-5 7-5-7v15z" fill="url(#g)"/>
-<text x="32" y="53" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" font-weight="700" letter-spacing="1.2" fill="#f5c94f">NAZU</text>
+<path d="M20 46V18l12 15 12-15v28h-7V33l-5 7-5-7v13z" fill="url(#g)"/>
 </svg>

@@ -100,10 +100,10 @@ xBtn.onclick=async()=>{
 
 let mode="signin";
 const PENDING_SIGNUP_KEY="nazorix_pending_signup_v1";
-const params=new URLSearchParams(location.search);
+const params=new URLSearchParams(location.search);\nconst requestedMode=(params.get("mode")||"").trim();
 const verified=params.get("verified")==="1";
 const incomingRef=(params.get("ref")||"").trim().replace(/[^a-zA-Z0-9_-]/g,"").slice(0,64);
-if(incomingRef) mode="create";
+if(incomingRef || requestedMode==="create") mode="create";
 const recovery=location.hash.includes("type=recovery");
 
 function savePendingSignup(){

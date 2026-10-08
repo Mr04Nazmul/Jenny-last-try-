@@ -152,8 +152,8 @@ function render(){
   if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
   else if(create){title.textContent="Create your account";sub.textContent="Enter your details and password. We’ll send a verification code to your email.";submit.textContent="Send verification code";}
   else if(verifySignup){title.textContent="Verify your email";sub.textContent="Enter the verification code sent to your email to create your account.";submit.textContent="Verify & create account";}
-  else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send a secure password reset link.";submit.textContent="Send reset link";}
-  else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code, or open the secure reset link in your email.";submit.textContent="Verify code";}
+  else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send a password recovery code.";submit.textContent="Send code";}
+  else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the verification code from your email.";submit.textContent="Verify code";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZORIX account.";submit.textContent="Sign in";}
   socialAuth.classList.toggle("hidden",!(mode==="signin"||mode==="create"));

@@ -274,8 +274,8 @@ form.onsubmit=async e=>{
     }
 
     if(mode==="verifyCode"){
-      if(!/^\d{8}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 6-digit recovery code.");
-      const {error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
+      if(!/^\d{6}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 6-digit recovery code.");
+      const {error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"recovery"});
       if(error)throw error;
       mode="reset";recoveryCode.value="";setMsg("Code verified. Choose a new password.",true);render();return;
     }

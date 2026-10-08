@@ -100,7 +100,7 @@ q("mainAuthForm").onsubmit=async e=>{
   }
   if(mainMode==="verifySignup"){
    const code=q("mainSignupCode").value.trim();
-   if(!/^\d{8}$/.test(code))throw new Error("Enter the 6-digit verification code.");
+   if(!/^\d{8}$/.test(code))throw new Error("Enter the 8-digit verification code.");
    const {data,error}=await mainSb.auth.verifyOtp({email:(mainSignupEmail||q("mainEmail").value.trim()),token:code,type:"email"});
    if(error)throw error;
    if(!data.session)throw new Error("Verification succeeded but the account session was not created. Please try again.");
@@ -118,7 +118,7 @@ q("mainAuthForm").onsubmit=async e=>{
    mainMode="verifyCode";mainMsg("Recovery code sent. Check your Gmail inbox.",true);mainRender();return;
   }
   if(mainMode==="verifyCode"){
-   if(!/^\d{8}$/.test(q("mainRecoveryCode").value.trim()))throw new Error("Enter the 6-digit recovery code.");
+   if(!/^\d{8}$/.test(q("mainRecoveryCode").value.trim()))throw new Error("Enter the 8-digit recovery code.");
    const {error}=await mainSb.auth.verifyOtp({email:q("mainEmail").value.trim(),token:q("mainRecoveryCode").value.trim(),type:"email"});if(error)throw error;
    mainMode="reset";q("mainRecoveryCode").value="";mainMsg("Code verified. Choose a new password.",true);mainRender();return;
   }

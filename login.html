@@ -18,7 +18,7 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 .msg{min-height:20px;margin-top:13px;text-align:center;color:#98abc7;font-size:12px;line-height:1.45}.ok{color:#8dffd0!important}
 .notice{margin:-7px 0 19px;padding:11px 13px;border:1px solid rgba(75,178,255,.22);border-radius:12px;background:rgba(46,139,255,.07);color:#a8c2e5;font-size:12px;line-height:1.45}
 .footer{text-align:center;margin-top:22px;color:#52617a;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
-.hidden{display:none!important}@media(max-width:450px){.card{padding:27px 21px 22px}.pill{display:none}.names{grid-template-columns:1fr}h1{font-size:26px}}
+.social-auth{margin-top:18px}.or{display:flex;align-items:center;gap:10px;color:#53627a;font-size:9px;letter-spacing:.12em;margin:15px 0}.or:before,.or:after{content:"";height:1px;flex:1;background:rgba(255,255,255,.09)}.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.social-btn{height:46px!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:12px!important;background:rgba(255,255,255,.045)!important;box-shadow:none!important;color:#eaf0ff!important;display:flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:750}.social-btn:hover{background:rgba(255,255,255,.08)!important}.gicon,.xicon{width:20px;height:20px;display:grid;place-items:center;font-weight:900;font-size:15px}.gicon{font-family:Arial,sans-serif}.xicon{font-size:18px}.hidden{display:none!important}@media(max-width:450px){.card{padding:27px 21px 22px}.pill{display:none}.names{grid-template-columns:1fr}h1{font-size:26px}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -45,6 +45,13 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 <label for="confirmPassword">CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password">
 </div>
 <button id="submit" type="submit">Sign in</button>
+<div id="socialAuth" class="social-auth">
+  <div class="or"><span>OR CONTINUE WITH</span></div>
+  <div class="social-grid">
+    <button id="googleBtn" class="social-btn" type="button"><span class="gicon">G</span><span>Google</span></button>
+    <button id="xBtn" class="social-btn" type="button"><span class="xicon">𝕏</span><span>X</span></button>
+  </div>
+</div>
 </form>
 
 <div id="msg" class="msg"></div>
@@ -66,6 +73,7 @@ const first=document.getElementById("first"),last=document.getElementById("last"
 const names=document.getElementById("names"),referralBlock=document.getElementById("referralBlock"),passwordBlock=document.getElementById("passwordBlock"),confirmCreateBlock=document.getElementById("confirmCreateBlock"),codeBlock=document.getElementById("codeBlock"),newPasswordBlock=document.getElementById("newPasswordBlock");
 const title=document.getElementById("title"),sub=document.getElementById("sub"),submit=document.getElementById("submit"),msg=document.getElementById("msg");
 const forgot=document.getElementById("forgot"),switchBtn=document.getElementById("switch"),back=document.getElementById("back"),notice=document.getElementById("notice");
+const socialAuth=document.getElementById("socialAuth"),googleBtn=document.getElementById("googleBtn"),xBtn=document.getElementById("xBtn");
 
 let mode="signin";
 const PENDING_SIGNUP_KEY="nazorix_pending_signup_v1";
@@ -121,6 +129,7 @@ function render(){
   else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code sent to your email.";submit.textContent="Verify code";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZORIX account.";submit.textContent="Sign in";}
+  socialAuth.classList.toggle("hidden",mode!=="signin");
   forgot.classList.toggle("hidden",mode!=="signin");
   switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset"||mode==="verifyCode"||mode==="verifySignup");
   switchBtn.textContent=create?"Already have an account? Sign in":"Create an account";

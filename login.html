@@ -79,11 +79,14 @@ googleBtn.onclick=async()=>{
   googleBtn.disabled=true;
   setMsg("Opening Google sign-in…");
   try{
+    sessionStorage.setItem("nazorix_oauth_mode",mode);
+    sessionStorage.setItem("nazorix_oauth_ref",(referralCode?.value||incomingRef||"").trim());
+    const redirectUrl=new URL("login.html",location.href);
+    redirectUrl.search="";
+    redirectUrl.hash="";
     const {error}=await sb.auth.signInWithOAuth({
       provider:"google",
-      options:{
-        redirectTo:location.href.split("#")[0]
-      }
+      options:{redirectTo:redirectUrl.toString()}
     });
     if(error)throw error;
   }catch(err){
@@ -152,7 +155,7 @@ function render(){
   else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code sent to your email.";submit.textContent="Verify code";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZORIX account.";submit.textContent="Sign in";}
-  socialAuth.classList.toggle("hidden",mode!=="signin");
+  socialAuth.classList.toggle("hidden",!(mode==="signin"||mode==="create"));
   forgot.classList.toggle("hidden",mode!=="signin");
   switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset"||mode==="verifyCode"||mode==="verifySignup");
   switchBtn.textContent=create?"Already have an account? Sign in":"Create an account";
@@ -170,7 +173,23 @@ async function checkSession(){
     last.value=u.user_metadata?.last_name||"";
     mode="setup";render();return;
   }
-  if(data.session&&!recovery){location.replace("dashboard.html?v=50");}
+  if(data.session&&!recovery){
+    const oauthMode=sessionStorage.getItem("nazorix_oauth_mode");
+    const oauthRef=sessionStorage.getItem("nazorix_oauth_ref")||"";
+    if(oauthMode==="create"){
+      sessionStorage.removeItem("nazorix_oauth_mode");
+      sessionStorage.removeItem("nazorix_oauth_ref");
+      const u=data.session.user;
+      const meta=u.user_metadata||{};
+      await sb.auth.updateUser({data:{
+        first_name:meta.first_name||meta.full_name?.split(" ")[0]||"",
+        last_name:meta.last_name||meta.full_name?.split(" ").slice(1).join(" ")||"",
+        account_complete:true,
+        referred_by:oauthRef||null
+      }});
+    }
+    location.replace("dashboard.html?v=50");
+  }
 }
 
 sb.auth.onAuthStateChange((event,session)=>{

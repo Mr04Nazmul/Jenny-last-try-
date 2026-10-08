@@ -39,7 +39,7 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 <div id="passwordBlock"><label for="password">PASSWORD</label><input id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="Your password"></div>
 <div id="confirmCreateBlock" class="hidden"><label for="confirmCreatePassword">CONFIRM PASSWORD</label><input id="confirmCreatePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
 <div id="referralBlock" class="referral hidden"><label for="referralCode">REFERRAL CODE <span style="color:#61718a;font-weight:500">(OPTIONAL)</span></label><input id="referralCode" type="text" maxlength="64" autocomplete="off" placeholder="Enter referral code"><span class="referral-note">If someone invited you, their code will be filled automatically.</span></div>
-<div id="codeBlock" class="hidden"><label for="recoveryCode">VERIFICATION CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></div>
+<div id="codeBlock" class="hidden"><label for="recoveryCode">VERIFICATION CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="8-digit code"></div>
 <div id="newPasswordBlock" class="hidden">
 <label for="newPassword">NEW PASSWORD</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
 <label for="confirmPassword">CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password">
@@ -151,9 +151,9 @@ function render(){
   newPassword.required=setup||reset;confirmPassword.required=setup||reset;
   if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
   else if(create){title.textContent="Create your account";sub.textContent="Enter your details and password. We’ll send a verification code to your email.";submit.textContent="Send verification code";}
-  else if(verifySignup){title.textContent="Verify your email";sub.textContent="Enter the 6-digit code sent to your email to create your account.";submit.textContent="Verify & create account";}
+  else if(verifySignup){title.textContent="Verify your email";sub.textContent="Enter the 8-digit code sent to your email to create your account.";submit.textContent="Verify & create account";}
   else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send a secure password reset link.";submit.textContent="Send reset link";}
-  else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code, or open the secure reset link in your email.";submit.textContent="Verify code";}
+  else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 8-digit code, or open the secure reset link in your email.";submit.textContent="Verify code";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZORIX account.";submit.textContent="Sign in";}
   socialAuth.classList.toggle("hidden",!(mode==="signin"||mode==="create"));
@@ -228,7 +228,7 @@ form.onsubmit=async e=>{
         if(!resendError){
           savePendingSignup();
           mode="verifySignup";
-          setMsg("A verification code has been sent again. Enter the 6-digit code from your email.",true);
+          setMsg("A verification code has been sent again. Enter the 8-digit code from your email.",true);
           render();
           return;
         }
@@ -246,9 +246,9 @@ form.onsubmit=async e=>{
         });
         if(otpError)throw otpError;
         await sb.auth.signOut();
-        setMsg("Verification code sent. Enter the 6-digit code from your email to finish creating the account.",true);
+        setMsg("Verification code sent. Enter the 8-digit code from your email to finish creating the account.",true);
       }else{
-        setMsg("Verification code sent. Enter the 6-digit code from your email to finish creating the account.",true);
+        setMsg("Verification code sent. Enter the 8-digit code from your email to finish creating the account.",true);
       }
       savePendingSignup();
       mode="verifySignup";
@@ -257,7 +257,7 @@ form.onsubmit=async e=>{
     }
 
     if(mode==="verifySignup"){
-      if(!/^\d{6}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 6-digit verification code.");
+      if(!/^\d{8}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 8-digit verification code.");
       const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
       if(error)throw error;
       if(!data.session)throw new Error("Email verification did not create a session. Please try again.");
@@ -288,11 +288,11 @@ form.onsubmit=async e=>{
     if(mode==="forgot"){
       const {error}=await sb.auth.resetPasswordForEmail(email.value.trim(),{redirectTo:new URL("login.html",location.href).toString()});
       if(error)throw error;
-      mode="verifyCode";setMsg("Check your email. Enter the 6-digit code, or open the secure reset link.",true);render();return;
+      mode="verifyCode";setMsg("Check your email. Enter the 8-digit code, or open the secure reset link.",true);render();return;
     }
 
     if(mode==="verifyCode"){
-      if(!/^\d{6}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 6-digit recovery code.");
+      if(!/^\d{8}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 8-digit recovery code.");
       const {error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"recovery"});
       if(error)throw error;
       mode="reset";recoveryCode.value="";setMsg("Code verified. Choose a new password.",true);render();return;
@@ -323,7 +323,7 @@ form.onsubmit=async e=>{
 if(incomingRef && referralCode) referralCode.value=incomingRef;
 const restoredPendingSignup=loadPendingSignup();
 render();
-if(restoredPendingSignup) setMsg("You already requested a verification code. Enter the 6-digit code from your email.",true);
+if(restoredPendingSignup) setMsg("You already requested a verification code. Enter the 8-digit code from your email.",true);
 checkSession();
 </script>
 </body>

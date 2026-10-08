@@ -40,22 +40,11 @@ nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:cen
 <nav><div class="brand">NAZORIX</div><a class="back" href="dashboard.html">← DASHBOARD</a></nav>
 <main class="wrap"><div class="k">ECOSYSTEM / WALLET</div><div style="display:flex;justify-content:space-between;align-items:end;gap:15px"><h1 class="title" style="margin-bottom:35px">Your <em>wallet.</em></h1><span id="live" class="badge hidden" style="margin-bottom:45px">● LIVE</span></div>
 <section class="card">
-<div class="topline"><div><div class="icon">◇</div><h2 style="margin-top:18px">NAZORIX Wallet</h2></div><span class="badge">SEPOLIA TESTNET</span></div>
-<p>Connect your wallet to view your Sepolia ETH balance and on-chain activity. Token balances are not displayed here.</p>
-<button id="connectBtn" class="btn" onclick="connectWallet()">CONNECT WALLET</button>
-<div id="disconnectWrap" class="hidden"><button id="disconnectBtn" class="btn" onclick="disconnectWallet()">DISCONNECT WALLET</button></div>
+<div class="topline"><div><div class="icon">◇</div><h2 style="margin-top:18px">NAZORIX Wallet</h2></div><span class="badge">COMING SOON</span></div>
+<p>Wallet connection and on-chain wallet features are currently being prepared.</p>
+<button class="btn" disabled>WALLET CONNECTION · COMING SOON</button>
 <div class="contract" style="margin-top:18px"><div class="label">WALLET CONNECTION POLICY</div><p style="margin:8px 0 0">Your first connected wallet is permanently linked to your NAZORIX account. You may disconnect and reconnect it anytime, but you cannot replace it with another wallet. Only the same wallet can be connected again.</p></div>
-<div id="walletData" class="hidden">
-<div class="grid">
-<div class="stat" style="grid-column:1/-1"><div class="label">SEPOLIA ETH</div><div id="balance" class="value" style="font-size:30px">—</div><div class="muted">NATIVE ASSET</div></div>
-<div class="stat"><div class="label">WALLET</div><div id="address" class="value">—</div></div>
-<div class="stat"><div class="label">NETWORK</div><div id="network" class="value ok">—</div></div>
-</div>
-<div style="margin-top:18px"><div class="topline"><h2 style="font-size:16px">Sepolia Faucet</h2><span class="label">TEST ETH</span></div><div class="stat" style="margin-top:10px"><div class="label">GET SEPOLIA ETH</div><div class="muted" style="font-size:11px;line-height:1.7;margin-top:8px">Need test ETH for gas? Use a Sepolia faucet to request free test ETH for your connected wallet.</div><a class="btn" style="display:block;text-align:center;text-decoration:none;margin-top:14px" target="_blank" rel="noopener" href="https://www.alchemy.com/faucets/ethereum-sepolia">OPEN SEPOLIA FAUCET ↗</a></div></div>
-<div class="contract"><div class="label">VERIFIED CONTRACT</div><a target="_blank" rel="noopener" href="https://sepolia.etherscan.io/address/0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557">0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557</a></div>
-<div style="margin-top:28px"><div class="topline"><h2 style="font-size:16px">Recent Activity</h2><span class="label">ON-CHAIN</span></div><div id="activity" class="activity"><div class="muted">Loading activity…</div></div></div>
-</div>
-<div id="msg" class="note">No private key or seed phrase is requested.</div>
+<div class="note">Wallet connection will be available in a future update.</div>
 </section></main>
 <script>
 const CONTRACT="0xefb0ba65e3ebf22067ffdbe67838634ee2cdf557";

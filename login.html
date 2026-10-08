@@ -37,7 +37,8 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 </div>
 <div><label for="email">EMAIL</label><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
 <div id="passwordBlock"><label for="password">PASSWORD</label><input id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="Your password"></div>
-<div id="codeBlock" class="hidden"><label for="recoveryCode">RECOVERY CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></div>
+<div id="confirmCreateBlock" class="hidden"><label for="confirmCreatePassword">CONFIRM PASSWORD</label><input id="confirmCreatePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
+<div id="codeBlock" class="hidden"><label for="recoveryCode">VERIFICATION CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></div>
 <div id="newPasswordBlock" class="hidden">
 <label for="newPassword">NEW PASSWORD</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
 <label for="confirmPassword">CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password">
@@ -60,8 +61,8 @@ const SUPABASE_KEY="sb_publishable_SL6n4Q0t_AxHywHM6iMkpg_bm-lx_Oh";
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const form=document.getElementById("form"),email=document.getElementById("email"),password=document.getElementById("password");
-const first=document.getElementById("first"),last=document.getElementById("last"),recoveryCode=document.getElementById("recoveryCode"),newPassword=document.getElementById("newPassword"),confirmPassword=document.getElementById("confirmPassword");
-const names=document.getElementById("names"),passwordBlock=document.getElementById("passwordBlock"),codeBlock=document.getElementById("codeBlock"),newPasswordBlock=document.getElementById("newPasswordBlock");
+const first=document.getElementById("first"),last=document.getElementById("last"),recoveryCode=document.getElementById("recoveryCode"),newPassword=document.getElementById("newPassword"),confirmPassword=document.getElementById("confirmPassword"),confirmCreatePassword=document.getElementById("confirmCreatePassword");
+const names=document.getElementById("names"),passwordBlock=document.getElementById("passwordBlock"),confirmCreateBlock=document.getElementById("confirmCreateBlock"),codeBlock=document.getElementById("codeBlock"),newPasswordBlock=document.getElementById("newPasswordBlock");
 const title=document.getElementById("title"),sub=document.getElementById("sub"),submit=document.getElementById("submit"),msg=document.getElementById("msg");
 const forgot=document.getElementById("forgot"),switchBtn=document.getElementById("switch"),back=document.getElementById("back"),notice=document.getElementById("notice");
 
@@ -73,25 +74,28 @@ const recovery=location.hash.includes("type=recovery");
 function setMsg(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}
 
 function render(){
-  const setup=mode==="setup", create=mode==="create", forgotMode=mode==="forgot", verifyCode=mode==="verifyCode", reset=mode==="reset";
+  const setup=mode==="setup", create=mode==="create", forgotMode=mode==="forgot", verifyCode=mode==="verifyCode", verifySignup=mode==="verifySignup", reset=mode==="reset";
   notice.classList.toggle("hidden",!setup);
   names.classList.toggle("hidden",!setup&&!create);
-  passwordBlock.classList.toggle("hidden",create||setup||forgotMode||reset);
-  codeBlock.classList.toggle("hidden",!verifyCode);
+  passwordBlock.classList.toggle("hidden",!["signin","create"].includes(mode));
+  confirmCreateBlock.classList.toggle("hidden",mode!=="create");
+  codeBlock.classList.toggle("hidden",!verifyCode&&!verifySignup);
   newPasswordBlock.classList.toggle("hidden",!setup&&!reset);
-  email.readOnly=setup||verifyCode||reset;
+  email.readOnly=setup||verifyCode||verifySignup||reset;
   first.required=setup||create;last.required=setup||create;
-  password.required=mode==="signin";
-  recoveryCode.required=verifyCode;
+  password.required=mode==="signin"||mode==="create";
+  confirmCreatePassword.required=create;
+  recoveryCode.required=verifyCode||verifySignup;
   newPassword.required=setup||reset;confirmPassword.required=setup||reset;
   if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
-  else if(create){title.textContent="Create your account";sub.textContent="Enter your details. We’ll send a verification link before activation.";submit.textContent="Send verification";}
+  else if(create){title.textContent="Create your account";sub.textContent="Enter your details and password. We’ll send a verification code to your email.";submit.textContent="Send verification code";}
+  else if(verifySignup){title.textContent="Verify your email";sub.textContent="Enter the 6-digit code sent to your email to create your account.";submit.textContent="Verify & create account";}
   else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send a 6-digit recovery code.";submit.textContent="Send recovery code";}
   else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code sent to your email.";submit.textContent="Verify code";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
   else{title.textContent="Welcome back";sub.textContent="Sign in to continue to your NAZORIX account.";submit.textContent="Sign in";}
   forgot.classList.toggle("hidden",mode!=="signin");
-  switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset"||mode==="verifyCode");
+  switchBtn.classList.toggle("hidden",mode==="setup"||mode==="reset"||mode==="verifyCode"||mode==="verifySignup");
   switchBtn.textContent=create?"Already have an account? Sign in":"Create an account";
   back.classList.toggle("hidden",mode!=="reset"&&mode!=="forgot"&&mode!=="verifyCode");
 }
@@ -117,23 +121,37 @@ sb.auth.onAuthStateChange((event,session)=>{
   }
 });
 
-switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");render()};
+switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");password.value="";confirmCreatePassword.value="";render()};
 forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};
-back.onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mode="signin";setMsg("");password.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};
+back.onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mode="signin";setMsg("");password.value="";confirmCreatePassword.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};
 
 form.onsubmit=async e=>{
   e.preventDefault();submit.disabled=true;setMsg("");
   try{
     if(mode==="create"){
       if(!first.value.trim()||!last.value.trim())throw new Error("Please enter your first and last name.");
-      const redirectTo="https://mr04nazmul.github.io/nazulabs/login.html?verified=1";
-      const {error}=await sb.auth.signInWithOtp({
+      if(password.value.length<8)throw new Error("Password must be at least 8 characters.");
+      if(password.value!==confirmCreatePassword.value)throw new Error("Passwords do not match.");
+      const {data,error}=await sb.auth.signUp({
         email:email.value.trim(),
-        options:{shouldCreateUser:true,emailRedirectTo:redirectTo,data:{first_name:first.value.trim(),last_name:last.value.trim()}}
+        password:password.value,
+        options:{data:{first_name:first.value.trim(),last_name:last.value.trim()}}
       });
       if(error)throw error;
-      setMsg("Verification email sent. Open the link to continue. Your account is not activated until you verify your email.",true);
-      submit.textContent="Verification sent";
+      if(data.session)throw new Error("Email verification is required. Please keep Confirm email enabled in Supabase.");
+      mode="verifySignup";
+      setMsg("Verification code sent. Enter the code from your email to finish creating the account.",true);
+      render();
+      return;
+    }
+
+    if(mode==="verifySignup"){
+      if(!/^\d{6}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 6-digit verification code.");
+      const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
+      if(error)throw error;
+      if(!data.session)throw new Error("Email verification did not create a session. Please try again.");
+      setMsg("Email verified. Account created successfully. Opening NAZORIX…",true);
+      setTimeout(()=>location.replace("dashboard.html?v=50"),450);
       return;
     }
 

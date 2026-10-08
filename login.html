@@ -71,6 +71,7 @@ let mode="signin";
 const params=new URLSearchParams(location.search);
 const verified=params.get("verified")==="1";
 const incomingRef=(params.get("ref")||"").trim().replace(/[^a-zA-Z0-9_-]/g,"").slice(0,64);
+if(incomingRef) mode="create";
 const recovery=location.hash.includes("type=recovery");
 
 function setMsg(t,ok=false){msg.textContent=t;msg.classList.toggle("ok",ok)}

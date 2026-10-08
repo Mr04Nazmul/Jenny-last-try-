@@ -39,7 +39,7 @@ button{width:100%;height:52px;border:0;border-radius:13px;color:#fff;font-size:1
 <div id="passwordBlock"><label for="password">PASSWORD</label><input id="password" type="password" minlength="8" required autocomplete="current-password" placeholder="Your password"></div>
 <div id="confirmCreateBlock" class="hidden"><label for="confirmCreatePassword">CONFIRM PASSWORD</label><input id="confirmCreatePassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password"></div>
 <div id="referralBlock" class="referral hidden"><label for="referralCode">REFERRAL CODE <span style="color:#61718a;font-weight:500">(OPTIONAL)</span></label><input id="referralCode" type="text" maxlength="64" autocomplete="off" placeholder="Enter referral code"><span class="referral-note">If someone invited you, their code will be filled automatically.</span></div>
-<div id="codeBlock" class="hidden"><label for="recoveryCode">VERIFICATION CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit code"></div>
+<div id="codeBlock" class="hidden"><label for="recoveryCode">VERIFICATION CODE</label><input id="recoveryCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="8-digit code"></div>
 <div id="newPasswordBlock" class="hidden">
 <label for="newPassword">NEW PASSWORD</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
 <label for="confirmPassword">CONFIRM PASSWORD</label><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Repeat your password">
@@ -92,7 +92,7 @@ function render(){
   newPassword.required=setup||reset;confirmPassword.required=setup||reset;
   if(setup){title.textContent="Finish your account";sub.textContent="Your email is verified. Create a password to activate your account.";submit.textContent="Activate account";}
   else if(create){title.textContent="Create your account";sub.textContent="Enter your details and password. We’ll send a verification code to your email.";submit.textContent="Send verification code";}
-  else if(verifySignup){title.textContent="Verify your email";sub.textContent="Enter the 6-digit code sent to your email to create your account.";submit.textContent="Verify & create account";}
+  else if(verifySignup){title.textContent="Verify your email";sub.textContent="Enter the 8-digit code sent to your email to create your account.";submit.textContent="Verify & create account";}
   else if(forgotMode){title.textContent="Forgot password";sub.textContent="Enter your email and we’ll send a 6-digit recovery code.";submit.textContent="Send recovery code";}
   else if(verifyCode){title.textContent="Enter recovery code";sub.textContent="Enter the 6-digit code sent to your email.";submit.textContent="Verify code";}
   else if(reset){title.textContent="Reset your password";sub.textContent="Choose a new password for your NAZORIX account.";submit.textContent="Change password";}
@@ -142,7 +142,6 @@ form.onsubmit=async e=>{
         options:{data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:false,referred_by:referralCode.value.trim()||null}}
       });
       if(error)throw error;
-      if(data.session)throw new Error("Email verification is required. Please keep Confirm email enabled in Supabase.");
       mode="verifySignup";
       setMsg("Verification code sent. Enter the code from your email to finish creating the account.",true);
       render();
@@ -150,7 +149,7 @@ form.onsubmit=async e=>{
     }
 
     if(mode==="verifySignup"){
-      if(!/^\d{6}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 6-digit verification code.");
+      if(!/^\d{8}$/.test(recoveryCode.value.trim()))throw new Error("Enter the 8-digit verification code.");
       const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
       if(error)throw error;
       if(!data.session)throw new Error("Email verification did not create a session. Please try again.");

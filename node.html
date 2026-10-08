@@ -3,8 +3,30 @@
 <title>NAZORIX | Node Center</title>
 <style>
 body{margin:0;background:#050608;color:#f5f7fb;font-family:Inter,system-ui,sans-serif;min-height:100vh}nav{height:72px;border-bottom:1px solid #202631;display:flex;align-items:center;justify-content:space-between;padding:0 5%}.brand{font-weight:900;letter-spacing:.22em}.back{color:#8993a2;text-decoration:none;font-size:11px}.wrap{width:min(720px,92%);margin:auto;padding:70px 0}.k{font-size:9px;letter-spacing:.2em;color:#687382}.title{font-size:clamp(44px,8vw,76px);letter-spacing:-.06em;margin:12px 0 45px}.title em{font-style:normal;color:#65e6ff}.node{border:1px solid #202631;border-radius:24px;padding:30px;background:linear-gradient(145deg,#0e141a,#080a0e)}.status{color:#788392;font-size:10px;letter-spacing:.13em}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4b5360;margin-right:8px}.dot.on{background:#b8ff72;box-shadow:0 0 14px #b8ff72}.timer{font-size:clamp(58px,13vw,110px);font-weight:850;letter-spacing:-.07em;margin:35px 0 8px}.earned{color:#667180;font-size:11px}.earned b{color:#b8ff72}.btn{width:100%;margin-top:35px;padding:16px;border-radius:12px;border:1px solid #34404b;background:#10161d;color:#e8edf3;font-weight:800}.note{text-align:center;color:#596472;font-size:10px;line-height:1.7;margin-top:22px}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head>
-<body><nav><div class="brand">NAZORIX</div><a class="back" href="dashboard.html">← DASHBOARD</a></nav>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style id="nazu-global-nav">
+.nazu-side{position:fixed;left:0;top:0;bottom:0;width:218px;z-index:50;padding:22px 14px;background:rgba(4,8,18,.94);border-right:1px solid #1b2b48;backdrop-filter:blur(18px);font-family:Inter,system-ui,sans-serif}
+.nazu-side .nazu-brand{font-weight:950;letter-spacing:.14em;font-size:15px;color:#fff;padding:10px 12px 25px}
+.nazu-side .nazu-brand small{display:block;font-size:8px;letter-spacing:.02em;color:#71829e;margin-top:5px;font-weight:500}
+.nazu-links{display:grid;gap:6px}.nazu-links a{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;color:#8190a9;text-decoration:none;font-size:10px;font-weight:750}.nazu-links a:hover,.nazu-links a.active{color:#fff;background:linear-gradient(90deg,rgba(105,62,255,.28),rgba(38,115,255,.08));box-shadow:inset 2px 0 #7651ff}.nazu-links i{width:18px;text-align:center;font-style:normal;font-size:14px;color:#8aa9ff}
+.nazu-mobile{display:none}
+@media(min-width:901px){body{padding-left:218px}.nazu-side{display:block}}
+@media(max-width:900px){.nazu-side{display:none}.nazu-mobile{position:fixed;display:flex;left:0;right:0;bottom:0;height:66px;z-index:100;background:rgba(4,8,18,.96);border-top:1px solid #1b2b48;backdrop-filter:blur(18px);justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.nazu-mobile a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#71829e;text-decoration:none;font-size:7px;font-weight:750}.nazu-mobile a.active{color:#a98cff}.nazu-mobile i{font-style:normal;font-size:16px}.wrap{padding-bottom:90px!important}}
+</style></head>
+<body><aside class="nazu-side"><div class="nazu-brand">NAZORIX<small>AI • Web3 • NETWORK</small></div><nav class="nazu-links">
+<a class="" href="dashboard.html"><i>⌂</i>Dashboard</a>
+<a class="active" href="node.html"><i>◇</i>Node</a>
+<a class="" href="missions.html"><i>▣</i>Missions</a>
+<a class="" href="referrals.html"><i>♧</i>Referrals</a>
+<a class="" href="wallet.html"><i>▱</i>Wallet</a>
+<a href="missions.html"><i>★</i>Points</a>
+</nav></aside>
+<nav class="nazu-mobile">
+<a href="dashboard.html"><i>⌂</i>Home</a>
+<a class="active" href="node.html"><i>◇</i>Node</a>
+<a class="" href="missions.html"><i>▣</i>Missions</a>
+<a class="" href="referrals.html"><i>♧</i>Referrals</a>
+<a class="" href="wallet.html"><i>▱</i>Wallet</a>
+</nav><nav><div class="brand">NAZORIX</div><a class="back" href="dashboard.html">← DASHBOARD</a></nav>
 <main class="wrap"><div class="k">NETWORK / NODE CENTER</div><h1 class="title">Run your <em>node.</em></h1>
 <section class="node"><div class="status"><i id="dot" class="dot"></i><span id="status">NODE OFFLINE</span></div><div class="timer" id="timer">00:00:00</div><div class="earned">SESSION UPTIME · <b id="points">0 PTS</b></div><button class="btn" id="btn" onclick="toggleNode()">START NODE</button><div class="note">Uptime points are recorded to your NAZORIX account.</div></section></main>
 <script>

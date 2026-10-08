@@ -135,7 +135,7 @@ form.onsubmit=async e=>{
       const {data,error}=await sb.auth.signUp({
         email:email.value.trim(),
         password:password.value,
-        options:{data:{first_name:first.value.trim(),last_name:last.value.trim()}}
+        options:{data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:false}}
       });
       if(error)throw error;
       if(data.session)throw new Error("Email verification is required. Please keep Confirm email enabled in Supabase.");
@@ -150,6 +150,8 @@ form.onsubmit=async e=>{
       const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
       if(error)throw error;
       if(!data.session)throw new Error("Email verification did not create a session. Please try again.");
+      const {error:updateError}=await sb.auth.updateUser({data:{first_name:first.value.trim(),last_name:last.value.trim(),account_complete:true}});
+      if(updateError)throw updateError;
       setMsg("Email verified. Account created successfully. Opening NAZORIX…",true);
       setTimeout(()=>location.replace("dashboard.html?v=50"),450);
       return;

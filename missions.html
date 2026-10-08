@@ -33,10 +33,11 @@ async function init(){
  if(a.error||!a.data.user){location.replace("login.html");return}
  const q=await sb.from("missions").select("id,title,description,reward,active").eq("active",true).order("id");
  if(q.error){document.getElementById("list").innerHTML='<div class="card"><h2>Could not load activities.</h2><p>Please return to the dashboard and try again.</p></div>';return}
- const p=await sb.from("profiles").select("last_checkin").eq("id",a.data.user.id).maybeSingle();
+ const p=await sb.from("profiles").select("last_checkin,last_checkin_at").eq("id",a.data.user.id).maybeSingle();
  if(p.error){document.getElementById("list").innerHTML='<div class="card"><h2>Could not sync check-in.</h2><p>Please refresh and try again.</p></div>';return}
  const last=p.data?.last_checkin||null;
- const next=last?new Date(String(last)+"T00:00:00Z").getTime()+86400000:null;
+ const lastAt=p.data?.last_checkin_at||null;
+ const next=lastAt?new Date(lastAt).getTime()+86400000:null;
  const available=!next||Date.now()>=next;
  document.getElementById("list").innerHTML=(q.data||[]).map(x=>{
    const daily=x.title.toLowerCase().includes("daily check");

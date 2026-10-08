@@ -256,6 +256,7 @@ form.onsubmit=async e=>{
         if(owner && owner.id!==data.user.id){
           const {error:profileError}=await sb.from("profiles").upsert({id:data.user.id,email:data.user.email,referred_by:ref},{onConflict:"id"});
           if(profileError)console.warn("Referral attribution could not be saved",profileError);
+          else await sb.rpc("award_referral_reward",{p_ref:ref});
         }
       }
       clearPendingSignup();

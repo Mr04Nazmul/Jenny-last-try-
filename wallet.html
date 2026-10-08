@@ -12,8 +12,30 @@ nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:cen
 
 .activity{margin-top:12px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#080a0e}.activityRow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--line)}.activityRow:last-child{border-bottom:0}.activityMain{min-width:0}.activityType{font-size:11px;font-weight:800}.activityMeta{font-size:9px;color:var(--muted);margin-top:5px}.activityAmount{font-size:11px;font-weight:800;white-space:nowrap}.in{color:var(--lime)}.out{color:#ff9b9b}.activity a{color:#8ccfff;text-decoration:none}.empty{padding:20px;text-align:center;color:var(--muted);font-size:10px}</style>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.15.0/dist/ethers.umd.min.js"></script>
-</head>
-<body>
+<style id="nazu-global-nav">
+.nazu-side{position:fixed;left:0;top:0;bottom:0;width:218px;z-index:50;padding:22px 14px;background:rgba(4,8,18,.94);border-right:1px solid #1b2b48;backdrop-filter:blur(18px);font-family:Inter,system-ui,sans-serif}
+.nazu-side .nazu-brand{font-weight:950;letter-spacing:.14em;font-size:15px;color:#fff;padding:10px 12px 25px}
+.nazu-side .nazu-brand small{display:block;font-size:8px;letter-spacing:.02em;color:#71829e;margin-top:5px;font-weight:500}
+.nazu-links{display:grid;gap:6px}.nazu-links a{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;color:#8190a9;text-decoration:none;font-size:10px;font-weight:750}.nazu-links a:hover,.nazu-links a.active{color:#fff;background:linear-gradient(90deg,rgba(105,62,255,.28),rgba(38,115,255,.08));box-shadow:inset 2px 0 #7651ff}.nazu-links i{width:18px;text-align:center;font-style:normal;font-size:14px;color:#8aa9ff}
+.nazu-mobile{display:none}
+@media(min-width:901px){body{padding-left:218px}.nazu-side{display:block}}
+@media(max-width:900px){.nazu-side{display:none}.nazu-mobile{position:fixed;display:flex;left:0;right:0;bottom:0;height:66px;z-index:100;background:rgba(4,8,18,.96);border-top:1px solid #1b2b48;backdrop-filter:blur(18px);justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.nazu-mobile a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#71829e;text-decoration:none;font-size:7px;font-weight:750}.nazu-mobile a.active{color:#a98cff}.nazu-mobile i{font-style:normal;font-size:16px}.wrap{padding-bottom:90px!important}}
+</style></head>
+<body><aside class="nazu-side"><div class="nazu-brand">NAZORIX<small>AI • Web3 • NETWORK</small></div><nav class="nazu-links">
+<a class="" href="dashboard.html"><i>⌂</i>Dashboard</a>
+<a class="" href="node.html"><i>◇</i>Node</a>
+<a class="" href="missions.html"><i>▣</i>Missions</a>
+<a class="" href="referrals.html"><i>♧</i>Referrals</a>
+<a class="active" href="wallet.html"><i>▱</i>Wallet</a>
+<a href="missions.html"><i>★</i>Points</a>
+</nav></aside>
+<nav class="nazu-mobile">
+<a href="dashboard.html"><i>⌂</i>Home</a>
+<a class="" href="node.html"><i>◇</i>Node</a>
+<a class="" href="missions.html"><i>▣</i>Missions</a>
+<a class="" href="referrals.html"><i>♧</i>Referrals</a>
+<a class="active" href="wallet.html"><i>▱</i>Wallet</a>
+</nav>
 <nav><div class="brand">NAZORIX</div><a class="back" href="dashboard.html">← DASHBOARD</a></nav>
 <main class="wrap"><div class="k">ECOSYSTEM / WALLET</div><div style="display:flex;justify-content:space-between;align-items:end;gap:15px"><h1 class="title" style="margin-bottom:35px">Your <em>wallet.</em></h1><span id="live" class="badge hidden" style="margin-bottom:45px">● LIVE</span></div>
 <section class="card">

@@ -206,7 +206,7 @@ sb.auth.onAuthStateChange((event,session)=>{
 });
 
 switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");password.value="";confirmCreatePassword.value="";render()};
-forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};\nresendCode.onclick=async()=>{ if(mode!=="verifyCode")return; resendCode.disabled=true; setMsg(""); try{ const {error}=await sb.auth.signInWithOtp({email:email.value.trim(),options:{shouldCreateUser:false}}); if(error)throw error; setMsg("A new verification code has been sent.",true); }catch(err){ setMsg(err.message||"Could not send a new code."); } finally{ resendCode.disabled=false; } };
+forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};\nresendCode.onclick=async()=>{ if(mode!=="verifyCode")return; resendCode.disabled=true; setMsg(""); try{ const {error}=await sb.auth.resetPasswordForEmail(email.value.trim()); if(error)throw error; setMsg("A new verification code has been sent.",true); }catch(err){ setMsg(err.message||"Could not send a new code."); } finally{ resendCode.disabled=false; } };
 back.onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mode="signin";setMsg("");password.value="";confirmCreatePassword.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};
 
 form.onsubmit=async e=>{
@@ -286,19 +286,17 @@ form.onsubmit=async e=>{
     }
 
     if(mode==="forgot"){
-      // Send an OTP code only. Do not use resetPasswordForEmail(), because
-      // that flow is link-based by design.
-      const {error}=await sb.auth.signInWithOtp({
-        email:email.value.trim(),
-        options:{shouldCreateUser:false}
-      });
+      // Password recovery must use Supabase's recovery flow.
+      // The Reset Password email template is configured to show {{ .Token }}
+      // so the user receives a code instead of a clickable reset link.
+      const {error}=await sb.auth.resetPasswordForEmail(email.value.trim());
       if(error)throw error;
       mode="verifyCode";setMsg("Check your email and enter the verification code.",true);render();return;
     }
 
     if(mode==="verifyCode"){
       if(!/^\d{6,10}$/.test(recoveryCode.value.trim()))throw new Error("Enter the recovery code.");
-      const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"email"});
+      const {data,error}=await sb.auth.verifyOtp({email:email.value.trim(),token:recoveryCode.value.trim(),type:"recovery"});
       if(error)throw error;
       if(!data?.session)throw new Error("Code verification did not create a session. Please try again.");
       mode="reset";recoveryCode.value="";setMsg("Code verified. Choose a new password.",true);render();return;

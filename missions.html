@@ -35,6 +35,9 @@ async function init(){
  if(q.error){document.getElementById("list").innerHTML='<div class="card"><h2>Could not load activities.</h2><p>Please return to the dashboard and try again.</p></div>';return}
  const p=await sb.from("profiles").select("last_checkin,last_checkin_at").eq("id",a.data.user.id).maybeSingle();
  if(p.error){document.getElementById("list").innerHTML='<div class="card"><h2>Could not sync check-in.</h2><p>Please refresh and try again.</p></div>';return}
+ const completed=await sb.from("mission_completions").select("mission_key").eq("user_id",a.data.user.id);
+ if(completed.error){document.getElementById("list").innerHTML='<div class="card"><h2>Could not sync mission status.</h2><p>Please refresh and try again.</p></div>';return}
+ const completedKeys=new Set((completed.data||[]).map(x=>x.mission_key));
  const last=p.data?.last_checkin||null;
  const lastAt=p.data?.last_checkin_at||null;
  const next=lastAt?new Date(lastAt).getTime()+86400000:null;

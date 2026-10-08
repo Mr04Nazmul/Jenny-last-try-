@@ -206,7 +206,8 @@ sb.auth.onAuthStateChange((event,session)=>{
 });
 
 switchBtn.onclick=()=>{mode=mode==="create"?"signin":"create";setMsg("");password.value="";confirmCreatePassword.value="";render()};
-forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};\nresendCode.onclick=async()=>{ if(mode!=="verifyCode")return; resendCode.disabled=true; setMsg(""); try{ const {error}=await sb.auth.resetPasswordForEmail(email.value.trim()); if(error)throw error; setMsg("A new verification code has been sent.",true); }catch(err){ setMsg(err.message||"Could not send a new code."); } finally{ resendCode.disabled=false; } };
+forgot.onclick=()=>{mode="forgot";setMsg("");password.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};
+resendCode.onclick=async()=>{ if(mode!=="verifyCode")return; resendCode.disabled=true; setMsg(""); try{ const {error}=await sb.auth.resetPasswordForEmail(email.value.trim()); if(error)throw error; setMsg("A new verification code has been sent.",true); }catch(err){ setMsg(err.message||"Could not send a new code."); } finally{ resendCode.disabled=false; } };
 back.onclick=()=>{history.replaceState(null,"",location.pathname+location.search);mode="signin";setMsg("");password.value="";confirmCreatePassword.value="";recoveryCode.value="";newPassword.value="";confirmPassword.value="";render()};
 
 form.onsubmit=async e=>{

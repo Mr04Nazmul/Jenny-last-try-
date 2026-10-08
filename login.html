@@ -170,7 +170,8 @@ async function checkSession(){
   if(data.session&&recovery){
     email.value=data.session.user.email||"";
     mode="reset";render();return;
-  }\n  if(data.session&&verified){
+  }
+  if(data.session&&verified){
     const u=data.session.user;
     email.value=u.email||"";
     first.value=u.user_metadata?.first_name||"";
